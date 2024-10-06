@@ -42,8 +42,6 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
-            label5 = new Label();
-            linkLabel1 = new LinkLabel();
             panel2 = new Panel();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
@@ -55,7 +53,7 @@
             // 
             pictureBox1.BorderStyle = BorderStyle.FixedSingle;
             pictureBox1.Dock = DockStyle.Fill;
-            pictureBox1.Image = (Image)resources.GetObject("pictureBox1.Image");
+            pictureBox1.Image = Properties.Resources._26830_361092105;
             pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(1182, 680);
@@ -114,9 +112,9 @@
             // 
             // btnIngresar
             // 
-            btnIngresar.BackColor = Color.MediumSeaGreen;
+            btnIngresar.BackColor = Color.LimeGreen;
             btnIngresar.Font = new Font("Segoe UI", 12F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            btnIngresar.Location = new Point(67, 266);
+            btnIngresar.Location = new Point(66, 281);
             btnIngresar.Name = "btnIngresar";
             btnIngresar.Size = new Size(188, 46);
             btnIngresar.TabIndex = 2;
@@ -128,21 +126,21 @@
             // 
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "Empleado", "Administrador" });
-            comboBox1.Location = new Point(67, 60);
+            comboBox1.Location = new Point(66, 75);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(188, 23);
             comboBox1.TabIndex = 4;
             // 
             // maskedTextBox1
             // 
-            maskedTextBox1.Location = new Point(67, 189);
+            maskedTextBox1.Location = new Point(66, 204);
             maskedTextBox1.Name = "maskedTextBox1";
             maskedTextBox1.Size = new Size(188, 23);
             maskedTextBox1.TabIndex = 5;
             // 
             // textBox1
             // 
-            textBox1.Location = new Point(67, 121);
+            textBox1.Location = new Point(66, 136);
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(188, 23);
             textBox1.TabIndex = 6;
@@ -150,7 +148,7 @@
             // checkBox1
             // 
             checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(127, 218);
+            checkBox1.Location = new Point(126, 233);
             checkBox1.Name = "checkBox1";
             checkBox1.Size = new Size(128, 19);
             checkBox1.TabIndex = 7;
@@ -160,7 +158,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(65, 42);
+            label2.Location = new Point(64, 57);
             label2.Name = "label2";
             label2.Size = new Size(66, 15);
             label2.TabIndex = 8;
@@ -169,7 +167,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(65, 103);
+            label3.Location = new Point(64, 118);
             label3.Name = "label3";
             label3.Size = new Size(50, 15);
             label3.TabIndex = 9;
@@ -178,38 +176,17 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(65, 171);
+            label4.Location = new Point(64, 186);
             label4.Name = "label4";
             label4.Size = new Size(70, 15);
             label4.TabIndex = 10;
             label4.Text = "Contraseña:";
             // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(73, 341);
-            label5.Name = "label5";
-            label5.Size = new Size(113, 15);
-            label5.TabIndex = 11;
-            label5.Text = "No estas registrado?";
-            // 
-            // linkLabel1
-            // 
-            linkLabel1.AutoSize = true;
-            linkLabel1.Location = new Point(185, 341);
-            linkLabel1.Name = "linkLabel1";
-            linkLabel1.Size = new Size(62, 15);
-            linkLabel1.TabIndex = 12;
-            linkLabel1.TabStop = true;
-            linkLabel1.Text = "Registrate!";
-            // 
             // panel2
             // 
             panel2.BackColor = Color.FromArgb(128, 255, 255);
             panel2.BorderStyle = BorderStyle.FixedSingle;
-            panel2.Controls.Add(linkLabel1);
             panel2.Controls.Add(label2);
-            panel2.Controls.Add(label5);
             panel2.Controls.Add(btnIngresar);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(comboBox1);
@@ -261,8 +238,6 @@
         private Label label2;
         private Label label3;
         private Label label4;
-        private Label label5;
-        private LinkLabel linkLabel1;
         private Panel panel2;  
     }
 }

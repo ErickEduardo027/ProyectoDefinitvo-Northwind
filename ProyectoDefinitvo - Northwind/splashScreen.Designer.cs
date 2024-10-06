@@ -74,7 +74,7 @@
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Modern No. 20", 27.75F, FontStyle.Bold);
-            label1.Location = new Point(96, 14);
+            label1.Location = new Point(98, 19);
             label1.Name = "label1";
             label1.Size = new Size(190, 38);
             label1.TabIndex = 1;
@@ -95,7 +95,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("MS Reference Sans Serif", 15.75F, FontStyle.Bold | FontStyle.Italic);
-            label2.Location = new Point(117, 415);
+            label2.Location = new Point(118, 401);
             label2.Name = "label2";
             label2.Size = new Size(149, 26);
             label2.TabIndex = 3;
@@ -104,7 +104,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(130, 497);
+            label3.Location = new Point(124, 446);
             label3.Name = "label3";
             label3.Size = new Size(122, 15);
             label3.TabIndex = 4;
@@ -115,7 +115,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.LightSeaGreen;
-            ClientSize = new Size(382, 527);
+            ClientSize = new Size(382, 471);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(pictureBox1);
