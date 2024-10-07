@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
+using ProyectoDefinitvo___Northwind.Servicios.productos;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,18 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 {
     public partial class productosForm : Form
     {
-        public productosForm()
+        private readonly IproductosService iproductosService;
+
+        public productosForm(IproductosService iproductosService)
         {
             InitializeComponent();
+            this.iproductosService = iproductosService;
+        }
+
+        private void btnAgregar_Click(object sender, EventArgs e)
+        {
+            var instancia = new AgregarProductoDialog(iproductosService);
+            instancia.ShowDialog();
         }
     }
 }

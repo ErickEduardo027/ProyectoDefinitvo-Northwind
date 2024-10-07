@@ -1,4 +1,7 @@
-﻿using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
+﻿using FluentValidation;
+using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
+using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
+using ProyectoDefinitvo___Northwind.Servicios.productos;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,15 +12,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static ProyectoDefinitvo___Northwind.Servicios.productos.productosService;
 
 namespace ProyectoDefinitvo___Northwind
 {
     public partial class mainMenu : Form
     {
         private Form Activarform;
-        public mainMenu()
+        private readonly IproductosService iproductosService;
+
+        public mainMenu(IproductosService iproductosService)
         {
             InitializeComponent();
+            this.iproductosService = iproductosService;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -45,7 +52,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            abrirForm(new productosForm());
+            abrirForm(new productosForm(iproductosService));
         }
 
         private void btnCategorias_Click(object sender, EventArgs e)
@@ -60,7 +67,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void button3_Click(object sender, EventArgs e)
         {
-            LoginForm loginForm = new LoginForm();
+            LoginForm loginForm = new LoginForm(iproductosService);
             loginForm.Show();
             this.Close();
         }
@@ -70,14 +77,24 @@ namespace ProyectoDefinitvo___Northwind
             if (abrirForm != null)
             {
                 Activarform.Close();
-                Resetear();
+                lblTitulo.Text = "DASHBOARD";
+                btnCerrarFormularios.Visible = false;
             }
         }
 
-        private void Resetear()
+        private void label2_Click(object sender, EventArgs e)
         {
-            lblTitulo.Text = "DASHBOARD";
-            btnCerrarFormularios.Visible = false;
+
+        }
+
+        private void panelLogo_Paint(object sender, PaintEventArgs e)
+        {
+
+        }
+
+        public void ActualizarNombreText(string text)
+        {
+            labelNombre.Text = text;
         }
     }
 }

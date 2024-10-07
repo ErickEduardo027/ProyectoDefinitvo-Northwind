@@ -34,6 +34,8 @@
             btnCategorias = new Button();
             btnProductos = new Button();
             panelLogo = new Panel();
+            labelNombre = new Label();
+            pictureBox2 = new PictureBox();
             label1 = new Label();
             panelTitulo = new Panel();
             btnCerrarFormularios = new Button();
@@ -42,6 +44,7 @@
             pictureBox1 = new PictureBox();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panelTitulo.SuspendLayout();
             panelEscritorio.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
@@ -145,20 +148,46 @@
             // panelLogo
             // 
             panelLogo.BackColor = Color.FromArgb(39, 39, 58);
+            panelLogo.Controls.Add(labelNombre);
+            panelLogo.Controls.Add(pictureBox2);
             panelLogo.Controls.Add(label1);
             panelLogo.Dock = DockStyle.Top;
             panelLogo.Location = new Point(0, 0);
             panelLogo.Name = "panelLogo";
             panelLogo.Size = new Size(220, 80);
             panelLogo.TabIndex = 0;
+            panelLogo.Paint += panelLogo_Paint;
+            // 
+            // labelNombre
+            // 
+            labelNombre.AutoSize = true;
+            labelNombre.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            labelNombre.ForeColor = SystemColors.ButtonHighlight;
+            labelNombre.Location = new Point(88, 43);
+            labelNombre.Name = "labelNombre";
+            labelNombre.Size = new Size(53, 15);
+            labelNombre.TabIndex = 2;
+            labelNombre.Text = "Nombre";
+            labelNombre.Click += label2_Click;
+            // 
+            // pictureBox2
+            // 
+            pictureBox2.Image = Properties.Resources._4140039;
+            pictureBox2.Location = new Point(9, 10);
+            pictureBox2.Name = "pictureBox2";
+            pictureBox2.Size = new Size(70, 62);
+            pictureBox2.SizeMode = PictureBoxSizeMode.StretchImage;
+            pictureBox2.TabIndex = 1;
+            pictureBox2.TabStop = false;
             // 
             // label1
             // 
             label1.AutoSize = true;
+            label1.Font = new Font("Segoe UI", 9.75F, FontStyle.Regular, GraphicsUnit.Point, 0);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(73, 33);
+            label1.Location = new Point(87, 22);
             label1.Name = "label1";
-            label1.Size = new Size(69, 15);
+            label1.Size = new Size(75, 17);
             label1.TabIndex = 0;
             label1.Text = "Bienvenido!";
             // 
@@ -234,6 +263,7 @@
             panelMenu.ResumeLayout(false);
             panelLogo.ResumeLayout(false);
             panelLogo.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panelTitulo.ResumeLayout(false);
             panelTitulo.PerformLayout();
             panelEscritorio.ResumeLayout(false);
@@ -255,5 +285,7 @@
         private Panel panelEscritorio;
         private Button btnCerrarFormularios;
         private PictureBox pictureBox1;
+        private Label labelNombre;
+        private PictureBox pictureBox2;
     }
 }

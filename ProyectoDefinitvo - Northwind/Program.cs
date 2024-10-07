@@ -1,17 +1,30 @@
+using FluentValidation;
+using Microsoft.Extensions.DependencyInjection;
+using ProyectoDefinitvo___Northwind.Servicios.productos;
+using System.Reflection;
+using System.Windows.Forms;
+
 namespace ProyectoDefinitvo___Northwind
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            var serviceCollection = new ServiceCollection();
+
+            serviceCollection.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+
+            serviceCollection.AddTransient<LoginForm>();
+            serviceCollection.AddTransient<mainMenu>();
+            serviceCollection.AddTransient<IproductosService, productosService>();
+
+            var serviceProvider = serviceCollection.BuildServiceProvider();
+
             ApplicationConfiguration.Initialize();
-            Application.Run(new LoginForm());
+
+            var loginForm = serviceProvider.GetService<LoginForm>();
+            Application.Run(loginForm);
         }
     }
 }

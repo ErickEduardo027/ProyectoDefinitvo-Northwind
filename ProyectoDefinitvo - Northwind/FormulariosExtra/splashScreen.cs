@@ -25,11 +25,7 @@ namespace ProyectoDefinitvo___Northwind
                 ActualizarProgreso(i);
                 await Task.Delay(50);
             }
-            mainMenu mainMenu = new mainMenu();
-            mainMenu.Show();
             this.Close();
-
-
         }
 
         private void ActualizarProgreso(int valor)

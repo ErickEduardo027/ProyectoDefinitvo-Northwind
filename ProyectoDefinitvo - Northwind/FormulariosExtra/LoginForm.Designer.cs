@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(LoginForm));
             pictureBox1 = new PictureBox();
             panel1 = new Panel();
@@ -36,17 +37,19 @@
             pictureBox2 = new PictureBox();
             btnIngresar = new Button();
             comboBox1 = new ComboBox();
-            maskedTextBox1 = new MaskedTextBox();
-            textBox1 = new TextBox();
-            checkBox1 = new CheckBox();
+            txtUsuario = new TextBox();
+            MostrarContraseña = new CheckBox();
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
             panel2 = new Panel();
+            txtContraseña = new TextBox();
+            errorProvider1 = new ErrorProvider(components);
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
             panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
@@ -60,6 +63,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel1
             // 
@@ -71,6 +75,7 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1182, 42);
             panel1.TabIndex = 1;
+            panel1.Paint += panel1_Paint;
             // 
             // btnSalir
             // 
@@ -131,29 +136,23 @@
             comboBox1.Size = new Size(188, 23);
             comboBox1.TabIndex = 4;
             // 
-            // maskedTextBox1
+            // txtUsuario
             // 
-            maskedTextBox1.Location = new Point(66, 204);
-            maskedTextBox1.Name = "maskedTextBox1";
-            maskedTextBox1.Size = new Size(188, 23);
-            maskedTextBox1.TabIndex = 5;
+            txtUsuario.Location = new Point(66, 136);
+            txtUsuario.Name = "txtUsuario";
+            txtUsuario.Size = new Size(188, 23);
+            txtUsuario.TabIndex = 6;
             // 
-            // textBox1
+            // MostrarContraseña
             // 
-            textBox1.Location = new Point(66, 136);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(188, 23);
-            textBox1.TabIndex = 6;
-            // 
-            // checkBox1
-            // 
-            checkBox1.AutoSize = true;
-            checkBox1.Location = new Point(126, 233);
-            checkBox1.Name = "checkBox1";
-            checkBox1.Size = new Size(128, 19);
-            checkBox1.TabIndex = 7;
-            checkBox1.Text = "Mostrar contraseña";
-            checkBox1.UseVisualStyleBackColor = true;
+            MostrarContraseña.AutoSize = true;
+            MostrarContraseña.Location = new Point(129, 233);
+            MostrarContraseña.Name = "MostrarContraseña";
+            MostrarContraseña.Size = new Size(128, 19);
+            MostrarContraseña.TabIndex = 7;
+            MostrarContraseña.Text = "Mostrar contraseña";
+            MostrarContraseña.UseVisualStyleBackColor = true;
+            MostrarContraseña.CheckedChanged += checkBox1_CheckedChanged;
             // 
             // label2
             // 
@@ -186,18 +185,29 @@
             // 
             panel2.BackColor = Color.FromArgb(128, 255, 255);
             panel2.BorderStyle = BorderStyle.FixedSingle;
+            panel2.Controls.Add(txtContraseña);
             panel2.Controls.Add(label2);
             panel2.Controls.Add(btnIngresar);
             panel2.Controls.Add(label4);
             panel2.Controls.Add(comboBox1);
             panel2.Controls.Add(label3);
-            panel2.Controls.Add(maskedTextBox1);
-            panel2.Controls.Add(textBox1);
-            panel2.Controls.Add(checkBox1);
+            panel2.Controls.Add(txtUsuario);
+            panel2.Controls.Add(MostrarContraseña);
             panel2.Location = new Point(144, 152);
             panel2.Name = "panel2";
             panel2.Size = new Size(323, 397);
             panel2.TabIndex = 13;
+            // 
+            // txtContraseña
+            // 
+            txtContraseña.Location = new Point(66, 204);
+            txtContraseña.Name = "txtContraseña";
+            txtContraseña.Size = new Size(188, 23);
+            txtContraseña.TabIndex = 11;
+            // 
+            // errorProvider1
+            // 
+            errorProvider1.ContainerControl = this;
             // 
             // LoginForm
             // 
@@ -220,6 +230,7 @@
             ((System.ComponentModel.ISupportInitialize)pictureBox2).EndInit();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)errorProvider1).EndInit();
             ResumeLayout(false);
         }
 
@@ -232,12 +243,13 @@
         private PictureBox pictureBox2;
         private Button btnIngresar;
         private ComboBox comboBox1;
-        private MaskedTextBox maskedTextBox1;
-        private TextBox textBox1;
-        private CheckBox checkBox1;
+        private TextBox txtUsuario;
+        private CheckBox MostrarContraseña;
         private Label label2;
         private Label label3;
         private Label label4;
-        private Panel panel2;  
+        private Panel panel2;
+        private TextBox txtContraseña;
+        private ErrorProvider errorProvider1;
     }
 }
