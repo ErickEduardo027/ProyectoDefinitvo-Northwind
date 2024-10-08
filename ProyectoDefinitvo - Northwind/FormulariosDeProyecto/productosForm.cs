@@ -30,6 +30,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         {
             var agregar = new AgregarProductoDialog(iproductosService);
             agregar.ShowDialog();
+            btnReset.Visible = true;
         }
 
         private void productosForm_Load(object sender, EventArgs e)
