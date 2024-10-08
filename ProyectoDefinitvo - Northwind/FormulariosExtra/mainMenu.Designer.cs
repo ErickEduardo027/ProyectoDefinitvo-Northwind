@@ -258,7 +258,6 @@
             Name = "mainMenu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "MainMenu";
-            WindowState = FormWindowState.Maximized;
             Load += mainMenu_Load;
             panelMenu.ResumeLayout(false);
             panelLogo.ResumeLayout(false);

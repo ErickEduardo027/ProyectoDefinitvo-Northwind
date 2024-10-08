@@ -45,7 +45,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.productos
             public short UnitsInStock { get; set; }
             public short UnitsOnOrder { get; set; }
             public short ReorderLevel { get; set; }
-            public string Discontinued { get; set; }
+            public bool Discontinued { get; set; }
         }
 
         public class CrearProductoValidator : AbstractValidator<CrearProductoRequest>
@@ -68,7 +68,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.productos
 
                 RuleFor(p => p.ReorderLevel).GreaterThan((short)0);
 
-                RuleFor(p => p.Discontinued).NotEmpty();
+                RuleFor(p => p.Discontinued).NotNull();
             }
         }
     }

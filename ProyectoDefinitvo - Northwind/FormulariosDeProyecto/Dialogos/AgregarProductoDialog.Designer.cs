@@ -49,10 +49,9 @@
             panel1 = new Panel();
             panel2 = new Panel();
             dataGridView1 = new DataGridView();
-            label9 = new Label();
             label10 = new Label();
             dataGridView2 = new DataGridView();
-            cbxDiscontinued = new ComboBox();
+            chkDiscontinued = new CheckBox();
             label11 = new Label();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
@@ -82,56 +81,56 @@
             // 
             // txtProductName
             // 
-            txtProductName.Location = new Point(80, 45);
+            txtProductName.Location = new Point(75, 51);
             txtProductName.Name = "txtProductName";
             txtProductName.Size = new Size(215, 23);
             txtProductName.TabIndex = 2;
             // 
             // txtSupplierID
             // 
-            txtSupplierID.Location = new Point(80, 92);
+            txtSupplierID.Location = new Point(75, 98);
             txtSupplierID.Name = "txtSupplierID";
             txtSupplierID.Size = new Size(34, 23);
             txtSupplierID.TabIndex = 3;
             // 
             // txtCategoryID
             // 
-            txtCategoryID.Location = new Point(80, 141);
+            txtCategoryID.Location = new Point(75, 147);
             txtCategoryID.Name = "txtCategoryID";
             txtCategoryID.Size = new Size(34, 23);
             txtCategoryID.TabIndex = 4;
             // 
             // txtQuantityPerUnit
             // 
-            txtQuantityPerUnit.Location = new Point(80, 185);
+            txtQuantityPerUnit.Location = new Point(75, 191);
             txtQuantityPerUnit.Name = "txtQuantityPerUnit";
             txtQuantityPerUnit.Size = new Size(100, 23);
             txtQuantityPerUnit.TabIndex = 5;
             // 
             // txtUnitPrice
             // 
-            txtUnitPrice.Location = new Point(80, 232);
+            txtUnitPrice.Location = new Point(75, 238);
             txtUnitPrice.Name = "txtUnitPrice";
             txtUnitPrice.Size = new Size(100, 23);
             txtUnitPrice.TabIndex = 6;
             // 
             // txtUnitsInStock
             // 
-            txtUnitsInStock.Location = new Point(80, 280);
+            txtUnitsInStock.Location = new Point(75, 286);
             txtUnitsInStock.Name = "txtUnitsInStock";
             txtUnitsInStock.Size = new Size(100, 23);
             txtUnitsInStock.TabIndex = 7;
             // 
             // txtUnitsOnOrder
             // 
-            txtUnitsOnOrder.Location = new Point(80, 328);
+            txtUnitsOnOrder.Location = new Point(75, 334);
             txtUnitsOnOrder.Name = "txtUnitsOnOrder";
             txtUnitsOnOrder.Size = new Size(100, 23);
             txtUnitsOnOrder.TabIndex = 8;
             // 
             // txtReorderLevel
             // 
-            txtReorderLevel.Location = new Point(80, 374);
+            txtReorderLevel.Location = new Point(75, 380);
             txtReorderLevel.Name = "txtReorderLevel";
             txtReorderLevel.Size = new Size(100, 23);
             txtReorderLevel.TabIndex = 9;
@@ -139,7 +138,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(80, 27);
+            label1.Location = new Point(75, 33);
             label1.Name = "label1";
             label1.Size = new Size(54, 15);
             label1.TabIndex = 11;
@@ -148,7 +147,7 @@
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(80, 74);
+            label2.Location = new Point(75, 80);
             label2.Name = "label2";
             label2.Size = new Size(82, 15);
             label2.TabIndex = 12;
@@ -157,7 +156,7 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(80, 123);
+            label3.Location = new Point(75, 129);
             label3.Name = "label3";
             label3.Size = new Size(88, 15);
             label3.TabIndex = 13;
@@ -166,7 +165,7 @@
             // label4
             // 
             label4.AutoSize = true;
-            label4.Location = new Point(78, 171);
+            label4.Location = new Point(73, 177);
             label4.Name = "label4";
             label4.Size = new Size(119, 15);
             label4.TabIndex = 14;
@@ -175,7 +174,7 @@
             // label5
             // 
             label5.AutoSize = true;
-            label5.Location = new Point(80, 214);
+            label5.Location = new Point(75, 220);
             label5.Name = "label5";
             label5.Size = new Size(105, 15);
             label5.TabIndex = 15;
@@ -184,7 +183,7 @@
             // label6
             // 
             label6.AutoSize = true;
-            label6.Location = new Point(79, 262);
+            label6.Location = new Point(74, 268);
             label6.Name = "label6";
             label6.Size = new Size(122, 15);
             label6.TabIndex = 16;
@@ -193,7 +192,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(80, 310);
+            label7.Location = new Point(75, 316);
             label7.Name = "label7";
             label7.Size = new Size(109, 15);
             label7.TabIndex = 17;
@@ -202,7 +201,7 @@
             // label8
             // 
             label8.AutoSize = true;
-            label8.Location = new Point(80, 358);
+            label8.Location = new Point(75, 364);
             label8.Name = "label8";
             label8.Size = new Size(97, 15);
             label8.TabIndex = 18;
@@ -227,24 +226,18 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(353, 30);
+            dataGridView1.Location = new Point(352, 288);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(564, 216);
             dataGridView1.TabIndex = 21;
-            // 
-            // label9
-            // 
-            label9.AutoSize = true;
-            label9.Location = new Point(353, 12);
-            label9.Name = "label9";
-            label9.Size = new Size(129, 15);
-            label9.TabIndex = 22;
-            label9.Text = "Categorias disponibles:";
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // label10
             // 
             label10.AutoSize = true;
-            label10.Location = new Point(353, 272);
+            label10.Location = new Point(352, 9);
             label10.Name = "label10";
             label10.Size = new Size(128, 15);
             label10.TabIndex = 24;
@@ -253,28 +246,32 @@
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(353, 290);
+            dataGridView2.Location = new Point(352, 27);
             dataGridView2.Name = "dataGridView2";
+            dataGridView2.ReadOnly = true;
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView2.Size = new Size(564, 214);
             dataGridView2.TabIndex = 23;
+            dataGridView2.CellContentClick += dataGridView2_CellContentClick;
             // 
-            // cbxDiscontinued
+            // chkDiscontinued
             // 
-            cbxDiscontinued.FormattingEnabled = true;
-            cbxDiscontinued.Items.AddRange(new object[] { "0", "1" });
-            cbxDiscontinued.Location = new Point(80, 422);
-            cbxDiscontinued.Name = "cbxDiscontinued";
-            cbxDiscontinued.Size = new Size(120, 23);
-            cbxDiscontinued.TabIndex = 25;
+            chkDiscontinued.AutoSize = true;
+            chkDiscontinued.Location = new Point(75, 418);
+            chkDiscontinued.Name = "chkDiscontinued";
+            chkDiscontinued.Size = new Size(96, 19);
+            chkDiscontinued.TabIndex = 27;
+            chkDiscontinued.Text = "Discontinued";
+            chkDiscontinued.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
             label11.AutoSize = true;
-            label11.Location = new Point(80, 404);
+            label11.Location = new Point(352, 270);
             label11.Name = "label11";
-            label11.Size = new Size(80, 15);
-            label11.TabIndex = 26;
-            label11.Text = "Discontinued:";
+            label11.Size = new Size(129, 15);
+            label11.TabIndex = 28;
+            label11.Text = "Categorias disponibles:";
             // 
             // AgregarProductoDialog
             // 
@@ -286,10 +283,9 @@
             ClientSize = new Size(923, 512);
             ControlBox = false;
             Controls.Add(label11);
-            Controls.Add(cbxDiscontinued);
+            Controls.Add(chkDiscontinued);
             Controls.Add(label10);
             Controls.Add(dataGridView2);
-            Controls.Add(label9);
             Controls.Add(dataGridView1);
             Controls.Add(panel2);
             Controls.Add(panel1);
@@ -317,7 +313,7 @@
             Name = "AgregarProductoDialog";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = " ";
+            Text = " Agregar Producto";
             Load += AgregarProductoDialog_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
@@ -348,10 +344,9 @@
         private Panel panel1;
         private Panel panel2;
         private DataGridView dataGridView1;
-        private Label label9;
         private Label label10;
         private DataGridView dataGridView2;
-        private ComboBox cbxDiscontinued;
+        private CheckBox chkDiscontinued;
         private Label label11;
     }
 }

@@ -7,33 +7,47 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ProyectoDefinitvo___Northwind.Servicios.productos.productosService;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 {
-    public partial class AgregarProductoDialog : Form
+    public partial class ActualizarProductoDialog : Form
     {
-        private readonly IproductosService productoService;
+        private readonly IproductosService productosService;
 
-        public AgregarProductoDialog(IproductosService productoService)
+        public ActualizarProductoDialog(IproductosService iproductosService)
         {
             InitializeComponent();
-            this.productoService = productoService;
+            this.productosService = iproductosService;
         }
-        private void AgregarProductoDialog_Load(object sender, EventArgs e)
+
+        private void btnCancelar_Click(object sender, EventArgs e)
         {
-            txtSupplierID.Text = "0";
-            txtCategoryID.Text = "0";
-            txtSupplierID.Text = "0";
-            txtUnitPrice.Text = "0";
-            txtUnitsInStock.Text = "0";
-            txtUnitsOnOrder.Text = "0";
-            txtReorderLevel.Text = "0";
+            DialogResult = DialogResult.Cancel;
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView1.CurrentRow != null)
+            {
+                txtCategoryID.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+            }
+        }
+
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dataGridView2.CurrentRow != null)
+
+                txtSupplierID.Text = dataGridView2.CurrentRow.Cells[0].Value.ToString();
+        }
+
+        private void ActualizarProductoDialog_Load(object sender, EventArgs e)
+        {
+            string productName = this.Tag.ToString();
+            CargarProductoPorNombre(productName);
 
             SqlConnection conexion = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
             SqlCommand cmd = conexion.CreateCommand();
@@ -57,12 +71,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             conexion2.Close();
             dataGridView2.DataSource = dataTable2;
         }
-        private void btnCancelar_Click(object sender, EventArgs e)
+
+        private void btnActualizar_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-        }
-        private void btnAceptar_Click(object sender, EventArgs e)
-        {
+            var ProductId = int.Parse(txtProductoId.Text);
             var ProductName = txtProductName.Text;
             var SupplierID = int.Parse(txtSupplierID.Text);
             var CategoryID = int.Parse(txtCategoryID.Text);
@@ -75,7 +87,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
             try
             {
-                this.productoService.CrearProducto(new CrearProductoRequest
+                this.productosService.CrearProducto(new CrearProductoRequest
                 {
                     ProductName = txtProductName.Text,
                     SupplierID = int.Parse(txtSupplierID.Text),
@@ -95,44 +107,46 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 MessageBox.Show(message, "Validacion de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            var agregar = new productoCRUD();
+            var actualizar = new productoCRUD();
 
-            if (agregar.AgregarProducto(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
+            if (actualizar.ActualizarProducto(ProductId, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
                         UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued))
             {
-                MessageBox.Show("Nuevo producto ingresado con éxito", "Agregar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                txtProductName.Text = "";
-                txtSupplierID.Text = "0";
-                txtCategoryID.Text = "0";
-                txtQuantityPerUnit.Text = "";
-                txtUnitPrice.Text = "0";
-                txtUnitsInStock.Text = "0";
-                txtUnitsOnOrder.Text = "0";
-                txtReorderLevel.Text = "0";
-                chkDiscontinued.Checked = false;
+                MessageBox.Show("Nuevo producto Actualizado con éxito", "Actualizar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DialogResult = DialogResult.OK;
+                
             }
             else
             {
-                MessageBox.Show("Error al agregar el producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Error al Actualizar el producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void CargarProductoPorNombre(string productName)
         {
-            if (dataGridView1.CurrentRow != null)
+            SqlConnection conexion = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
             {
-                txtCategoryID.Text = dataGridView1.CurrentRow.Cells[0].Value.ToString();
+                SqlCommand cmd = conexion.CreateCommand();
+                cmd.CommandText = "SELECT * FROM Products WHERE ProductName = @ProductName";
+                cmd.Parameters.AddWithValue("@ProductName", productName);
+
+                conexion.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+                if (reader.Read())
+                {
+                    txtProductoId.Text = reader["ProductID"].ToString();
+                    txtProductName.Text = reader["ProductName"].ToString();
+                    txtSupplierID.Text = reader["SupplierID"].ToString();
+                    txtCategoryID.Text = reader["CategoryID"].ToString();
+                    txtQuantityPerUnit.Text = reader["QuantityPerUnit"].ToString();
+                    txtUnitPrice.Text = reader["UnitPrice"].ToString();
+                    txtUnitsInStock.Text = reader["UnitsInStock"].ToString();
+                    txtUnitsOnOrder.Text = reader["UnitsOnOrder"].ToString();
+                    txtReorderLevel.Text = reader["ReorderLevel"].ToString();
+                    chkDiscontinued.Checked = (bool)reader["Discontinued"];
+                }
+                conexion.Close();
             }
         }
-
-        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (dataGridView2.CurrentRow != null)
-  
-                txtSupplierID.Text = dataGridView2.CurrentRow.Cells[0].Value.ToString();
-        }
-
     }
- 
 }
