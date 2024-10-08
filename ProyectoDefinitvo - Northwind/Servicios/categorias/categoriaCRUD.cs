@@ -50,7 +50,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
             }
         }
 
-        public bool ActualizarCategoria(int categoryID, string categoryName, string description, byte[] picture)
+        public bool ActualizarCategoria(int categoryID, string categoryName, string description, MemoryStream picture)
         {
             string query = "UPDATE Categories SET CategoryName = @CategoryName, Description = @Description, Picture = @Picture WHERE CategoryID = @CategoryID";
             SqlConnection con = new SqlConnection(connectionString);
@@ -60,7 +60,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
                 cmd.Parameters.AddWithValue("@CategoryID", categoryID);
                 cmd.Parameters.AddWithValue("@CategoryName", categoryName);
                 cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Picture", picture);  // Asegúrate de que sea de tipo byte[]
+                cmd.Parameters.AddWithValue("@Picture", picture);  
 
                 try
                 {

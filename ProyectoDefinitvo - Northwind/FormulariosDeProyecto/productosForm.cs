@@ -230,5 +230,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             { "@ProductName", textBox1.Text }
                 });
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 }

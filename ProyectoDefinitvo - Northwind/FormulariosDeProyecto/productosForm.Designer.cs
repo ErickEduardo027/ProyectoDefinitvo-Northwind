@@ -74,6 +74,7 @@
             dataGridView1.ReadOnly = true;
             dataGridView1.Size = new Size(1012, 471);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // ProductName
             // 
