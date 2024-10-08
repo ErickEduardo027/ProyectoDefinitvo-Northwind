@@ -35,8 +35,6 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-
-                
                 mainMenu mainMenu = new mainMenu(iproductosService);
 
                 string nombre = txtUsuario.Text;
@@ -119,10 +117,15 @@ namespace ProyectoDefinitvo___Northwind
         private bool Validar()
         {
             bool valid = true;
+
             if (txtUsuario.Text.Trim() == "Usuario")
             {
                 errorProvider1.SetError(txtUsuario, "Es requerido un usuario.");
                 valid = false;
+            }
+            else
+            {
+                errorProvider1.SetError(txtUsuario, ""); 
             }
 
             if (txtContraseña.Text.Trim() == "Contraseña")
@@ -130,6 +133,21 @@ namespace ProyectoDefinitvo___Northwind
                 errorProvider1.SetError(txtContraseña, "Es requerido una contraseña.");
                 valid = false;
             }
+            else
+            {
+                errorProvider1.SetError(txtContraseña, ""); 
+            }
+
+            if (comboBox1.SelectedIndex == -1)
+            {
+                errorProvider1.SetError(comboBox1, "Es requerido un rol.");
+                valid = false;
+            }
+            else
+            {
+                errorProvider1.SetError(comboBox1, "");
+            }
+
             return valid;
         }
 
