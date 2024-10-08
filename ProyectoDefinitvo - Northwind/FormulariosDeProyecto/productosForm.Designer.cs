@@ -49,7 +49,9 @@
             textBox1 = new TextBox();
             comboBox2 = new ComboBox();
             comboBox3 = new ComboBox();
-            btnfiltrar = new Button();
+            btnFiltrarPorNombre = new Button();
+            btnFiltrarPorCategoria = new Button();
+            btnFiltrarPorSuplidor = new Button();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
@@ -185,7 +187,7 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(156, 23);
             comboBox1.TabIndex = 6;
-
+            comboBox1.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // label1
             // 
@@ -211,6 +213,7 @@
             textBox1.Name = "textBox1";
             textBox1.Size = new Size(196, 23);
             textBox1.TabIndex = 9;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // comboBox2
             // 
@@ -220,6 +223,7 @@
             comboBox2.Name = "comboBox2";
             comboBox2.Size = new Size(156, 23);
             comboBox2.TabIndex = 10;
+            comboBox2.SelectedIndexChanged += comboBox2_SelectedIndexChanged;
             // 
             // comboBox3
             // 
@@ -229,23 +233,49 @@
             comboBox3.Name = "comboBox3";
             comboBox3.Size = new Size(156, 23);
             comboBox3.TabIndex = 11;
+            comboBox3.SelectedIndexChanged += comboBox3_SelectedIndexChanged;
             // 
-            // btnfiltrar
+            // btnFiltrarPorNombre
             // 
-            btnfiltrar.BackColor = Color.FromArgb(255, 128, 0);
-            btnfiltrar.Location = new Point(404, 13);
-            btnfiltrar.Name = "btnfiltrar";
-            btnfiltrar.Size = new Size(75, 52);
-            btnfiltrar.TabIndex = 12;
-            btnfiltrar.Text = "filtrar";
-            btnfiltrar.UseVisualStyleBackColor = false;
+            btnFiltrarPorNombre.BackColor = Color.FromArgb(255, 128, 0);
+            btnFiltrarPorNombre.Location = new Point(404, 13);
+            btnFiltrarPorNombre.Name = "btnFiltrarPorNombre";
+            btnFiltrarPorNombre.Size = new Size(75, 52);
+            btnFiltrarPorNombre.TabIndex = 12;
+            btnFiltrarPorNombre.Text = "filtrar";
+            btnFiltrarPorNombre.UseVisualStyleBackColor = false;
+            btnFiltrarPorNombre.Click += btnFiltrarPorNombre_Click;
+            // 
+            // btnFiltrarPorCategoria
+            // 
+            btnFiltrarPorCategoria.BackColor = Color.FromArgb(255, 128, 0);
+            btnFiltrarPorCategoria.Location = new Point(404, 12);
+            btnFiltrarPorCategoria.Name = "btnFiltrarPorCategoria";
+            btnFiltrarPorCategoria.Size = new Size(75, 52);
+            btnFiltrarPorCategoria.TabIndex = 13;
+            btnFiltrarPorCategoria.Text = "filtrar";
+            btnFiltrarPorCategoria.UseVisualStyleBackColor = false;
+            btnFiltrarPorCategoria.Click += btnFiltrarPorCategoria_Click;
+            // 
+            // btnFiltrarPorSuplidor
+            // 
+            btnFiltrarPorSuplidor.BackColor = Color.FromArgb(255, 128, 0);
+            btnFiltrarPorSuplidor.Location = new Point(404, 12);
+            btnFiltrarPorSuplidor.Name = "btnFiltrarPorSuplidor";
+            btnFiltrarPorSuplidor.Size = new Size(75, 52);
+            btnFiltrarPorSuplidor.TabIndex = 14;
+            btnFiltrarPorSuplidor.Text = "filtrar";
+            btnFiltrarPorSuplidor.UseVisualStyleBackColor = false;
+            btnFiltrarPorSuplidor.Click += btnFiltrarPorSuplidor_Click;
             // 
             // productosForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1036, 607);
-            Controls.Add(btnfiltrar);
+            Controls.Add(btnFiltrarPorSuplidor);
+            Controls.Add(btnFiltrarPorCategoria);
+            Controls.Add(btnFiltrarPorNombre);
             Controls.Add(comboBox3);
             Controls.Add(comboBox2);
             Controls.Add(textBox1);
@@ -285,6 +315,8 @@
         private TextBox textBox1;
         private ComboBox comboBox2;
         private ComboBox comboBox3;
-        private Button btnfiltrar;
+        private Button btnFiltrarPorNombre;
+        private Button btnFiltrarPorCategoria;
+        private Button btnFiltrarPorSuplidor;
     }
 }

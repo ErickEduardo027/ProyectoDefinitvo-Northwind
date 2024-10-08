@@ -12,13 +12,16 @@ using System.Windows.Forms;
 using System.Data.SqlClient;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using ProyectoDefinitvo___Northwind.Servicios.categorias;
+using System.Configuration;
 
 namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 {
     public partial class productosForm : Form
     {
         private readonly IproductosService iproductosService;
-
+        string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         public productosForm(IproductosService iproductosService)
         {
             InitializeComponent();
@@ -40,7 +43,9 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             comboBox3.Visible = false;
             label2.Visible = false;
             textBox1.Visible = false;
-            btnfiltrar.Visible = false;
+            btnFiltrarPorNombre.Visible = false;
+            btnFiltrarPorCategoria.Visible = false;
+            btnFiltrarPorSuplidor.Visible = false;
             var leer = new productoCRUD();
             DataTable productos = leer.ObtenerProductos();
             dataGridView1.DataSource = productos;
@@ -98,6 +103,121 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             DataTable productos = leer.ObtenerProductos();
             dataGridView1.DataSource = productos;
             btnReset.Visible = false;
+            comboBox1.Text = "";
+            comboBox2.Text = "";
+            comboBox3.Text = "";
+            textBox1.Text = "";
+        }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            {
+
+                label2.Visible = false;
+                textBox1.Visible = false;
+                comboBox2.Visible = false;
+                comboBox3.Visible = false;
+
+                if (comboBox1.Text == "Nombre")
+                {
+                    label2.Visible = true;
+                    textBox1.Visible = true;
+                }
+                else if (comboBox1.Text == "Suplidor")
+                {
+                    comboBox2.Visible = true;
+
+                    var listaDeSuplidores = new suplidoresCRUD();
+                    DataTable Suplidores = listaDeSuplidores.ObtenerSuplidores();
+                    comboBox2.DataSource = Suplidores;
+                    comboBox2.ValueMember = "SupplierID";
+                    comboBox2.DisplayMember = "CompanyName";
+                }
+                else if (comboBox1.Text == "Categoria")
+                {
+                    comboBox3.Visible = true;
+
+                    var ListaDeCategorias = new categoriaCRUD();
+                    DataTable categorias = ListaDeCategorias.ObtenerCategorias();
+                    comboBox3.DataSource = categorias;
+                    comboBox3.ValueMember = "CategoryID";
+                    comboBox3.DisplayMember = "CategoryName";
+                }
+            }
+        }
+
+        private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnFiltrarPorCategoria.Visible = true;
+            btnFiltrarPorNombre.Visible = false;
+            btnFiltrarPorSuplidor.Visible = false;
+
+        }
+
+        private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            btnFiltrarPorCategoria.Visible = false;
+            btnFiltrarPorNombre.Visible = false;
+            btnFiltrarPorSuplidor.Visible = true;
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            btnFiltrarPorCategoria.Visible = false;
+            btnFiltrarPorNombre.Visible = true;
+            btnFiltrarPorSuplidor.Visible = false;
+        }
+
+        public DataTable GetDataTable(string sql, Dictionary<string, object> parameters = null)
+        {
+            SqlConnection sqlConnection = new SqlConnection(connectionString);
+            SqlCommand sqlCommand = sqlConnection.CreateCommand();
+            sqlCommand.CommandText = sql;
+
+            if (parameters != null)
+            {
+                foreach (var parameter in parameters)
+                {
+                    sqlCommand.Parameters.AddWithValue(parameter.Key, parameter.Value);
+                }
+            }
+
+            sqlConnection.Open();
+
+            var dataReader = sqlCommand.ExecuteReader();
+            DataTable dataTable = new DataTable();
+            dataTable.Load(dataReader);
+
+            sqlConnection.Close();
+
+            return dataTable;
+        }
+
+        private void btnFiltrarPorSuplidor_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE SupplierID = @SupplierID",
+                new Dictionary<string, object>
+                {
+            { "@SupplierID", int.Parse(comboBox2.SelectedValue.ToString()) }
+                });
+        }
+
+        private void btnFiltrarPorCategoria_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE CategoryID = @CategoryID",
+                new Dictionary<string, object>
+                {
+            { "@CategoryID", int.Parse(comboBox3.SelectedValue.ToString()) }
+                });
+        }
+
+        private void btnFiltrarPorNombre_Click(object sender, EventArgs e)
+        {
+            dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE ProductName = @ProductName",
+                new Dictionary<string, object>
+                {
+            { "@ProductName", textBox1.Text }
+                });
         }
     }
 }
