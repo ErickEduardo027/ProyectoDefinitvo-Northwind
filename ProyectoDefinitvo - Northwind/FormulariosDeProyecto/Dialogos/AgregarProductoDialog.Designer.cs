@@ -90,15 +90,19 @@
             // 
             txtSupplierID.Location = new Point(75, 98);
             txtSupplierID.Name = "txtSupplierID";
+            txtSupplierID.ReadOnly = true;
             txtSupplierID.Size = new Size(34, 23);
             txtSupplierID.TabIndex = 3;
+            txtSupplierID.Click += txtSupplierID_Click;
             // 
             // txtCategoryID
             // 
             txtCategoryID.Location = new Point(75, 147);
             txtCategoryID.Name = "txtCategoryID";
+            txtCategoryID.ReadOnly = true;
             txtCategoryID.Size = new Size(34, 23);
             txtCategoryID.TabIndex = 4;
+            txtCategoryID.Click += txtCategoryID_Click;
             // 
             // txtQuantityPerUnit
             // 

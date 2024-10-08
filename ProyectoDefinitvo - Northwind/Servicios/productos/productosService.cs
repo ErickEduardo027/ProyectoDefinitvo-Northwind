@@ -52,22 +52,34 @@ namespace ProyectoDefinitvo___Northwind.Servicios.productos
         {
             public CrearProductoValidator()
             {
-                RuleFor(p => p.ProductName).NotEmpty();
+               
+                RuleFor(p => p.ProductName).NotEmpty().WithMessage("El nombre del producto es obligatorio.");
 
-                RuleFor(p => p.SupplierID).GreaterThan(0);
 
-                RuleFor(p => p.CategoryID).GreaterThan(0);
+                RuleFor(p => p.SupplierID)
+                    .GreaterThanOrEqualTo(0).WithMessage("SupplierID debe ser un número mayor o igual a 0.");
 
-                RuleFor(p => p.QuantityPerUnit).NotEmpty();
 
-                RuleFor(p => p.UnitPrice).GreaterThan(0);
+                RuleFor(p => p.CategoryID)
+                    .GreaterThanOrEqualTo(0).WithMessage("CategoryID debe ser un número mayor o igual a 0.");
+                   
+                
+                RuleFor(p => p.QuantityPerUnit).NotEmpty().WithMessage("La cantidad por unidad es obligatoria.");
 
-                RuleFor(p => p.UnitsInStock).GreaterThan((short)0);
+                RuleFor(p => p.UnitPrice)
+                    .GreaterThanOrEqualTo(0).WithMessage("El precio unitario debe ser un número mayor o igual a 0.");
 
-                RuleFor(p => p.UnitsOnOrder).GreaterThan((short)0);
 
-                RuleFor(p => p.ReorderLevel).GreaterThan((short)0);
+                RuleFor(p => p.UnitsInStock)
+                    .GreaterThanOrEqualTo((short)0).WithMessage("Las unidades en stock deben ser un número mayor o igual a 0.");
 
+                RuleFor(p => p.UnitsOnOrder)
+                    .GreaterThanOrEqualTo((short)0).WithMessage("Las unidades pedidas deben ser un número mayor o igual a 0.");
+
+
+                RuleFor(p => p.ReorderLevel)
+                    .GreaterThanOrEqualTo((short)0).WithMessage("El nivel de reorden debe ser un número mayor o igual a 0.");
+                    
                 RuleFor(p => p.Discontinued).NotNull();
             }
         }

@@ -64,57 +64,89 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             var ProductName = txtProductName.Text;
-            var SupplierID = int.Parse(txtSupplierID.Text);
-            var CategoryID = int.Parse(txtCategoryID.Text);
-            var QuantityPerUnit = txtQuantityPerUnit.Text;
-            var UnitPrice = decimal.Parse(txtUnitPrice.Text);
-            var UnitsInStock = short.Parse(txtUnitsInStock.Text);
-            var UnitsOnOrder = short.Parse(txtUnitsOnOrder.Text);
-            var ReorderLevel = short.Parse(txtReorderLevel.Text);
+            int SupplierID = int.Parse(txtSupplierID.Text);
+            int CategoryID = int.Parse(txtCategoryID.Text);
+            string QuantityPerUnit = txtQuantityPerUnit.Text;
+            decimal UnitPrice;
+            short UnitsInStock;
+            short UnitsOnOrder;
+            short ReorderLevel;
             bool Discontinued = chkDiscontinued.Checked;
+
+            bool isValid = true;
+            StringBuilder errorMessage = new StringBuilder();
+
+
+            if (!decimal.TryParse(txtUnitPrice.Text, out UnitPrice))
+            {
+                errorMessage.AppendLine("UnitPrice debe ser un número decimal válido.");
+                isValid = false;
+            }
+
+            if (!short.TryParse(txtUnitsInStock.Text, out UnitsInStock))
+            {
+                errorMessage.AppendLine("UnitsInStock debe ser un número entero.");
+                isValid = false;
+            }
+
+            if (!short.TryParse(txtUnitsOnOrder.Text, out UnitsOnOrder))
+            {
+                errorMessage.AppendLine("UnitsOnOrder debe ser un número entero.");
+                isValid = false;
+            }
+
+            if (!short.TryParse(txtReorderLevel.Text, out ReorderLevel))
+            {
+                errorMessage.AppendLine("ReorderLevel debe ser un número entero.");
+                isValid = false;
+            }
+
+            if (!isValid)
+            {
+                MessageBox.Show(errorMessage.ToString(), "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             try
             {
                 this.productoService.CrearProducto(new CrearProductoRequest
                 {
-                    ProductName = txtProductName.Text,
-                    SupplierID = int.Parse(txtSupplierID.Text),
-                    CategoryID = int.Parse(txtCategoryID.Text),
-                    QuantityPerUnit = txtQuantityPerUnit.Text,
-                    UnitPrice = decimal.Parse(txtUnitPrice.Text),
-                    UnitsInStock = short.Parse(txtUnitsInStock.Text),
-                    UnitsOnOrder = short.Parse(txtUnitsOnOrder.Text),
-                    ReorderLevel = short.Parse(txtReorderLevel.Text),
-                    Discontinued = chkDiscontinued.Checked
-
+                    ProductName = ProductName,
+                    SupplierID = SupplierID,
+                    CategoryID = CategoryID,
+                    QuantityPerUnit = QuantityPerUnit,
+                    UnitPrice = UnitPrice,
+                    UnitsInStock = UnitsInStock,
+                    UnitsOnOrder = UnitsOnOrder,
+                    ReorderLevel = ReorderLevel,
+                    Discontinued = Discontinued
                 });
+
+                var agregar = new productoCRUD();
+                if (agregar.AgregarProducto(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
+                        UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued))
+                {
+                    MessageBox.Show("Nuevo producto ingresado con éxito", "Agregar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    txtProductName.Text = "";
+                    txtSupplierID.Text = "0";
+                    txtCategoryID.Text = "0";
+                    txtQuantityPerUnit.Text = "";
+                    txtUnitPrice.Text = "0";
+                    txtUnitsInStock.Text = "0";
+                    txtUnitsOnOrder.Text = "0";
+                    txtReorderLevel.Text = "0";
+                    chkDiscontinued.Checked = false;
+                }
+                else
+                {
+                    MessageBox.Show("Error al agregar el producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             catch (ValidationException ex)
             {
-                var message = ex.GetMessage();
-                MessageBox.Show(message, "Validacion de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-
-            var agregar = new productoCRUD();
-
-            if (agregar.AgregarProducto(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
-                        UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued))
-            {
-                MessageBox.Show("Nuevo producto ingresado con éxito", "Agregar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                txtProductName.Text = "";
-                txtSupplierID.Text = "0";
-                txtCategoryID.Text = "0";
-                txtQuantityPerUnit.Text = "";
-                txtUnitPrice.Text = "0";
-                txtUnitsInStock.Text = "0";
-                txtUnitsOnOrder.Text = "0";
-                txtReorderLevel.Text = "0";
-                chkDiscontinued.Checked = false;
-            }
-            else
-            {
-                MessageBox.Show("Error al agregar el producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var message = ex.Message;
+                MessageBox.Show(message, "Validación de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -129,10 +161,19 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dataGridView2.CurrentRow != null)
-  
+
                 txtSupplierID.Text = dataGridView2.CurrentRow.Cells[0].Value.ToString();
         }
 
+        private void txtSupplierID_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("campo no editable!. selecciona un suplidor en la lista de suplidores disponibles", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void txtCategoryID_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("campo no editable!. selecciona una categoria en la lista de categorias disponibles", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
     }
- 
+
 }
