@@ -40,12 +40,10 @@ namespace ProyectoDefinitvo___Northwind
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);
                 MessageBox.Show("Bienvenido al sistema, señor/a: " + nombre, "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                this.Hide();
                 splashScreen splashScreen = new splashScreen();
                 splashScreen.Show();
-
+                this.Hide();
                 
-
                 splashScreen.FormClosed += (s, args) =>
                 {
                     mainMenu.Show();
@@ -53,15 +51,6 @@ namespace ProyectoDefinitvo___Northwind
             }
         }
 
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panel1_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
@@ -125,7 +114,7 @@ namespace ProyectoDefinitvo___Northwind
             }
             else
             {
-                errorProvider1.SetError(txtUsuario, ""); 
+                errorProvider1.SetError(txtUsuario, "");
             }
 
             if (txtContraseña.Text.Trim() == "Contraseña")
@@ -135,7 +124,7 @@ namespace ProyectoDefinitvo___Northwind
             }
             else
             {
-                errorProvider1.SetError(txtContraseña, ""); 
+                errorProvider1.SetError(txtContraseña, "");
             }
 
             if (comboBox1.SelectedIndex == -1)
@@ -159,6 +148,11 @@ namespace ProyectoDefinitvo___Northwind
         private void txtContraseña_Validated(object sender, EventArgs e)
         {
             errorProvider1.SetError(txtContraseña, "");
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

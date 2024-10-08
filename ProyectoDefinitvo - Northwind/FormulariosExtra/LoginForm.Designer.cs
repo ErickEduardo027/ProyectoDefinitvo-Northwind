@@ -75,7 +75,6 @@
             panel1.Name = "panel1";
             panel1.Size = new Size(1182, 42);
             panel1.TabIndex = 1;
-            panel1.Paint += panel1_Paint;
             // 
             // btnSalir
             // 

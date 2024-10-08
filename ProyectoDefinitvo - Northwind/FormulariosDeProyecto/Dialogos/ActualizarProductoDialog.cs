@@ -1,6 +1,9 @@
 ﻿using FluentValidation;
 using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,7 +20,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     public partial class ActualizarProductoDialog : Form
     {
         private readonly IproductosService productosService;
-
+        string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         public ActualizarProductoDialog(IproductosService iproductosService)
         {
             InitializeComponent();
@@ -49,41 +52,65 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             string productName = this.Tag.ToString();
             CargarProductoPorNombre(productName);
 
-            SqlConnection conexion = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
-            SqlCommand cmd = conexion.CreateCommand();
-            cmd.CommandText = "SELECT * FROM Categories";
+            var ListaDeCategorias = new categoriaCRUD();
+            DataTable categorias = ListaDeCategorias.ObtenerCategorias();
+            dataGridView1.DataSource = categorias;
+            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            dataGridView1.RowTemplate.Height = 100;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-            conexion.Open();
-            var datareader = cmd.ExecuteReader();
-            DataTable dataTable = new DataTable();
-            dataTable.Load(datareader);
-            conexion.Close();
-            dataGridView1.DataSource = dataTable;
 
-            SqlConnection conexion2 = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
-            SqlCommand cmd2 = conexion2.CreateCommand();
-            cmd2.CommandText = "SELECT * FROM Suppliers";
-
-            conexion2.Open();
-            var datareader2 = cmd2.ExecuteReader();
-            DataTable dataTable2 = new DataTable();
-            dataTable2.Load(datareader2);
-            conexion2.Close();
-            dataGridView2.DataSource = dataTable2;
+            var listaDeSuplidores = new suplidoresCRUD();
+            DataTable Suplidores = listaDeSuplidores.ObtenerSuplidores();
+            dataGridView2.DataSource = Suplidores;
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
             var ProductId = int.Parse(txtProductoId.Text);
             var ProductName = txtProductName.Text;
-            var SupplierID = int.Parse(txtSupplierID.Text);
-            var CategoryID = int.Parse(txtCategoryID.Text);
-            var QuantityPerUnit = txtQuantityPerUnit.Text;
-            var UnitPrice = decimal.Parse(txtUnitPrice.Text);
-            var UnitsInStock = short.Parse(txtUnitsInStock.Text);
-            var UnitsOnOrder = short.Parse(txtUnitsOnOrder.Text);
-            var ReorderLevel = short.Parse(txtReorderLevel.Text);
+            int SupplierID = int.Parse(txtSupplierID.Text);
+            int CategoryID = int.Parse(txtCategoryID.Text);
+            string QuantityPerUnit = txtQuantityPerUnit.Text;
+            decimal UnitPrice;
+            short UnitsInStock;
+            short UnitsOnOrder;
+            short ReorderLevel;
             bool Discontinued = chkDiscontinued.Checked;
+
+            bool isValid = true;
+            StringBuilder errorMessage = new StringBuilder();
+
+
+            if (!decimal.TryParse(txtUnitPrice.Text, out UnitPrice))
+            {
+                errorMessage.AppendLine("UnitPrice debe ser un número decimal válido.");
+                isValid = false;
+            }
+
+            if (!short.TryParse(txtUnitsInStock.Text, out UnitsInStock))
+            {
+                errorMessage.AppendLine("UnitsInStock debe ser un número entero.");
+                isValid = false;
+            }
+
+            if (!short.TryParse(txtUnitsOnOrder.Text, out UnitsOnOrder))
+            {
+                errorMessage.AppendLine("UnitsOnOrder debe ser un número entero.");
+                isValid = false;
+            }
+
+            if (!short.TryParse(txtReorderLevel.Text, out ReorderLevel))
+            {
+                errorMessage.AppendLine("ReorderLevel debe ser un número entero.");
+                isValid = false;
+            }
+
+            if (!isValid)
+            {
+                MessageBox.Show(errorMessage.ToString(), "Error de validación", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             try
             {
@@ -124,7 +151,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void CargarProductoPorNombre(string productName)
         {
-            SqlConnection conexion = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
+            SqlConnection conexion = new SqlConnection(connectionString);
             {
                 SqlCommand cmd = conexion.CreateCommand();
                 cmd.CommandText = "SELECT * FROM Products WHERE ProductName = @ProductName";
@@ -147,6 +174,16 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 }
                 conexion.Close();
             }
+        }
+
+        private void txtSupplierID_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("campo no editable!. selecciona un suplidor en la lista de suplidores disponibles", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
+        }
+
+        private void txtCategoryID_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("campo no editable!. selecciona una categoria en la lista de categorias disponibles", "Informacion", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

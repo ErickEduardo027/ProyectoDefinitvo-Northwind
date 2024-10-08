@@ -232,7 +232,6 @@
             // 
             // txtCategoryID
             // 
-            txtCategoryID.Enabled = false;
             txtCategoryID.Location = new Point(71, 171);
             txtCategoryID.Name = "txtCategoryID";
             txtCategoryID.Size = new Size(34, 23);
@@ -240,7 +239,6 @@
             // 
             // txtSupplierID
             // 
-            txtSupplierID.Enabled = false;
             txtSupplierID.Location = new Point(71, 122);
             txtSupplierID.Name = "txtSupplierID";
             txtSupplierID.Size = new Size(34, 23);

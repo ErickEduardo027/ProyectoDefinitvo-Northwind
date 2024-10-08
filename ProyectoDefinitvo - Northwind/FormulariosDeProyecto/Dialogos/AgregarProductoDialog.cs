@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using Microsoft.Data.SqlClient;
+using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -35,27 +37,18 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             txtUnitsOnOrder.Text = "0";
             txtReorderLevel.Text = "0";
 
-            SqlConnection conexion = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
-            SqlCommand cmd = conexion.CreateCommand();
-            cmd.CommandText = "SELECT * FROM Categories";
+            var ListaDeCategorias = new categoriaCRUD();
+            DataTable categorias = ListaDeCategorias.ObtenerCategorias();
+            dataGridView1.DataSource = categorias;
+            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            dataGridView1.RowTemplate.Height = 100;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
 
-            conexion.Open();
-            var datareader = cmd.ExecuteReader();
-            DataTable dataTable = new DataTable();
-            dataTable.Load(datareader);
-            conexion.Close();
-            dataGridView1.DataSource = dataTable;
 
-            SqlConnection conexion2 = new SqlConnection("Data Source=LAPTOP-KK0P0EO7\\SQLEXPRESS;Initial Catalog=Northwind;Integrated Security=True;Encrypt=True;Trust Server Certificate=True");
-            SqlCommand cmd2 = conexion2.CreateCommand();
-            cmd2.CommandText = "SELECT * FROM Suppliers";
+            var listaDeSuplidores = new suplidoresCRUD();
+            DataTable Suplidores = listaDeSuplidores.ObtenerSuplidores();
+            dataGridView2.DataSource = Suplidores;
 
-            conexion2.Open();
-            var datareader2 = cmd2.ExecuteReader();
-            DataTable dataTable2 = new DataTable();
-            dataTable2.Load(datareader2);
-            conexion2.Close();
-            dataGridView2.DataSource = dataTable2;
         }
         private void btnCancelar_Click(object sender, EventArgs e)
         {
