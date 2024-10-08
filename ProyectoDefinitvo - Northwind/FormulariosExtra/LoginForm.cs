@@ -42,11 +42,11 @@ namespace ProyectoDefinitvo___Northwind
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);
                 MessageBox.Show("Bienvenido al sistema, señor/a: " + nombre, "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                this.Hide();
                 splashScreen splashScreen = new splashScreen();
                 splashScreen.Show();
 
-                this.Hide();
+                
 
                 splashScreen.FormClosed += (s, args) =>
                 {

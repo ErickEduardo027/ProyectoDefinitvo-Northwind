@@ -107,6 +107,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             comboBox2.Text = "";
             comboBox3.Text = "";
             textBox1.Text = "";
+            comboBox2.Visible = false;
+            comboBox3.Visible = false;
+            label2.Visible = false;
+            textBox1.Visible = false;
+            btnFiltrarPorNombre.Visible = false;
+            btnFiltrarPorCategoria.Visible = false;
+            btnFiltrarPorSuplidor.Visible = false;
+
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
@@ -195,6 +203,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnFiltrarPorSuplidor_Click(object sender, EventArgs e)
         {
+            btnReset.Visible = true;
             dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE SupplierID = @SupplierID",
                 new Dictionary<string, object>
                 {
@@ -204,6 +213,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnFiltrarPorCategoria_Click(object sender, EventArgs e)
         {
+            btnReset.Visible = true;
             dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE CategoryID = @CategoryID",
                 new Dictionary<string, object>
                 {
@@ -213,6 +223,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnFiltrarPorNombre_Click(object sender, EventArgs e)
         {
+            btnReset.Visible = true;
             dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE ProductName = @ProductName",
                 new Dictionary<string, object>
                 {
