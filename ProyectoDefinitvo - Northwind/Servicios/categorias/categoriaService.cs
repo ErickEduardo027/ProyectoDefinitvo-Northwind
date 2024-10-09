@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ProyectoDefinitvo___Northwind.Servicios.categorias
 {
-    class categoriaService
+    public class categoriaService
     {
+    
     }
 }
