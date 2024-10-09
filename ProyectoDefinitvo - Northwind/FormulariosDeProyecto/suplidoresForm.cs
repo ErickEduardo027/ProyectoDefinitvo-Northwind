@@ -50,5 +50,47 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
+
+                DialogResult result = MessageBox.Show($"¿Está seguro de que desea eliminar el suplidor?, no vayas a poner un huevo!",
+                    "Confirmación de eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    var suplidorCRUD = new suplidoresCRUD();
+
+                    bool exito = suplidorCRUD.EliminarSuplidor(id);
+
+                    if (exito)
+                    {
+                        MessageBox.Show("Suplidor eliminado con éxito, despues no me vengas llorando!", "Eliminar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        var leer = new productoCRUD();
+                        DataTable productos = leer.ObtenerProductos();
+                        dataGridView1.DataSource = productos;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al eliminar el suplidorr.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un producto para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnReset_Click(object sender, EventArgs e)
+        {
+            var leer = new suplidoresCRUD();
+            dataGridView1.DataSource = leer.ObtenerSuplidores();
+            btnReset.Visible = false;
+        }
     }
 }

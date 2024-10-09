@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
@@ -62,13 +63,60 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            var nombreSuplidor = txtNombre.Text;
+            var representante = txtRepresentante.Text;
+            var PuestoRepresentante = cbxPuestoRepresentante.Text;
+            var direccion = txtDireccion.Text;
+            var pais = cbxPais.Text;
+            var ciudad = cbxCiudad.Text;
+            var region = txtRegion.Text;
+            var codigoPostal = txtCodigoPostal.Text;
+            var telefono = txtTelefono.Text;
+            var fax = txtFax.Text;
+            var homepage = txtHomepage.Text;
+
             try
             {
                 this.isuplidorService.CrearSuplidor(new CrearSuplidorRequest
                 {
-
+                    CompanyName = nombreSuplidor,
+                    ContactName = representante,
+                    ContactTitle = PuestoRepresentante,
+                    Address = direccion,
+                    City = ciudad,
+                    Region = region,
+                    PostalCode = codigoPostal,
+                    Country = pais,
+                    Phone = telefono,
+                    Fax = fax,
+                    HomePage = homepage,
                 });
+
+                var agregar = new suplidoresCRUD();
+                if (agregar.AgregarSuplidor(nombreSuplidor, representante, PuestoRepresentante, direccion, ciudad, region, codigoPostal, pais, telefono, fax, homepage))
+                {
+                    MessageBox.Show("Nuevo suplidor ingresado con éxito", "Agregar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    txtNombre.Text = "";
+                    txtRepresentante.Text = "";
+                    cbxPuestoRepresentante.Text = "";
+                    txtDireccion.Text = "";
+                    cbxPais.Text = "";
+                    cbxCiudad.Text = "";
+                    txtRegion.Text = "";
+                    txtCodigoPostal.Text = "";
+                    txtTelefono.Text = "";
+                    txtFax.Text = "";
+                    txtHomepage.Text = "";
+                }
+                else
+                {
+                    MessageBox.Show("Error al agregar el producto", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
             }
+
+
             catch (ValidationException ex)
             {
                 var message = ex.Message;
