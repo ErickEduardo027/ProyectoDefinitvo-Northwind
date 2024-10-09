@@ -1,4 +1,6 @@
-﻿using System;
+﻿using FluentValidation;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using System;
 using System.Collections.Generic;
 using System.Windows.Forms;
 
@@ -8,13 +10,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     {
         private Dictionary<string, List<string>> paisesCiudades = new Dictionary<string, List<string>>();
         private Dictionary<string, List<string>> ciudadesRegiones = new Dictionary<string, List<string>>();
+        private readonly ISuplidorService isuplidorService;
 
-        public AgregarSuplidorDialog()
+        public AgregarSuplidorDialog(ISuplidorService suplidorService)
         {
 
             InitializeComponent();
             InicializarDatos();
-
+            this.isuplidorService = suplidorService;
         }
 
         private void AgregarSuplidorDialog_Load(object sender, EventArgs e)
@@ -59,7 +62,18 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            try
+            {
+                this.isuplidorService.CrearSuplidor(new CrearSuplidorRequest
+                {
 
+                });
+            }
+            catch (ValidationException ex)
+            {
+                var message = ex.Message;
+                MessageBox.Show(message, "Validación de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

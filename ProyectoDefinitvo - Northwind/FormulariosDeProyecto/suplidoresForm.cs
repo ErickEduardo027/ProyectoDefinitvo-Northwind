@@ -16,9 +16,12 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 {
     public partial class suplidoresForm : Form
     {
-        public suplidoresForm()
+        private readonly ISuplidorService isuplidorService;
+
+        public suplidoresForm(ISuplidorService suplidorService)
         {
             InitializeComponent();
+            this.isuplidorService = suplidorService;
         }
 
         private void suplidoresForm_Load(object sender, EventArgs e)
@@ -43,7 +46,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var formTnstance = new AgregarSuplidorDialog();
+            var formTnstance = new AgregarSuplidorDialog(isuplidorService);
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
