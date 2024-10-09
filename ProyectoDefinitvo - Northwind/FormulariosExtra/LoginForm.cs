@@ -1,3 +1,4 @@
+using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 
 namespace ProyectoDefinitvo___Northwind
@@ -6,10 +7,13 @@ namespace ProyectoDefinitvo___Northwind
     {
         private readonly IproductosService iproductosService;
 
-        public LoginForm(IproductosService iproductosService)
+        public IcategoriaService icategoriaService { get; }
+
+        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
+            this.icategoriaService = icategoriaService;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -35,7 +39,7 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-                mainMenu mainMenu = new mainMenu(iproductosService);
+                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService);
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);
