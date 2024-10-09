@@ -129,7 +129,7 @@
             // comboBox1
             // 
             comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "Empleado", "Administrador" });
+            comboBox1.Items.AddRange(new object[] { "Empleado" });
             comboBox1.Location = new Point(66, 75);
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(188, 23);

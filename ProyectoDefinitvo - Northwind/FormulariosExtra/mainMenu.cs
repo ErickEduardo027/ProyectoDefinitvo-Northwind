@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
+using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using System;
 using System.Collections.Generic;
@@ -21,10 +22,13 @@ namespace ProyectoDefinitvo___Northwind
         private Form Activarform;
         private readonly IproductosService iproductosService;
 
-        public mainMenu(IproductosService iproductosService)
+        public IcategoriaService icategoriaService { get; }
+
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
+            this.icategoriaService = icategoriaService;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -57,7 +61,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnCategorias_Click(object sender, EventArgs e)
         {
-            abrirForm(new categoriasForm());
+            abrirForm(new categoriasForm(icategoriaService));
         }
 
         private void btnSuplidores_Click(object sender, EventArgs e)
@@ -67,7 +71,8 @@ namespace ProyectoDefinitvo___Northwind
 
         private void button3_Click(object sender, EventArgs e)
         {
-            LoginForm loginForm = new LoginForm(iproductosService);
+            MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)","Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService);
             loginForm.Show();
             this.Close();
         }

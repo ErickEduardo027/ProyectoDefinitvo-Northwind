@@ -53,25 +53,32 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-
+            
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string nombre = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
-                var productoCRUD = new productoCRUD();
+                DialogResult result = MessageBox.Show($"¿Está seguro de que desea eliminar el producto '{nombre}'?, no vayas a poner un huevo!",
+                    "Confirmación de eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
-                bool exito = productoCRUD.EliminarProducto(nombre);
+                if (result == DialogResult.Yes)
+                {
+                    var productoCRUD = new productoCRUD();
 
-                if (exito)
-                {
-                    MessageBox.Show("Producto eliminado con éxito.", "Eliminar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    var leer = new productoCRUD();
-                    DataTable productos = leer.ObtenerProductos();
-                    dataGridView1.DataSource = productos;
-                }
-                else
-                {
-                    MessageBox.Show("Error al eliminar el producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    bool exito = productoCRUD.EliminarProducto(nombre);
+
+                    if (exito)
+                    {
+                        MessageBox.Show("Producto eliminado con éxito, despues no me vengas llorando!", "Eliminar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        var leer = new productoCRUD();
+                        DataTable productos = leer.ObtenerProductos();
+                        dataGridView1.DataSource = productos;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al eliminar el producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
             }
             else
@@ -79,6 +86,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 MessageBox.Show("Por favor, seleccione un producto para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
@@ -229,6 +237,11 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 {
             { "@ProductName", textBox1.Text }
                 });
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

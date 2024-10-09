@@ -26,29 +26,32 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
             }
         }
 
-        public bool AgregarCategoria(string categoryName, string description, byte[] picture)
+        public bool AgregarCategoria(string categoryName, string description, byte[] pictureData)
         {
             string query = "INSERT INTO Categories (CategoryName, Description, Picture) VALUES (@CategoryName, @Description, @Picture)";
-            SqlConnection con = new SqlConnection(connectionString);
+            using (SqlConnection con = new SqlConnection(connectionString))
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-
-                cmd.Parameters.AddWithValue("@CategoryName", categoryName);
-                cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Picture", picture);  
-
-                try
+                using (SqlCommand cmd = new SqlCommand(query, con))
                 {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
+                    cmd.Parameters.AddWithValue("@CategoryName", categoryName);
+                    cmd.Parameters.AddWithValue("@Description", description);
+                    
+                    cmd.Parameters.AddWithValue("@Picture", pictureData ?? (object)DBNull.Value);
+
+                    try
+                    {
+                        con.Open();
+                        return cmd.ExecuteNonQuery() == 1; 
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine("Error: " + ex.Message);
+                        return false;
+                    }
                 }
             }
         }
+
 
         public bool ActualizarCategoria(int categoryID, string categoryName, string description, byte[] picture)
         {
@@ -60,7 +63,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
                 cmd.Parameters.AddWithValue("@CategoryID", categoryID);
                 cmd.Parameters.AddWithValue("@CategoryName", categoryName);
                 cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Picture", picture);  // Asegúrate de que sea de tipo byte[]
+                cmd.Parameters.AddWithValue("@Picture", picture);  
 
                 try
                 {

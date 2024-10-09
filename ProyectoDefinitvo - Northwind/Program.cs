@@ -2,6 +2,7 @@ using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols;
+using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using System.Reflection;
 using System.Windows.Forms;
@@ -31,6 +32,7 @@ namespace ProyectoDefinitvo___Northwind
             serviceCollection.AddTransient<LoginForm>();
             serviceCollection.AddTransient<mainMenu>();
             serviceCollection.AddTransient<IproductosService, productosService>();
+            serviceCollection.AddTransient<IcategoriaService, categoriaService>();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 
