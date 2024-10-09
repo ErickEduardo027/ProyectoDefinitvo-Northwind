@@ -18,7 +18,9 @@ namespace ProyectoDefinitvo___Northwind
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            pictureBox2.Parent = pictureBox1;
+            //(BUG) hace un hoyo en el programa
+            //magicamente se daño, comprobar despues...
+            //pictureBox2.Parent = pictureBox1;
             txtUsuario.Text = "Usuario";
             txtUsuario.ForeColor = Color.DarkGray;
             txtContraseña.Text = "Contraseña";
@@ -43,11 +45,12 @@ namespace ProyectoDefinitvo___Northwind
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);
-                MessageBox.Show("Bienvenido al sistema, señor/a: " + nombre, "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //(BUG) el mensaje no aparece :,(
+                //MessageBox.Show("Bienvenido al sistema, señor/a: " + nombre, "Login", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 splashScreen splashScreen = new splashScreen();
                 splashScreen.Show();
                 this.Hide();
-                
+
                 splashScreen.FormClosed += (s, args) =>
                 {
                     mainMenu.Show();
@@ -116,47 +119,24 @@ namespace ProyectoDefinitvo___Northwind
                 errorProvider1.SetError(txtUsuario, "Es requerido un usuario.");
                 valid = false;
             }
-            else
-            {
-                errorProvider1.SetError(txtUsuario, "");
-            }
+            else errorProvider1.SetError(txtUsuario, "");
 
-            if (txtContraseña.Text.Trim() == "Contraseña")
-            {
-                errorProvider1.SetError(txtContraseña, "Es requerido una contraseña.");
-                valid = false;
-            }
-            else
-            {
-                errorProvider1.SetError(txtContraseña, "");
-            }
 
             if (comboBox1.SelectedIndex == -1)
             {
                 errorProvider1.SetError(comboBox1, "Es requerido un rol.");
                 valid = false;
             }
-            else
+            else errorProvider1.SetError(comboBox1, "");
+
+            if (txtContraseña.Text.Trim() == "Contraseña")
             {
-                errorProvider1.SetError(comboBox1, "");
+                errorProvider1.SetError(txtContraseña, "Es requerido una contraseña.");
+                valid = false;
             }
+            else errorProvider1.SetError(txtContraseña, "");
 
             return valid;
-        }
-
-        private void txtUsuario_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(txtUsuario, "");
-        }
-
-        private void txtContraseña_Validated(object sender, EventArgs e)
-        {
-            errorProvider1.SetError(txtContraseña, "");
-        }
-
-        private void pictureBox1_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }
