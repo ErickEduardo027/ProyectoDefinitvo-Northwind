@@ -67,6 +67,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void button3_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)","Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
             LoginForm loginForm = new LoginForm(iproductosService);
             loginForm.Show();
             this.Close();
