@@ -63,6 +63,7 @@
             pictureBox1.SizeMode = PictureBoxSizeMode.StretchImage;
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
+            pictureBox1.Click += pictureBox1_Click;
             // 
             // panel1
             // 
@@ -133,7 +134,6 @@
             comboBox1.Name = "comboBox1";
             comboBox1.Size = new Size(188, 23);
             comboBox1.TabIndex = 4;
-            
             // 
             // txtUsuario
             // 

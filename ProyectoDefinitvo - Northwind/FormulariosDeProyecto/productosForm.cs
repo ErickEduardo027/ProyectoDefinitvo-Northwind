@@ -38,11 +38,11 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void productosForm_Load(object sender, EventArgs e)
         {
-            btnReset.Visible = false;
             comboBox2.Visible = false;
             comboBox3.Visible = false;
             label2.Visible = false;
             textBox1.Visible = false;
+            btnReset.Visible = false;
             btnFiltrarPorNombre.Visible = false;
             btnFiltrarPorCategoria.Visible = false;
             btnFiltrarPorSuplidor.Visible = false;

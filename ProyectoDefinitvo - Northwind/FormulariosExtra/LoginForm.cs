@@ -138,5 +138,10 @@ namespace ProyectoDefinitvo___Northwind
 
             return valid;
         }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
