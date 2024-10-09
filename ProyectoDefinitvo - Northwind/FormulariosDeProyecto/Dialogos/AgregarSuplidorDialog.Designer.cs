@@ -243,7 +243,7 @@
             txtTelefono.Location = new Point(62, 495);
             txtTelefono.Mask = "000-000-0000";
             txtTelefono.Name = "txtTelefono";
-            txtTelefono.Size = new Size(72, 23);
+            txtTelefono.Size = new Size(83, 23);
             txtTelefono.TabIndex = 27;
             // 
             // txtFax

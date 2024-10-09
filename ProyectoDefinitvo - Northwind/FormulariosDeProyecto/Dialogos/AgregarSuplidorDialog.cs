@@ -3,6 +3,7 @@ using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Windows.Forms;
 
 namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
@@ -23,7 +24,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void AgregarSuplidorDialog_Load(object sender, EventArgs e)
         {
-
+            
 
         }
 
@@ -74,6 +75,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             var telefono = txtTelefono.Text;
             var fax = txtFax.Text;
             var homepage = txtHomepage.Text;
+
 
             try
             {

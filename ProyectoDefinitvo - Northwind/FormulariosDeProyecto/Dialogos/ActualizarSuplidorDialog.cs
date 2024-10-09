@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -12,9 +14,58 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 {
     public partial class ActualizarSuplidorDialog : Form
     {
+        string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         public ActualizarSuplidorDialog()
         {
             InitializeComponent();
+        }
+
+        private void ActualizarSuplidorDialog_Load(object sender, EventArgs e)
+        {
+            string suplidorName = this.Tag.ToString();
+            CargarCategoriaPorNombre(suplidorName);
+        }
+
+        private void CargarCategoriaPorNombre(string suplidorName)
+        {
+            using (SqlConnection conexion = new SqlConnection(connectionString))
+            {
+                using (SqlCommand cmd = conexion.CreateCommand())
+                {
+                    cmd.CommandText = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax, HomePage FROM Suppliers WHERE CompanyName = @CompanyName";
+                    cmd.Parameters.AddWithValue("@CompanyName", suplidorName);
+
+                    conexion.Open();
+                    using (SqlDataReader reader = cmd.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            textBox1.Text = reader["SupplierID"].ToString();
+                            txtNombre.Text = reader["CompanyName"].ToString();
+                            txtRepresentante.Text = reader["ContactName"].ToString();
+                            cbxPuestoRepresentante.Text = reader["ContactTitle"].ToString();
+                            txtDireccion.Text = reader["Address"].ToString();
+                            cbxCiudad.Text = reader["City"].ToString();
+                            txtRegion.Text = reader["Region"].ToString();
+                            txtCodigoPostal.Text = reader["PostalCode"].ToString();
+                            cbxPais.Text = reader["Country"].ToString();
+                            txtTelefono.Text = reader["Phone"].ToString();
+                            txtFax.Text = reader["Fax"].ToString();
+                            txtHomepage.Text = reader["HomePage"].ToString();
+
+                        }
+                        else
+                        {
+                            MessageBox.Show("No se encontró la categoría con el nombre especificado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        }
+                    }
+                }
+            }
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            DialogResult = DialogResult.Cancel;
         }
     }
 }

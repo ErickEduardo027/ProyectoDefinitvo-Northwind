@@ -46,7 +46,6 @@ namespace ProyectoDefinitvo___Northwind.Servicios.suplidores
             RuleFor(a => a.ContactTitle).NotEmpty();
             RuleFor(a => a.Address).NotEmpty();
             RuleFor(a => a.City).NotEmpty();
-            RuleFor(a => a.Region).NotEmpty();
             RuleFor(a => a.PostalCode).NotEmpty();
             RuleFor(a => a.Country).NotEmpty();
             RuleFor(a => a.Phone).NotEmpty();

@@ -70,8 +70,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                     {
                         MessageBox.Show("Suplidor eliminado con éxito, despues no me vengas llorando!", "Eliminar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        var leer = new productoCRUD();
-                        DataTable productos = leer.ObtenerProductos();
+                        var leer = new suplidoresCRUD();
+                        DataTable productos = leer.ObtenerSuplidores();
                         dataGridView1.DataSource = productos;
                     }
                     else
@@ -82,7 +82,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             }
             else
             {
-                MessageBox.Show("Por favor, seleccione un producto para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Por favor, seleccione un suplidor para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
 
@@ -91,6 +91,23 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             var leer = new suplidoresCRUD();
             dataGridView1.DataSource = leer.ObtenerSuplidores();
             btnReset.Visible = false;
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                string suplidorName = dataGridView1.SelectedRows[0].Cells["CompanyName"].Value.ToString();
+                var actualizar = new ActualizarSuplidorDialog();
+                actualizar.Tag = suplidorName;
+                actualizar.ShowDialog();
+                btnReset.Visible = true;
+
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione una categoria para actualizar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
