@@ -11,7 +11,7 @@ namespace ProyectoDefinitvo___Northwind
 
         public IcategoriaService icategoriaService { get; }
 
-        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService)
+        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
