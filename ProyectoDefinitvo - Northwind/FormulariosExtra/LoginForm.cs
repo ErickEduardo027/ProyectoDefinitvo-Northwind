@@ -1,19 +1,22 @@
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 
 namespace ProyectoDefinitvo___Northwind
 {
     public partial class LoginForm : Form
     {
         private readonly IproductosService iproductosService;
+        private readonly ISuplidorService isuplidorService;
 
         public IcategoriaService icategoriaService { get; }
 
-        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService)
+        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
             this.icategoriaService = icategoriaService;
+            this.isuplidorService = isuplidorService;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -41,7 +44,7 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService);
+                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService);
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);
@@ -137,6 +140,11 @@ namespace ProyectoDefinitvo___Northwind
             else errorProvider1.SetError(txtContraseña, "");
 
             return valid;
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

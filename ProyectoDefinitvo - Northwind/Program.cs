@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Protocols;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System.Reflection;
 using System.Windows.Forms;
 
@@ -33,6 +34,7 @@ namespace ProyectoDefinitvo___Northwind
             serviceCollection.AddTransient<mainMenu>();
             serviceCollection.AddTransient<IproductosService, productosService>();
             serviceCollection.AddTransient<IcategoriaService, categoriaService>();
+            serviceCollection.AddTransient<ISuplidorService, SuplidorService>();
 
             var serviceProvider = serviceCollection.BuildServiceProvider();
 

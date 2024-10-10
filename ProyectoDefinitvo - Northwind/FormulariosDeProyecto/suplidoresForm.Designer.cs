@@ -28,33 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            dataGridView1 = new DataGridView();
+            btnReset = new Button();
+            btnAgregar = new Button();
+            btnActualizar = new Button();
+            btnEliminar = new Button();
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
             // 
-            // label1
+            // dataGridView1
             // 
-            label1.AutoSize = true;
-            label1.Location = new Point(479, 295);
-            label1.Name = "label1";
-            label1.Size = new Size(61, 15);
-            label1.TabIndex = 0;
-            label1.Text = "suplidores";
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridView1.Location = new Point(12, 12);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(968, 493);
+            dataGridView1.TabIndex = 0;
+            // 
+            // btnReset
+            // 
+            btnReset.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnReset.BackColor = Color.MediumOrchid;
+            btnReset.Location = new Point(543, 521);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(101, 45);
+            btnReset.TabIndex = 9;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
+            // 
+            // btnAgregar
+            // 
+            btnAgregar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnAgregar.BackColor = Color.FromArgb(0, 192, 0);
+            btnAgregar.Location = new Point(874, 521);
+            btnAgregar.Name = "btnAgregar";
+            btnAgregar.Size = new Size(106, 45);
+            btnAgregar.TabIndex = 8;
+            btnAgregar.Text = "Agregar";
+            btnAgregar.UseVisualStyleBackColor = false;
+            btnAgregar.Click += btnAgregar_Click;
+            // 
+            // btnActualizar
+            // 
+            btnActualizar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnActualizar.BackColor = Color.FromArgb(0, 192, 192);
+            btnActualizar.Location = new Point(762, 521);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(106, 45);
+            btnActualizar.TabIndex = 7;
+            btnActualizar.Text = "Actualizar";
+            btnActualizar.UseVisualStyleBackColor = false;
+            btnActualizar.Click += btnActualizar_Click;
+            // 
+            // btnEliminar
+            // 
+            btnEliminar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnEliminar.BackColor = Color.IndianRed;
+            btnEliminar.Location = new Point(650, 521);
+            btnEliminar.Name = "btnEliminar";
+            btnEliminar.Size = new Size(106, 45);
+            btnEliminar.TabIndex = 6;
+            btnEliminar.Text = "Eliminar";
+            btnEliminar.UseVisualStyleBackColor = false;
+            btnEliminar.Click += btnEliminar_Click;
             // 
             // suplidoresForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(984, 578);
-            Controls.Add(label1);
+            ClientSize = new Size(992, 578);
+            Controls.Add(btnReset);
+            Controls.Add(btnAgregar);
+            Controls.Add(btnActualizar);
+            Controls.Add(btnEliminar);
+            Controls.Add(dataGridView1);
             Name = "suplidoresForm";
             Text = "SUPLIDORES";
             Load += suplidoresForm_Load;
+            ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
 
-        private Label label1;
+        private DataGridView dataGridView1;
+        private Button btnReset;
+        private Button btnAgregar;
+        private Button btnActualizar;
+        private Button btnEliminar;
     }
 }
