@@ -3,6 +3,7 @@ using Microsoft.Data.SqlClient;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -21,11 +22,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     public partial class AgregarProductoDialog : Form
     {
         private readonly IproductosService productoService;
+        private readonly ILogger logger;
 
-        public AgregarProductoDialog(IproductosService productoService)
+        public AgregarProductoDialog(IproductosService productoService, ILogger logger)
         {
             InitializeComponent();
             this.productoService = productoService;
+            this.logger = logger;
         }
         private void AgregarProductoDialog_Load(object sender, EventArgs e)
         {
@@ -56,6 +59,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         }
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            logger.Information("Producto_ADD: ");
             var ProductName = txtProductName.Text;
             int SupplierID = int.Parse(txtSupplierID.Text);
             int CategoryID = int.Parse(txtCategoryID.Text);

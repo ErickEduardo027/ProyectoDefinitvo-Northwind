@@ -2,6 +2,7 @@
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,11 +18,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
     public partial class suplidoresForm : Form
     {
         private readonly ISuplidorService isuplidorService;
+        private readonly ILogger logger;
 
-        public suplidoresForm(ISuplidorService suplidorService)
+        public suplidoresForm(ISuplidorService suplidorService, ILogger logger)
         {
             InitializeComponent();
             this.isuplidorService = suplidorService;
+            this.logger = logger;
         }
 
         private void suplidoresForm_Load(object sender, EventArgs e)
@@ -46,7 +49,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var formTnstance = new AgregarSuplidorDialog(isuplidorService);
+            var formTnstance = new AgregarSuplidorDialog(isuplidorService, logger);
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
@@ -98,7 +101,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string suplidorName = dataGridView1.SelectedRows[0].Cells["CompanyName"].Value.ToString();
-                var actualizar = new ActualizarSuplidorDialog(isuplidorService);
+                var actualizar = new ActualizarSuplidorDialog(isuplidorService, logger);
                 actualizar.Tag = suplidorName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;

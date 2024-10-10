@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,11 +16,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     public partial class AgregarCategoriaDialog : Form
     {
         private readonly IcategoriaService icategoriaService;
+        private readonly ILogger logger;
 
-        public AgregarCategoriaDialog(IcategoriaService icategoriaService)
+        public AgregarCategoriaDialog(IcategoriaService icategoriaService, ILogger logger)
         {
             InitializeComponent();
             this.icategoriaService = icategoriaService;
+            this.logger = logger;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -29,7 +32,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
-            
+            logger.Information("Categoria_ADD:");
             string categoryName = txtNombre.Text;
             string description = txtDescripcion.Text;
             byte[] pictureData = null;

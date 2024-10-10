@@ -1,6 +1,7 @@
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 
 namespace ProyectoDefinitvo___Northwind
 {
@@ -8,15 +9,16 @@ namespace ProyectoDefinitvo___Northwind
     {
         private readonly IproductosService iproductosService;
         private readonly ISuplidorService isuplidorService;
+        private readonly ILogger logger;
+        private readonly IcategoriaService icategoriaService;
 
-        public IcategoriaService icategoriaService { get; }
-
-        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService)
+        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService, ILogger logger)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
             this.icategoriaService = icategoriaService;
             this.isuplidorService = isuplidorService;
+            this.logger = logger;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -44,7 +46,7 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService);
+                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger);
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);

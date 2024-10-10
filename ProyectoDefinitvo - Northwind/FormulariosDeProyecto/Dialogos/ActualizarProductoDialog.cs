@@ -4,6 +4,7 @@ using Microsoft.Extensions.Configuration;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,11 +21,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     public partial class ActualizarProductoDialog : Form
     {
         private readonly IproductosService productosService;
+        private readonly ILogger logger;
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
-        public ActualizarProductoDialog(IproductosService iproductosService)
+        public ActualizarProductoDialog(IproductosService iproductosService, ILogger logger)
         {
             InitializeComponent();
             this.productosService = iproductosService;
+            this.logger = logger;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -67,6 +70,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnActualizar_Click(object sender, EventArgs e)
         {
+            logger.Information("producto_UPDATE:");
             var ProductId = int.Parse(txtProductoId.Text);
             var ProductName = txtProductName.Text;
             int SupplierID = int.Parse(txtSupplierID.Text);
