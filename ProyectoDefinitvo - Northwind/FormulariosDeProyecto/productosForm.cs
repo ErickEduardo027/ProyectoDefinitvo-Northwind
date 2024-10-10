@@ -23,12 +23,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
     {
         private readonly IproductosService iproductosService;
         private readonly ILogger logger;
+        private readonly IproductoCRUD iproductoCRUD;
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
-        public productosForm(IproductosService iproductosService, ILogger logger)
+        public productosForm(IproductosService iproductosService, ILogger logger, IproductoCRUD iproductoCRUD)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
             this.logger = logger;
+            this.iproductoCRUD = iproductoCRUD;
             dataGridView1.AutoGenerateColumns = false;
         }
 
@@ -49,9 +51,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             btnFiltrarPorNombre.Visible = false;
             btnFiltrarPorCategoria.Visible = false;
             btnFiltrarPorSuplidor.Visible = false;
-            var leer = new productoCRUD();
-            DataTable productos = leer.ObtenerProductos();
-            dataGridView1.DataSource = productos;
+            dataGridView1.DataSource = iproductoCRUD.ObtenerProductos();
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)
