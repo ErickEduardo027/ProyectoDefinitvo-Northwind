@@ -50,7 +50,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var formTnstance = new AgregarCategoriaDialog(icategoriaService, logger);
+            var formTnstance = new AgregarCategoriaDialog(icategoriaService, logger, icategoriaCRUD);
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
@@ -103,7 +103,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string categoriaName = dataGridView1.SelectedRows[0].Cells["CategoryName"].Value.ToString();
-                var actualizar = new ActualizarCategoriaDialog(icategoriaService, logger);
+                var actualizar = new ActualizarCategoriaDialog(icategoriaService, logger, icategoriaCRUD);
                 actualizar.Tag = categoriaName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;

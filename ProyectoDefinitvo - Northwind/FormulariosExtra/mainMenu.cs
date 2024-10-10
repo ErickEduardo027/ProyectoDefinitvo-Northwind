@@ -68,7 +68,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            abrirForm(new productosForm(iproductosService, logger, iproductoCRUD));
+            abrirForm(new productosForm(iproductosService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD));
         }
 
         private void btnCategorias_Click(object sender, EventArgs e)

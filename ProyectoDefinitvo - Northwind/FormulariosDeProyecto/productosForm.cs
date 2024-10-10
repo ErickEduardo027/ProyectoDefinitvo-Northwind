@@ -40,7 +40,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var agregar = new AgregarProductoDialog(iproductosService, logger);
+            var agregar = new AgregarProductoDialog(iproductosService, logger, icategoriaCRUD, isuplidoresCRUD, iproductoCRUD);
             agregar.ShowDialog();
             btnReset.Visible = true;
         }
@@ -96,7 +96,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string productName = dataGridView1.SelectedRows[0].Cells["ProductName"].Value.ToString();
-                var actualizar = new ActualizarProductoDialog(iproductosService, logger);
+                var actualizar = new ActualizarProductoDialog(iproductosService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD);
                 actualizar.Tag = productName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;

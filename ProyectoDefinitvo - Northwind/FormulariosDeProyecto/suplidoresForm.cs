@@ -49,7 +49,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var formTnstance = new AgregarSuplidorDialog(isuplidorService, logger);
+            var formTnstance = new AgregarSuplidorDialog(isuplidorService, logger, isuplidoresCRUD);
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
@@ -101,7 +101,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string suplidorName = dataGridView1.SelectedRows[0].Cells["CompanyName"].Value.ToString();
-                var actualizar = new ActualizarSuplidorDialog(isuplidorService, logger);
+                var actualizar = new ActualizarSuplidorDialog(isuplidorService, logger, isuplidoresCRUD);
                 actualizar.Tag = suplidorName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;
