@@ -20,12 +20,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         private readonly IcategoriaService icategoriaService;
         private readonly ILogger logger;
+        private readonly IcategoriaCRUD icategoriaCRUD;
 
-        public ActualizarCategoriaDialog(IcategoriaService icategoriaService, ILogger logger)
+        public ActualizarCategoriaDialog(IcategoriaService icategoriaService, ILogger logger, IcategoriaCRUD icategoriaCRUD)
         {
             InitializeComponent();
             this.icategoriaService = icategoriaService;
             this.logger = logger;
+            this.icategoriaCRUD = icategoriaCRUD;
         }
 
         private void ActualizarCategoriaDialog_Load(object sender, EventArgs e)
@@ -110,8 +112,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     Picture = pictureData
                 });
 
-                var agregar = new categoriaCRUD();
-                if (agregar.ActualizarCategoria(Id, categoryName, description, pictureData))
+                if (icategoriaCRUD.ActualizarCategoria(Id, categoryName, description, pictureData))
                 {
                     MessageBox.Show("Categoría actualizada con éxito", "Actualizar categoría", MessageBoxButtons.OK, MessageBoxIcon.Information);
 

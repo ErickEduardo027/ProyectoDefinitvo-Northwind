@@ -25,16 +25,22 @@ namespace ProyectoDefinitvo___Northwind
         private readonly IproductosService iproductosService;
         private readonly ISuplidorService isuplidorService;
         private readonly ILogger logger;
+        private readonly IproductoCRUD iproductoCRUD;
+        private readonly IcategoriaCRUD icategoriaCRUD;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
 
         public IcategoriaService icategoriaService { get; }
 
-        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger)
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
             this.icategoriaService = icategoriaService;
             this.isuplidorService = isuplidorService;
             this.logger = logger;
+            this.iproductoCRUD = iproductoCRUD;
+            this.icategoriaCRUD = icategoriaCRUD;
+            this.isuplidoresCRUD = isuplidoresCRUD;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -62,23 +68,23 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            abrirForm(new productosForm(iproductosService, logger));
+            abrirForm(new productosForm(iproductosService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD));
         }
 
         private void btnCategorias_Click(object sender, EventArgs e)
         {
-            abrirForm(new categoriasForm(icategoriaService, logger));
+            abrirForm(new categoriasForm(icategoriaService, logger, icategoriaCRUD));
         }
 
         private void btnSuplidores_Click(object sender, EventArgs e)
         {
-            abrirForm(new suplidoresForm(isuplidorService, logger));
+            abrirForm(new suplidoresForm(isuplidorService, logger, isuplidoresCRUD));
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)","Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger);
+            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD);
             loginForm.Show();
             this.Close();
         }

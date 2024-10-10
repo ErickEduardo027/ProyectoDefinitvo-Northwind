@@ -23,12 +23,18 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     {
         private readonly IproductosService productoService;
         private readonly ILogger logger;
+        private readonly IcategoriaCRUD icategoriaCRUD;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
+        private readonly IproductoCRUD iproductoCRUD;
 
-        public AgregarProductoDialog(IproductosService productoService, ILogger logger)
+        public AgregarProductoDialog(IproductosService productoService, ILogger logger, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IproductoCRUD iproductoCRUD)
         {
             InitializeComponent();
             this.productoService = productoService;
             this.logger = logger;
+            this.icategoriaCRUD = icategoriaCRUD;
+            this.isuplidoresCRUD = isuplidoresCRUD;
+            this.iproductoCRUD = iproductoCRUD;
         }
         private void AgregarProductoDialog_Load(object sender, EventArgs e)
         {
@@ -40,17 +46,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             txtUnitsOnOrder.Text = "0";
             txtReorderLevel.Text = "0";
 
-            var ListaDeCategorias = new categoriaCRUD();
-            DataTable categorias = ListaDeCategorias.ObtenerCategorias();
-            dataGridView1.DataSource = categorias;
-            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            dataGridView1.DataSource = icategoriaCRUD.ObtenerCategorias();
             dataGridView1.RowTemplate.Height = 100;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-
-            var listaDeSuplidores = new suplidoresCRUD();
-            DataTable Suplidores = listaDeSuplidores.ObtenerSuplidores();
-            dataGridView2.DataSource = Suplidores;
+            dataGridView2.DataSource = isuplidoresCRUD.ObtenerSuplidores();
 
         }
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -119,8 +118,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     Discontinued = Discontinued
                 });
 
-                var agregar = new productoCRUD();
-                if (agregar.AgregarProducto(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
+                
+                if (iproductoCRUD.AgregarProducto(ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
                         UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued))
                 {
                     MessageBox.Show("Nuevo producto ingresado con éxito", "Agregar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);

@@ -43,6 +43,9 @@ namespace ProyectoDefinitvo___Northwind
                 serviceCollection.AddTransient<IproductosService, productosService>();
                 serviceCollection.AddTransient<IcategoriaService, categoriaService>();
                 serviceCollection.AddTransient<ISuplidorService, SuplidorService>();
+                serviceCollection.AddTransient<IproductoCRUD, productoCRUD>();
+                serviceCollection.AddTransient<IcategoriaCRUD, categoriaCRUD>();
+                serviceCollection.AddTransient<IsuplidoresCRUD, suplidoresCRUD>();
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 

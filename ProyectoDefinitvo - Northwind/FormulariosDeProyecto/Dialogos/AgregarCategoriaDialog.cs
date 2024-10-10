@@ -17,12 +17,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     {
         private readonly IcategoriaService icategoriaService;
         private readonly ILogger logger;
+        private readonly IcategoriaCRUD icategoriaCRUD;
 
-        public AgregarCategoriaDialog(IcategoriaService icategoriaService, ILogger logger)
+        public AgregarCategoriaDialog(IcategoriaService icategoriaService, ILogger logger, IcategoriaCRUD icategoriaCRUD)
         {
             InitializeComponent();
             this.icategoriaService = icategoriaService;
             this.logger = logger;
+            this.icategoriaCRUD = icategoriaCRUD;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -55,9 +57,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     Description = description,
                     Picture = pictureData 
                 });
-
-                var agregar = new categoriaCRUD();
-                if (agregar.AgregarCategoria(categoryName, description, pictureData)) 
+                
+                if (icategoriaCRUD.AgregarCategoria(categoryName, description, pictureData)) 
                 {
                     MessageBox.Show("Nueva categoría ingresada con éxito", "Agregar categoría", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -87,11 +88,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             {
                 pictureBox1.Image = Image.FromFile(subir.FileName);
             }
-
-        }
-
-        private void AgregarCategoriaDialog_Load(object sender, EventArgs e)
-        {
 
         }
     }

@@ -146,7 +146,6 @@
             Name = "AgregarCategoriaDialog";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Agregar Categoria";
-            Load += AgregarCategoriaDialog_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
             ResumeLayout(false);
             PerformLayout();

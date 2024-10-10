@@ -20,12 +20,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         private readonly ISuplidorService isuplidorService;
         private readonly ILogger logger;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
 
-        public ActualizarSuplidorDialog(ISuplidorService isuplidorService, ILogger logger)
+        public ActualizarSuplidorDialog(ISuplidorService isuplidorService, ILogger logger, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
             this.isuplidorService = isuplidorService;
             this.logger = logger;
+            this.isuplidoresCRUD = isuplidoresCRUD;
         }
 
         private void ActualizarSuplidorDialog_Load(object sender, EventArgs e)
@@ -92,7 +94,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             var fax = txtFax.Text;
             var homepage = txtHomepage.Text;
 
-
             try
             {
                 this.isuplidorService.CrearSuplidor(new CrearSuplidorRequest
@@ -110,11 +111,9 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     HomePage = homepage,
                 });
 
-                var agregar = new suplidoresCRUD();
-                if (agregar.ActualizarSuplidor(id, nombreSuplidor, representante, PuestoRepresentante, direccion, ciudad, region, codigoPostal, pais, telefono, fax, homepage))
+                if (isuplidoresCRUD.ActualizarSuplidor(id, nombreSuplidor, representante, PuestoRepresentante, direccion, ciudad, region, codigoPostal, pais, telefono, fax, homepage))
                 {
                     MessageBox.Show("Nuevo suplidor actualizado con éxito", "Actualizar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
                 }
                 else
                 {
@@ -122,7 +121,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 }
 
             }
-
             catch (ValidationException ex)
             {
                 var message = ex.Message;

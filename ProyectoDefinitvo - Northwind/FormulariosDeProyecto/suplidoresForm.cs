@@ -19,20 +19,20 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
     {
         private readonly ISuplidorService isuplidorService;
         private readonly ILogger logger;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
 
-        public suplidoresForm(ISuplidorService suplidorService, ILogger logger)
+        public suplidoresForm(ISuplidorService suplidorService, ILogger logger, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
             this.isuplidorService = suplidorService;
             this.logger = logger;
+            this.isuplidoresCRUD = isuplidoresCRUD;
         }
 
         private void suplidoresForm_Load(object sender, EventArgs e)
         {
             btnReset.Visible = false;
-            var leer = new suplidoresCRUD();
-            DataTable suplidores = leer.ObtenerSuplidores();
-            dataGridView1.DataSource = suplidores;
+            dataGridView1.DataSource = isuplidoresCRUD.ObtenerSuplidores();
             dataGridView1.Columns["SupplierID"].HeaderText = "Id del suplidor:";
             dataGridView1.Columns["CompanyName"].HeaderText = "Nombre del suplidor:";
             dataGridView1.Columns["ContactName"].HeaderText = "Representante del suplidor:";
@@ -49,7 +49,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var formTnstance = new AgregarSuplidorDialog(isuplidorService, logger);
+            var formTnstance = new AgregarSuplidorDialog(isuplidorService, logger, isuplidoresCRUD);
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
@@ -101,7 +101,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string suplidorName = dataGridView1.SelectedRows[0].Cells["CompanyName"].Value.ToString();
-                var actualizar = new ActualizarSuplidorDialog(isuplidorService, logger);
+                var actualizar = new ActualizarSuplidorDialog(isuplidorService, logger, isuplidoresCRUD);
                 actualizar.Tag = suplidorName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;

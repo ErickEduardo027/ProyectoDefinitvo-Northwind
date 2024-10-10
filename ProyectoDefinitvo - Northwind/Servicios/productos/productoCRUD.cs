@@ -9,8 +9,15 @@ using System.Threading.Tasks;
 
 namespace ProyectoDefinitvo___Northwind.Servicios.productos
 {
-  
-    public class productoCRUD
+    public interface IproductoCRUD
+    {
+        bool ActualizarProducto(int ProductID, string productName, int supplierID, int categoryID, string quantityPerUnit, decimal unitPrice, short unitsInStock, short unitsOnOrder, short reorderLevel, bool discontinued);
+        bool AgregarProducto(string productName, int supplierID, int categoryID, string quantityPerUnit, decimal unitPrice, short unitsInStock, short unitsOnOrder, short reorderLevel, bool discontinued);
+        bool EliminarProducto(string productName);
+        DataTable ObtenerProductos();
+    }
+
+    public class productoCRUD : IproductoCRUD
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
 
