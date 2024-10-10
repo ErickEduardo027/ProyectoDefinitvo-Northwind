@@ -8,8 +8,7 @@ namespace ProyectoDefinitvo___Northwind
     {
         private readonly IproductosService iproductosService;
         private readonly ISuplidorService isuplidorService;
-
-        public IcategoriaService icategoriaService { get; }
+        private readonly IcategoriaService icategoriaService;
 
         public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService)
         {

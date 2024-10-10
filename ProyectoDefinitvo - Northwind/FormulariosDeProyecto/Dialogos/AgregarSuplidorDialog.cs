@@ -1,6 +1,8 @@
 ﻿using FluentValidation;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
+using Serilog.Core;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -13,13 +15,15 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private Dictionary<string, List<string>> paisesCiudades = new Dictionary<string, List<string>>();
         private Dictionary<string, List<string>> ciudadesRegiones = new Dictionary<string, List<string>>();
         private readonly ISuplidorService isuplidorService;
+        private readonly ILogger logger;
 
-        public AgregarSuplidorDialog(ISuplidorService suplidorService)
+        public AgregarSuplidorDialog(ISuplidorService suplidorService, ILogger logger)
         {
 
             InitializeComponent();
             InicializarDatos();
             this.isuplidorService = suplidorService;
+            this.logger = logger;
         }
 
         private void AgregarSuplidorDialog_Load(object sender, EventArgs e)
@@ -64,6 +68,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            logger.Information("suplidores_ADD:");
+            
             var nombreSuplidor = txtNombre.Text;
             var representante = txtRepresentante.Text;
             var PuestoRepresentante = cbxPuestoRepresentante.Text;

@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,24 +19,26 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         private readonly ISuplidorService isuplidorService;
+        private readonly ILogger logger;
 
-        public ActualizarSuplidorDialog(ISuplidorService isuplidorService)
+        public ActualizarSuplidorDialog(ISuplidorService isuplidorService, ILogger logger)
         {
             InitializeComponent();
             this.isuplidorService = isuplidorService;
+            this.logger = logger;
         }
 
         private void ActualizarSuplidorDialog_Load(object sender, EventArgs e)
         {
             string suplidorName = this.Tag.ToString();
-            CargarCategoriaPorNombre(suplidorName);
+            CargarSuplidorPorNombre(suplidorName);
         }
 
-        private void CargarCategoriaPorNombre(string suplidorName)
+        private void CargarSuplidorPorNombre(string suplidorName)
         {
-            using (SqlConnection conexion = new SqlConnection(connectionString))
+            SqlConnection conexion = new SqlConnection(connectionString);
             {
-                using (SqlCommand cmd = conexion.CreateCommand())
+                SqlCommand cmd = conexion.CreateCommand();
                 {
                     cmd.CommandText = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax, HomePage FROM Suppliers WHERE CompanyName = @CompanyName";
                     cmd.Parameters.AddWithValue("@CompanyName", suplidorName);
@@ -61,7 +64,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                         }
                         else
                         {
-                            MessageBox.Show("No se encontró la categoría con el nombre especificado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("No se encontró el suplidor con el nombre especificado.", "Información", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
                     }
                 }
@@ -75,6 +78,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            logger.Information("suplidor_UPDATE");
             var id = int.Parse(textBox1.Text);
             var nombreSuplidor = txtNombre.Text;
             var representante = txtRepresentante.Text;
@@ -118,7 +122,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 }
 
             }
-
 
             catch (ValidationException ex)
             {

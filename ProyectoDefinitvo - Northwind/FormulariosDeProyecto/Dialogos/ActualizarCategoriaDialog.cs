@@ -2,6 +2,7 @@
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -18,11 +19,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
         private readonly IcategoriaService icategoriaService;
+        private readonly ILogger logger;
 
-        public ActualizarCategoriaDialog(IcategoriaService icategoriaService)
+        public ActualizarCategoriaDialog(IcategoriaService icategoriaService, ILogger logger)
         {
             InitializeComponent();
             this.icategoriaService = icategoriaService;
+            this.logger = logger;
         }
 
         private void ActualizarCategoriaDialog_Load(object sender, EventArgs e)
@@ -33,9 +36,9 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void CargarCategoriaPorNombre(string categoryName)
         {
-            using (SqlConnection conexion = new SqlConnection(connectionString))
+            SqlConnection conexion = new SqlConnection(connectionString);
             {
-                using (SqlCommand cmd = conexion.CreateCommand())
+                SqlCommand cmd = conexion.CreateCommand();
                 {
                     cmd.CommandText = "SELECT CategoryID, CategoryName, Description, Picture FROM Categories WHERE CategoryName = @CategoryName";
                     cmd.Parameters.AddWithValue("@CategoryName", categoryName);
@@ -82,6 +85,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnAceptar_Click(object sender, EventArgs e)
         {
+            logger.Information("categoria_UPDATE:");
             int Id = int.Parse(txtId.Text);
             string categoryName = txtNombre.Text;
             string description = txtDescripcion.Text;
