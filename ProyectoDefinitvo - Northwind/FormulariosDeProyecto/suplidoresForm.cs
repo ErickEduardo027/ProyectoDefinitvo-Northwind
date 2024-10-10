@@ -98,7 +98,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string suplidorName = dataGridView1.SelectedRows[0].Cells["CompanyName"].Value.ToString();
-                var actualizar = new ActualizarSuplidorDialog();
+                var actualizar = new ActualizarSuplidorDialog(isuplidorService);
                 actualizar.Tag = suplidorName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;

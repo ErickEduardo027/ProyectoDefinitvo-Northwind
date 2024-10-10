@@ -1,5 +1,7 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using FluentValidation;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,9 +17,12 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
     public partial class ActualizarSuplidorDialog : Form
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
-        public ActualizarSuplidorDialog()
+        private readonly ISuplidorService isuplidorService;
+
+        public ActualizarSuplidorDialog(ISuplidorService isuplidorService)
         {
             InitializeComponent();
+            this.isuplidorService = isuplidorService;
         }
 
         private void ActualizarSuplidorDialog_Load(object sender, EventArgs e)
@@ -66,6 +71,60 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
+        }
+
+        private void btnAceptar_Click(object sender, EventArgs e)
+        {
+            var id = int.Parse(textBox1.Text);
+            var nombreSuplidor = txtNombre.Text;
+            var representante = txtRepresentante.Text;
+            var PuestoRepresentante = cbxPuestoRepresentante.Text;
+            var direccion = txtDireccion.Text;
+            var pais = cbxPais.Text;
+            var ciudad = cbxCiudad.Text;
+            var region = txtRegion.Text;
+            var codigoPostal = txtCodigoPostal.Text;
+            var telefono = txtTelefono.Text;
+            var fax = txtFax.Text;
+            var homepage = txtHomepage.Text;
+
+
+            try
+            {
+                this.isuplidorService.CrearSuplidor(new CrearSuplidorRequest
+                {
+                    CompanyName = nombreSuplidor,
+                    ContactName = representante,
+                    ContactTitle = PuestoRepresentante,
+                    Address = direccion,
+                    City = ciudad,
+                    Region = region,
+                    PostalCode = codigoPostal,
+                    Country = pais,
+                    Phone = telefono,
+                    Fax = fax,
+                    HomePage = homepage,
+                });
+
+                var agregar = new suplidoresCRUD();
+                if (agregar.ActualizarSuplidor(id, nombreSuplidor, representante, PuestoRepresentante, direccion, ciudad, region, codigoPostal, pais, telefono, fax, homepage))
+                {
+                    MessageBox.Show("Nuevo suplidor actualizado con éxito", "Actualizar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                }
+                else
+                {
+                    MessageBox.Show("Error al actualizar el suplidor", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+
+            }
+
+
+            catch (ValidationException ex)
+            {
+                var message = ex.Message;
+                MessageBox.Show(message, "Validación de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }
