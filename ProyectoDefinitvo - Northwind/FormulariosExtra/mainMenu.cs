@@ -4,6 +4,7 @@ using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -23,15 +24,17 @@ namespace ProyectoDefinitvo___Northwind
         private Form Activarform;
         private readonly IproductosService iproductosService;
         private readonly ISuplidorService isuplidorService;
+        private readonly ILogger logger;
 
         public IcategoriaService icategoriaService { get; }
 
-        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService)
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
             this.icategoriaService = icategoriaService;
             this.isuplidorService = isuplidorService;
+            this.logger = logger;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -59,23 +62,23 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnProductos_Click(object sender, EventArgs e)
         {
-            abrirForm(new productosForm(iproductosService));
+            abrirForm(new productosForm(iproductosService, logger));
         }
 
         private void btnCategorias_Click(object sender, EventArgs e)
         {
-            abrirForm(new categoriasForm(icategoriaService));
+            abrirForm(new categoriasForm(icategoriaService, logger));
         }
 
         private void btnSuplidores_Click(object sender, EventArgs e)
         {
-            abrirForm(new suplidoresForm(isuplidorService));
+            abrirForm(new suplidoresForm(isuplidorService, logger));
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)","Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService);
+            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger);
             loginForm.Show();
             this.Close();
         }

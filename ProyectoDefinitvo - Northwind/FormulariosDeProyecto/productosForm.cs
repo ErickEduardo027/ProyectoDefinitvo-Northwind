@@ -15,23 +15,26 @@ using Microsoft.Extensions.Configuration;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using System.Configuration;
+using Serilog;
 
 namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 {
     public partial class productosForm : Form
     {
         private readonly IproductosService iproductosService;
+        private readonly ILogger logger;
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
-        public productosForm(IproductosService iproductosService)
+        public productosForm(IproductosService iproductosService, ILogger logger)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
+            this.logger = logger;
             dataGridView1.AutoGenerateColumns = false;
         }
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var agregar = new AgregarProductoDialog(iproductosService);
+            var agregar = new AgregarProductoDialog(iproductosService, logger);
             agregar.ShowDialog();
             btnReset.Visible = true;
         }
@@ -93,7 +96,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string productName = dataGridView1.SelectedRows[0].Cells["ProductName"].Value.ToString();
-                var actualizar = new ActualizarProductoDialog(iproductosService);
+                var actualizar = new ActualizarProductoDialog(iproductosService, logger);
                 actualizar.Tag = productName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;

@@ -1,6 +1,7 @@
 ﻿using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -17,11 +18,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
     public partial class categoriasForm : Form
     {
         private readonly IcategoriaService icategoriaService;
+        private readonly ILogger logger;
 
-        public categoriasForm(IcategoriaService icategoriaService)
+        public categoriasForm(IcategoriaService icategoriaService, ILogger logger)
         {
             InitializeComponent();
             this.icategoriaService = icategoriaService;
+            this.logger = logger;
         }
 
         private void categoriasForm_Load(object sender, EventArgs e)
@@ -46,7 +49,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnAgregar_Click(object sender, EventArgs e)
         {
-            var formTnstance = new AgregarCategoriaDialog(icategoriaService);
+            var formTnstance = new AgregarCategoriaDialog(icategoriaService, logger);
             formTnstance.ShowDialog();
             btnReset.Visible = true;
         }
@@ -100,7 +103,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string categoriaName = dataGridView1.SelectedRows[0].Cells["CategoryName"].Value.ToString();
-                var actualizar = new ActualizarCategoriaDialog(icategoriaService);
+                var actualizar = new ActualizarCategoriaDialog(icategoriaService, logger);
                 actualizar.Tag = categoriaName;
                 actualizar.ShowDialog();
                 btnReset.Visible = true;
