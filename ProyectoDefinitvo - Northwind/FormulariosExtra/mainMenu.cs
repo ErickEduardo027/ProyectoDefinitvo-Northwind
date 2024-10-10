@@ -26,10 +26,11 @@ namespace ProyectoDefinitvo___Northwind
         private readonly ISuplidorService isuplidorService;
         private readonly ILogger logger;
         private readonly IproductoCRUD iproductoCRUD;
+        private readonly IcategoriaCRUD icategoriaCRUD;
 
         public IcategoriaService icategoriaService { get; }
 
-        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD)
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
@@ -37,6 +38,7 @@ namespace ProyectoDefinitvo___Northwind
             this.isuplidorService = isuplidorService;
             this.logger = logger;
             this.iproductoCRUD = iproductoCRUD;
+            this.icategoriaCRUD = icategoriaCRUD;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -69,7 +71,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnCategorias_Click(object sender, EventArgs e)
         {
-            abrirForm(new categoriasForm(icategoriaService, logger));
+            abrirForm(new categoriasForm(icategoriaService, logger, icategoriaCRUD));
         }
 
         private void btnSuplidores_Click(object sender, EventArgs e)
@@ -80,7 +82,7 @@ namespace ProyectoDefinitvo___Northwind
         private void button3_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)","Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD);
+            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD);
             loginForm.Show();
             this.Close();
         }

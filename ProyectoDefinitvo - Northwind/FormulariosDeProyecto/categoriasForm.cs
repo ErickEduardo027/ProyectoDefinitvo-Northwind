@@ -19,19 +19,20 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
     {
         private readonly IcategoriaService icategoriaService;
         private readonly ILogger logger;
+        private readonly IcategoriaCRUD icategoriaCRUD;
 
-        public categoriasForm(IcategoriaService icategoriaService, ILogger logger)
+        public categoriasForm(IcategoriaService icategoriaService, ILogger logger, IcategoriaCRUD icategoriaCRUD)
         {
             InitializeComponent();
             this.icategoriaService = icategoriaService;
             this.logger = logger;
+            this.icategoriaCRUD = icategoriaCRUD;
         }
 
         private void categoriasForm_Load(object sender, EventArgs e)
         {
             btnReset.Visible = false;
-            var ListaDeCategorias = new categoriaCRUD();
-            DataTable categorias = ListaDeCategorias.ObtenerCategorias();
+            DataTable categorias = icategoriaCRUD.ObtenerCategorias();
             dataGridView1.DataSource = categorias;
             dataGridView1.Columns["CategoryID"].HeaderText = "Id de la categoría:";
             dataGridView1.Columns["CategoryName"].HeaderText = "Nombre de la categoría:";
@@ -56,8 +57,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            var leer = new categoriaCRUD();
-            dataGridView1.DataSource = leer.ObtenerCategorias();
+            dataGridView1.DataSource = icategoriaCRUD.ObtenerCategorias();
             btnReset.Visible = false;
         }
 

@@ -66,9 +66,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
                 if (result == DialogResult.Yes)
                 {
-                    var productoCRUD = new productoCRUD();
 
-                    bool exito = productoCRUD.EliminarProducto(nombre);
+                    bool exito = iproductoCRUD.EliminarProducto(nombre);
 
                     if (exito)
                     {
@@ -110,9 +109,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            var leer = new productoCRUD();
-            DataTable productos = leer.ObtenerProductos();
-            dataGridView1.DataSource = productos;
+            
+            dataGridView1.DataSource = iproductoCRUD.ObtenerProductos();
             btnReset.Visible = false;
             comboBox1.Text = "";
             comboBox2.Text = "";

@@ -9,7 +9,15 @@ using System.Threading.Tasks;
 
 namespace ProyectoDefinitvo___Northwind.Servicios.categorias
 {
-    public class categoriaCRUD
+    public interface IcategoriaCRUD
+    {
+        bool ActualizarCategoria(int categoryID, string categoryName, string description, byte[] picture);
+        bool AgregarCategoria(string categoryName, string description, byte[] pictureData);
+        bool EliminarCategoria(int categoryID);
+        DataTable ObtenerCategorias();
+    }
+
+    public class categoriaCRUD : IcategoriaCRUD
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
 
@@ -35,13 +43,13 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
                 {
                     cmd.Parameters.AddWithValue("@CategoryName", categoryName);
                     cmd.Parameters.AddWithValue("@Description", description);
-                    
+
                     cmd.Parameters.AddWithValue("@Picture", pictureData ?? (object)DBNull.Value);
 
                     try
                     {
                         con.Open();
-                        return cmd.ExecuteNonQuery() == 1; 
+                        return cmd.ExecuteNonQuery() == 1;
                     }
                     catch (Exception ex)
                     {
@@ -63,7 +71,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
                 cmd.Parameters.AddWithValue("@CategoryID", categoryID);
                 cmd.Parameters.AddWithValue("@CategoryName", categoryName);
                 cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Picture", picture);  
+                cmd.Parameters.AddWithValue("@Picture", picture);
 
                 try
                 {
