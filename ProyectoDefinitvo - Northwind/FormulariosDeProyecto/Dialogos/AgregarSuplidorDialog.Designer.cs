@@ -293,7 +293,6 @@
             Name = "AgregarSuplidorDialog";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Agregar suplidor";
-            Load += AgregarSuplidorDialog_Load;
             ResumeLayout(false);
             PerformLayout();
         }

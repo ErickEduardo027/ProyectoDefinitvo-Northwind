@@ -16,20 +16,16 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private Dictionary<string, List<string>> ciudadesRegiones = new Dictionary<string, List<string>>();
         private readonly ISuplidorService isuplidorService;
         private readonly ILogger logger;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
 
-        public AgregarSuplidorDialog(ISuplidorService suplidorService, ILogger logger)
+        public AgregarSuplidorDialog(ISuplidorService suplidorService, ILogger logger, IsuplidoresCRUD isuplidoresCRUD)
         {
 
             InitializeComponent();
             InicializarDatos();
             this.isuplidorService = suplidorService;
             this.logger = logger;
-        }
-
-        private void AgregarSuplidorDialog_Load(object sender, EventArgs e)
-        {
-            
-
+            this.isuplidoresCRUD = isuplidoresCRUD;
         }
 
         private void InicializarDatos()
@@ -56,14 +52,12 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private void cbxCiudad_SelectedIndexChanged(object sender, EventArgs e)
         {
             string ciudadSeleccionada = cbxCiudad.SelectedItem.ToString();
-
         }
         private void cbxPais_SelectedIndexChanged(object sender, EventArgs e)
         {
             string paisSeleccionado = cbxPais.SelectedItem.ToString();
             cbxCiudad.Enabled = true;
             cbxCiudad.DataSource = paisesCiudades[paisSeleccionado];
-
         }
 
         private void btnAceptar_Click(object sender, EventArgs e)
@@ -100,8 +94,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     HomePage = homepage,
                 });
 
-                var agregar = new suplidoresCRUD();
-                if (agregar.AgregarSuplidor(nombreSuplidor, representante, PuestoRepresentante, direccion, ciudad, region, codigoPostal, pais, telefono, fax, homepage))
+                if (isuplidoresCRUD.AgregarSuplidor(nombreSuplidor, representante, PuestoRepresentante, direccion, ciudad, region, codigoPostal, pais, telefono, fax, homepage))
                 {
                     MessageBox.Show("Nuevo suplidor ingresado con éxito", "Agregar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -123,8 +116,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 }
 
             }
-
-
             catch (ValidationException ex)
             {
                 var message = ex.Message;

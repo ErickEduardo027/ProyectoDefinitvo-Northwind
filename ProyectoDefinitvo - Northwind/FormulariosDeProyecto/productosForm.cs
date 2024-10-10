@@ -24,13 +24,17 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private readonly IproductosService iproductosService;
         private readonly ILogger logger;
         private readonly IproductoCRUD iproductoCRUD;
+        private readonly IcategoriaCRUD icategoriaCRUD;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
-        public productosForm(IproductosService iproductosService, ILogger logger, IproductoCRUD iproductoCRUD)
+        public productosForm(IproductosService iproductosService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
             this.logger = logger;
             this.iproductoCRUD = iproductoCRUD;
+            this.icategoriaCRUD = icategoriaCRUD;
+            this.isuplidoresCRUD = isuplidoresCRUD;
             dataGridView1.AutoGenerateColumns = false;
         }
 
@@ -72,10 +76,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                     if (exito)
                     {
                         MessageBox.Show("Producto eliminado con éxito, despues no me vengas llorando!", "Eliminar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        var leer = new productoCRUD();
-                        DataTable productos = leer.ObtenerProductos();
-                        dataGridView1.DataSource = productos;
+                        dataGridView1.DataSource = iproductoCRUD.ObtenerProductos();
                     }
                     else
                     {
@@ -143,20 +144,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 else if (comboBox1.Text == "Suplidor")
                 {
                     comboBox2.Visible = true;
-
-                    var listaDeSuplidores = new suplidoresCRUD();
-                    DataTable Suplidores = listaDeSuplidores.ObtenerSuplidores();
-                    comboBox2.DataSource = Suplidores;
+                    comboBox2.DataSource = isuplidoresCRUD.ObtenerSuplidores();
                     comboBox2.ValueMember = "SupplierID";
                     comboBox2.DisplayMember = "CompanyName";
                 }
                 else if (comboBox1.Text == "Categoria")
                 {
                     comboBox3.Visible = true;
-
-                    var ListaDeCategorias = new categoriaCRUD();
-                    DataTable categorias = ListaDeCategorias.ObtenerCategorias();
-                    comboBox3.DataSource = categorias;
+                    comboBox3.DataSource = icategoriaCRUD.ObtenerCategorias();
                     comboBox3.ValueMember = "CategoryID";
                     comboBox3.DisplayMember = "CategoryName";
                 }
@@ -168,7 +163,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             btnFiltrarPorCategoria.Visible = true;
             btnFiltrarPorNombre.Visible = false;
             btnFiltrarPorSuplidor.Visible = false;
-
         }
 
         private void comboBox2_SelectedIndexChanged(object sender, EventArgs e)
@@ -238,11 +232,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 {
             { "@ProductName", textBox1.Text }
                 });
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-
         }
     }
 }

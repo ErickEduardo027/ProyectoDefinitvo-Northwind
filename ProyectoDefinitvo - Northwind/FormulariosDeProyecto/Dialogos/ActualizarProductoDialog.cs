@@ -20,14 +20,20 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 {
     public partial class ActualizarProductoDialog : Form
     {
-        private readonly IproductosService productosService;
+        private readonly IproductosService iproductosService;
         private readonly ILogger logger;
+        private readonly IproductoCRUD iproductoCRUD;
+        private readonly IcategoriaCRUD icategoriaCRUD;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
-        public ActualizarProductoDialog(IproductosService iproductosService, ILogger logger)
+        public ActualizarProductoDialog(IproductosService iproductosService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
-            this.productosService = iproductosService;
+            this.iproductosService = iproductosService;
             this.logger = logger;
+            this.iproductoCRUD = iproductoCRUD;
+            this.icategoriaCRUD = icategoriaCRUD;
+            this.isuplidoresCRUD = isuplidoresCRUD;
         }
 
         private void btnCancelar_Click(object sender, EventArgs e)
@@ -55,17 +61,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             string productName = this.Tag.ToString();
             CargarProductoPorNombre(productName);
 
-            var ListaDeCategorias = new categoriaCRUD();
-            DataTable categorias = ListaDeCategorias.ObtenerCategorias();
-            dataGridView1.DataSource = categorias;
-            DataGridViewImageColumn imageColumn = new DataGridViewImageColumn();
+            dataGridView1.DataSource = icategoriaCRUD.ObtenerCategorias();
             dataGridView1.RowTemplate.Height = 100;
             dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-
-
-            var listaDeSuplidores = new suplidoresCRUD();
-            DataTable Suplidores = listaDeSuplidores.ObtenerSuplidores();
-            dataGridView2.DataSource = Suplidores;
+            dataGridView2.DataSource = isuplidoresCRUD.ObtenerSuplidores();
         }
 
         private void btnActualizar_Click(object sender, EventArgs e)
@@ -118,7 +117,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
             try
             {
-                this.productosService.CrearProducto(new CrearProductoRequest
+                this.iproductosService.CrearProducto(new CrearProductoRequest
                 {
                     ProductName = txtProductName.Text,
                     SupplierID = int.Parse(txtSupplierID.Text),
@@ -138,9 +137,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 MessageBox.Show(message, "Validacion de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
 
-            var actualizar = new productoCRUD();
-
-            if (actualizar.ActualizarProducto(ProductId, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
+            if (iproductoCRUD.ActualizarProducto(ProductId, ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice,
                         UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued))
             {
                 MessageBox.Show("Nuevo producto Actualizado con éxito", "Actualizar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
