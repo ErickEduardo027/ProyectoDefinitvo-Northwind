@@ -12,9 +12,10 @@ namespace ProyectoDefinitvo___Northwind
         private readonly ILogger logger;
         private readonly IproductoCRUD iproductoCRUD;
         private readonly IcategoriaCRUD icategoriaCRUD;
+        private readonly IsuplidoresCRUD isuplidoresCRUD;
         private readonly IcategoriaService icategoriaService;
 
-        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD)
+        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
@@ -23,6 +24,7 @@ namespace ProyectoDefinitvo___Northwind
             this.logger = logger;
             this.iproductoCRUD = iproductoCRUD;
             this.icategoriaCRUD = icategoriaCRUD;
+            this.isuplidoresCRUD = isuplidoresCRUD;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -50,7 +52,7 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD);
+                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD);
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);

@@ -9,7 +9,15 @@ using System.Threading.Tasks;
 
 namespace ProyectoDefinitvo___Northwind.Servicios.suplidores
 {
-    public class suplidoresCRUD
+    public interface IsuplidoresCRUD
+    {
+        bool ActualizarSuplidor(int supplierID, string companyName, string contactName, string contactTitle, string address, string city, string region, string postalCode, string country, string phone, string fax, string homePage);
+        bool AgregarSuplidor(string companyName, string contactName, string contactTitle, string address, string city, string region, string postalCode, string country, string phone, string fax, string homePage);
+        bool EliminarSuplidor(int supplierID);
+        DataTable ObtenerSuplidores();
+    }
+
+    public class suplidoresCRUD : IsuplidoresCRUD
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
 
