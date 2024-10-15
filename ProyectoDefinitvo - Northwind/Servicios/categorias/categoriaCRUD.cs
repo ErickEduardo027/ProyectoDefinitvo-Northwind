@@ -60,11 +60,11 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
             }
         }
 
-
         public bool ActualizarCategoria(int categoryID, string categoryName, string description, byte[] picture)
         {
             string query = "UPDATE Categories SET CategoryName = @CategoryName, Description = @Description, Picture = @Picture WHERE CategoryID = @CategoryID";
             SqlConnection con = new SqlConnection(connectionString);
+
             {
                 SqlCommand cmd = new SqlCommand(query, con);
 

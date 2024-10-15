@@ -55,7 +55,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                             txtDescripcion.Text = reader["Description"].ToString();
 
                             byte[] imageData = (byte[])reader["Picture"];
-
+                            
                             try
                             {
                                 using (MemoryStream ms = new MemoryStream(imageData))
@@ -95,7 +95,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
             if (pictureBox1.Image != null)
             {
-                using (MemoryStream ms = new MemoryStream())
+                MemoryStream ms = new MemoryStream();
                 {
                     pictureBox1.Image.Save(ms, pictureBox1.Image.RawFormat);
                     pictureData = ms.ToArray();

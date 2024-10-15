@@ -20,7 +20,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private readonly ISuplidorService isuplidorService;
         private readonly ILogger logger;
         private readonly IsuplidoresCRUD isuplidoresCRUD;
-
+ 
         public suplidoresForm(ISuplidorService suplidorService, ILogger logger, IsuplidoresCRUD isuplidoresCRUD)
         {
             InitializeComponent();
