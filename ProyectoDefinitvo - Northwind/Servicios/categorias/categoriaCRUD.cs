@@ -1,5 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Data;
+using ProyectoDefinitvo___Northwind.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,96 +17,98 @@ namespace ProyectoDefinitvo___Northwind.Servicios.categorias
         bool ActualizarCategoria(int categoryID, string categoryName, string description, byte[] picture);
         bool AgregarCategoria(string categoryName, string description, byte[] pictureData);
         bool EliminarCategoria(int categoryID);
-        DataTable ObtenerCategorias();
+        List<Category> ObtenerCategorias();
     }
 
     public class categoriaCRUD : IcategoriaCRUD
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
 
-        public DataTable ObtenerCategorias()
+        public List<Category> ObtenerCategorias()
         {
-            string query = "SELECT CategoryID, CategoryName, Description, Picture FROM Categories";
-            SqlConnection con = new SqlConnection(connectionString);
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                DataTable categorias = new DataTable();
-                dataAdapter.Fill(categorias);
-                return categorias;
-            }
+            var dbContext = new NorthwindContext();
+            var Categoria = dbContext.Categories.ToList();
+            return Categoria;
+
         }
 
         public bool AgregarCategoria(string categoryName, string description, byte[] pictureData)
         {
-            string query = "INSERT INTO Categories (CategoryName, Description, Picture) VALUES (@CategoryName, @Description, @Picture)";
-            using (SqlConnection con = new SqlConnection(connectionString))
+
+            var dbContext = new NorthwindContext();
+            var categoria = new Category();
+            dbContext.Categories.Add(categoria);
+
+            if (categoria == null)
             {
-                using (SqlCommand cmd = new SqlCommand(query, con))
-                {
-                    cmd.Parameters.AddWithValue("@CategoryName", categoryName);
-                    cmd.Parameters.AddWithValue("@Description", description);
-
-                    cmd.Parameters.AddWithValue("@Picture", pictureData ?? (object)DBNull.Value);
-
-                    try
-                    {
-                        con.Open();
-                        return cmd.ExecuteNonQuery() == 1;
-                    }
-                    catch (Exception ex)
-                    {
-                        Console.WriteLine("Error: " + ex.Message);
-                        return false;
-                    }
-                }
+                return false;
             }
+
+            categoria.CategoryName = categoryName;
+            categoria.Description = description;
+            categoria.Picture = pictureData;
+
+            try
+            {
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
+            }
+
         }
 
         public bool ActualizarCategoria(int categoryID, string categoryName, string description, byte[] picture)
         {
-            string query = "UPDATE Categories SET CategoryName = @CategoryName, Description = @Description, Picture = @Picture WHERE CategoryID = @CategoryID";
-            SqlConnection con = new SqlConnection(connectionString);
 
+            var dbcontext = new NorthwindContext();
+            var Categoria = new Category();
+            dbcontext.Categories.FirstOrDefault(p => p.CategoryId == categoryID);
+            if (Categoria == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-
-                cmd.Parameters.AddWithValue("@CategoryID", categoryID);
-                cmd.Parameters.AddWithValue("@CategoryName", categoryName);
-                cmd.Parameters.AddWithValue("@Description", description);
-                cmd.Parameters.AddWithValue("@Picture", picture);
-
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+                return false;
             }
+
+            Categoria.CategoryName = categoryName;
+            Categoria.Description = description;
+            Categoria.Picture = picture;
+
+            try
+            {
+                dbcontext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
+            }
+
         }
 
         public bool EliminarCategoria(int categoryID)
         {
-            string query = "DELETE FROM Categories WHERE CategoryID = @CategoryID";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbContext = new NorthwindContext();
+            var categoria = dbContext.Categories.FirstOrDefault(p => p.CategoryId == categoryID);
+            if (categoria == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@CategoryID", categoryID);
+                return false;
+            }
 
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+            dbContext.Categories.Remove(categoria);
+
+            try
+            {
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
             }
         }
     }
