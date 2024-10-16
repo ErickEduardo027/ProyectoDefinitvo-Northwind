@@ -32,8 +32,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private void categoriasForm_Load(object sender, EventArgs e)
         {
             btnReset.Visible = false;
-            DataTable categorias = icategoriaCRUD.ObtenerCategorias();
-            dataGridView1.DataSource = categorias;
+            dataGridView1.DataSource = icategoriaCRUD.ObtenerCategorias();
             dataGridView1.Columns["CategoryID"].HeaderText = "Id de la categoría:";
             dataGridView1.Columns["CategoryName"].HeaderText = "Nombre de la categoría:";
             dataGridView1.Columns["Description"].HeaderText = "Descripción de la categoría:";
@@ -75,16 +74,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
                     int id = Convert.ToInt32(dataGridView1.CurrentRow.Cells[0].Value);
 
-                    var categoriaCRUD = new categoriaCRUD();
-
-                    bool exito = categoriaCRUD.EliminarCategoria(id);
+                    bool exito = icategoriaCRUD.EliminarCategoria(id);
 
                     if (exito)
                     {
                         MessageBox.Show("Categoría eliminada con éxito, despues no te quejes!", "Eliminar categoría", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        var leer = new categoriaCRUD();
-                        DataTable categorias = leer.ObtenerCategorias();
-                        dataGridView1.DataSource = categorias;
+
+                        dataGridView1.DataSource = icategoriaCRUD.ObtenerCategorias();
                     }
                     else
                     {

@@ -16,11 +16,14 @@ using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using System.Configuration;
 using Serilog;
+using Microsoft.EntityFrameworkCore;
+using ProyectoDefinitvo___Northwind.Data;
 
 namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 {
     public partial class productosForm : Form
     {
+        
         private readonly IproductosService iproductosService;
         private readonly ILogger logger;
         private readonly IproductoCRUD iproductoCRUD;
@@ -56,6 +59,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             btnFiltrarPorCategoria.Visible = false;
             btnFiltrarPorSuplidor.Visible = false;
             dataGridView1.DataSource = iproductoCRUD.ObtenerProductos();
+
         }
 
         private void btnEliminar_Click(object sender, EventArgs e)

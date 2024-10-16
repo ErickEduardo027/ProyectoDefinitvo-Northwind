@@ -1,5 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Data;
+using ProyectoDefinitvo___Northwind.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,110 +17,107 @@ namespace ProyectoDefinitvo___Northwind.Servicios.productos
         bool ActualizarProducto(int ProductID, string productName, int supplierID, int categoryID, string quantityPerUnit, decimal unitPrice, short unitsInStock, short unitsOnOrder, short reorderLevel, bool discontinued);
         bool AgregarProducto(string productName, int supplierID, int categoryID, string quantityPerUnit, decimal unitPrice, short unitsInStock, short unitsOnOrder, short reorderLevel, bool discontinued);
         bool EliminarProducto(string productName);
-        DataTable ObtenerProductos();
+        List<Product> ObtenerProductos();
     }
 
     public class productoCRUD : IproductoCRUD
     {
         string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
 
-        public DataTable ObtenerProductos()
+        public List<Product> ObtenerProductos()
         {
-            string query = "SELECT * FROM Products";
-            SqlConnection con = new SqlConnection(connectionString);
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                SqlDataAdapter datatable = new SqlDataAdapter(cmd);
-                DataTable productos = new DataTable();
-                datatable.Fill(productos);
-                return productos;
-            }
+            var dbcontext = new NorthwindContext();
+            var productos = dbcontext.Products.ToList();
+            return productos;
+
         }
 
         public bool AgregarProducto(string productName, int supplierID, int categoryID, string quantityPerUnit, decimal unitPrice,
                                     short unitsInStock, short unitsOnOrder, short reorderLevel, bool discontinued)
         {
-            string query = "INSERT INTO Products (ProductName, SupplierID, CategoryID, QuantityPerUnit, UnitPrice, UnitsInStock, UnitsOnOrder, ReorderLevel, Discontinued) " +
-                           "VALUES (@ProductName, @SupplierID, @CategoryID, @QuantityPerUnit, @UnitPrice, @UnitsInStock, @UnitsOnOrder, @ReorderLevel, @Discontinued)";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbcontext = new NorthwindContext();
+            var producto = new Product();
+            dbcontext.Products.Add(producto);
+            if (producto == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
+                return false;
+            }
 
-                cmd.Parameters.AddWithValue("@ProductName", productName);
-                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
-                cmd.Parameters.AddWithValue("@CategoryID", categoryID);
-                cmd.Parameters.AddWithValue("@QuantityPerUnit", quantityPerUnit);
-                cmd.Parameters.AddWithValue("@UnitPrice", unitPrice);
-                cmd.Parameters.AddWithValue("@UnitsInStock", unitsInStock);
-                cmd.Parameters.AddWithValue("@UnitsOnOrder", unitsOnOrder);
-                cmd.Parameters.AddWithValue("@ReorderLevel", reorderLevel);
-                cmd.Parameters.AddWithValue("@Discontinued", discontinued);
+            producto.ProductName = productName;
+            producto.SupplierId = supplierID;
+            producto.CategoryId = categoryID;
+            producto.QuantityPerUnit = quantityPerUnit;
+            producto.UnitPrice = unitPrice;
+            producto.UnitsInStock = unitsInStock;
+            producto.UnitsOnOrder = unitsOnOrder;
+            producto.ReorderLevel = reorderLevel;
+            producto.Discontinued = discontinued;
 
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+            try
+            {
+                dbcontext.SaveChanges();  
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
             }
         }
 
         public bool ActualizarProducto(int ProductID, string productName, int supplierID, int categoryID, string quantityPerUnit, decimal unitPrice,
                                short unitsInStock, short unitsOnOrder, short reorderLevel, bool discontinued)
         {
-            string query = "UPDATE Products SET ProductName = @ProductName, SupplierID = @SupplierID, CategoryID = @CategoryID, QuantityPerUnit = @QuantityPerUnit, " +
-                           "UnitPrice = @UnitPrice, UnitsInStock = @UnitsInStock, UnitsOnOrder = @UnitsOnOrder, ReorderLevel = @ReorderLevel, Discontinued = @Discontinued " +
-                           "WHERE ProductID = @ProductID";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbContext = new NorthwindContext();
+            var product = dbContext.Products.FirstOrDefault(p => p.ProductId == ProductID);
+            if (product == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-
-                cmd.Parameters.AddWithValue("@ProductID", ProductID);
-                cmd.Parameters.AddWithValue("@ProductName", productName);
-                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
-                cmd.Parameters.AddWithValue("@CategoryID", categoryID);
-                cmd.Parameters.AddWithValue("@QuantityPerUnit", quantityPerUnit);
-                cmd.Parameters.AddWithValue("@UnitPrice", unitPrice);
-                cmd.Parameters.AddWithValue("@UnitsInStock", unitsInStock);
-                cmd.Parameters.AddWithValue("@UnitsOnOrder", unitsOnOrder);
-                cmd.Parameters.AddWithValue("@ReorderLevel", reorderLevel);
-                cmd.Parameters.AddWithValue("@Discontinued", discontinued);
-
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+                return false;
             }
+
+            product.ProductName = productName;
+            product.SupplierId = supplierID;
+            product.CategoryId = categoryID;
+            product.QuantityPerUnit = quantityPerUnit;
+            product.UnitPrice = unitPrice;
+            product.UnitsInStock = unitsInStock;
+            product.UnitsOnOrder = unitsOnOrder;
+            product.ReorderLevel = reorderLevel;
+            product.Discontinued = discontinued;
+
+            try
+            {
+                dbContext.SaveChanges();  
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
+            }
+
         }
 
         public bool EliminarProducto(string productName)
         {
-            string query = "DELETE FROM Products WHERE ProductName = @ProductName";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbContext = new NorthwindContext();
+            var product = dbContext.Products.FirstOrDefault(p => p.ProductName == productName);
+            if (product == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@ProductName", productName);
+                return false;
+            }
 
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+            dbContext.Products.Remove(product);
+
+            try
+            {
+                dbContext.SaveChanges();   
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
             }
         }
     }
