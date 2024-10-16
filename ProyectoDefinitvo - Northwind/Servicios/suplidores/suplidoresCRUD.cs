@@ -1,5 +1,8 @@
 ﻿using Microsoft.Data.SqlClient;
+using Microsoft.EntityFrameworkCore.Metadata.Conventions.Infrastructure;
 using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Data;
+using ProyectoDefinitvo___Northwind.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,116 +17,109 @@ namespace ProyectoDefinitvo___Northwind.Servicios.suplidores
         bool ActualizarSuplidor(int supplierID, string companyName, string contactName, string contactTitle, string address, string city, string region, string postalCode, string country, string phone, string fax, string homePage);
         bool AgregarSuplidor(string companyName, string contactName, string contactTitle, string address, string city, string region, string postalCode, string country, string phone, string fax, string homePage);
         bool EliminarSuplidor(int supplierID);
-        DataTable ObtenerSuplidores();
+        List<Supplier> ObtenerSuplidores();
     }
 
     public class suplidoresCRUD : IsuplidoresCRUD
     {
-        string connectionString = Program.Configuration.GetConnectionString("NorthwindConnectionString");
 
-        public DataTable ObtenerSuplidores()
+        public List<Supplier> ObtenerSuplidores()
         {
-            string query = "SELECT SupplierID, CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax, HomePage FROM Suppliers";
-            SqlConnection con = new SqlConnection(connectionString);
-            {
-                SqlCommand cmd = new SqlCommand(query, con);
-                SqlDataAdapter dataAdapter = new SqlDataAdapter(cmd);
-                DataTable proveedores = new DataTable();
-                dataAdapter.Fill(proveedores);
-                return proveedores;
-            }
+            var dbContext = new NorthwindContext();
+            var suplidores = dbContext.Suppliers.ToList();
+            return suplidores;
         }
 
         public bool AgregarSuplidor(string companyName, string contactName, string contactTitle, string address, string city, string region,
                              string postalCode, string country, string phone, string fax, string homePage)
         {
-            string query = "INSERT INTO Suppliers (CompanyName, ContactName, ContactTitle, Address, City, Region, PostalCode, Country, Phone, Fax, HomePage) " +
-                           "VALUES (@CompanyName, @ContactName, @ContactTitle, @Address, @City, @Region, @PostalCode, @Country, @Phone, @Fax, @HomePage)";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbcontext = new NorthwindContext();
+            var suplidor = new Supplier();
+            dbcontext.Suppliers.Add(suplidor);
+            if (suplidor == null)
+            { 
+                return false;
+            }
+
+            suplidor.CompanyName = companyName;
+            suplidor.ContactName = contactName;
+            suplidor.ContactTitle = contactTitle;
+            suplidor.Address = address;
+            suplidor.City = city;
+            suplidor.Region = region;
+            suplidor.PostalCode = postalCode;
+            suplidor.Country = country;
+            suplidor.Phone = phone;
+            suplidor.Fax = fax;
+            suplidor.HomePage = homePage;
+
+            try
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-
-                cmd.Parameters.AddWithValue("@CompanyName", companyName);
-                cmd.Parameters.AddWithValue("@ContactName", contactName);
-                cmd.Parameters.AddWithValue("@ContactTitle", contactTitle);
-                cmd.Parameters.AddWithValue("@Address", address);
-                cmd.Parameters.AddWithValue("@City", city);
-                cmd.Parameters.AddWithValue("@Region", region);
-                cmd.Parameters.AddWithValue("@PostalCode", postalCode);
-                cmd.Parameters.AddWithValue("@Country", country);
-                cmd.Parameters.AddWithValue("@Phone", phone);
-                cmd.Parameters.AddWithValue("@Fax", fax);
-                cmd.Parameters.AddWithValue("@HomePage", homePage);
-
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+                dbcontext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
             }
         }
 
         public bool ActualizarSuplidor(int supplierID, string companyName, string contactName, string contactTitle, string address, string city, string region,
                                 string postalCode, string country, string phone, string fax, string homePage)
         {
-            string query = "UPDATE Suppliers SET CompanyName = @CompanyName, ContactName = @ContactName, ContactTitle = @ContactTitle, Address = @Address, City = @City, Region = @Region, " +
-                           "PostalCode = @PostalCode, Country = @Country, Phone = @Phone, Fax = @Fax, HomePage = @HomePage WHERE SupplierID = @SupplierID";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbContext = new NorthwindContext();
+            var suplidor = dbContext.Suppliers.FirstOrDefault(p => p.SupplierId == supplierID);
+            if (suplidor == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
+                return false;
+            }
 
-                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
-                cmd.Parameters.AddWithValue("@CompanyName", companyName);
-                cmd.Parameters.AddWithValue("@ContactName", contactName);
-                cmd.Parameters.AddWithValue("@ContactTitle", contactTitle);
-                cmd.Parameters.AddWithValue("@Address", address);
-                cmd.Parameters.AddWithValue("@City", city);
-                cmd.Parameters.AddWithValue("@Region", region);
-                cmd.Parameters.AddWithValue("@PostalCode", postalCode);
-                cmd.Parameters.AddWithValue("@Country", country);
-                cmd.Parameters.AddWithValue("@Phone", phone);
-                cmd.Parameters.AddWithValue("@Fax", fax);
-                cmd.Parameters.AddWithValue("@HomePage", homePage);
+            suplidor.CompanyName = companyName;
+            suplidor.ContactName = contactName;
+            suplidor.ContactTitle = contactTitle;
+            suplidor.Address = address;
+            suplidor.City = city;
+            suplidor.Region = region;
+            suplidor.PostalCode = postalCode;
+            suplidor.Country = country;
+            suplidor.Phone = phone;
+            suplidor.Fax = fax;
+            suplidor.HomePage = homePage;
 
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+            try
+            {
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
             }
         }
 
         public bool EliminarSuplidor(int supplierID)
         {
-            string query = "DELETE FROM Suppliers WHERE SupplierID = @SupplierID";
-            SqlConnection con = new SqlConnection(connectionString);
+            var dbContext = new NorthwindContext();
+            var suplidores = dbContext.Suppliers.FirstOrDefault(p => p.SupplierId == supplierID);
+            if (suplidores == null)
             {
-                SqlCommand cmd = new SqlCommand(query, con);
-                cmd.Parameters.AddWithValue("@SupplierID", supplierID);
+                return false;
+            }
 
-                try
-                {
-                    con.Open();
-                    return cmd.ExecuteNonQuery() == 1;
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine("Error: " + ex.Message);
-                    return false;
-                }
+            dbContext.Suppliers.Remove(suplidores);
+
+            try
+            {
+                dbContext.SaveChanges();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error: " + ex.Message);
+                return false;
             }
         }
-
-
     }
 }

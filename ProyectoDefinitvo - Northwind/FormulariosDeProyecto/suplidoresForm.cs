@@ -73,9 +73,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                     {
                         MessageBox.Show("Suplidor eliminado con éxito, despues no me vengas llorando!", "Eliminar suplidor", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                        var leer = new suplidoresCRUD();
-                        DataTable productos = leer.ObtenerSuplidores();
-                        dataGridView1.DataSource = productos;
+                        dataGridView1.DataSource = isuplidoresCRUD.ObtenerSuplidores();
                     }
                     else
                     {
@@ -91,8 +89,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnReset_Click(object sender, EventArgs e)
         {
-            var leer = new suplidoresCRUD();
-            dataGridView1.DataSource = leer.ObtenerSuplidores();
+            dataGridView1.DataSource = isuplidoresCRUD.ObtenerSuplidores();
             btnReset.Visible = false;
         }
 
