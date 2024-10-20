@@ -42,6 +42,7 @@
             lblTitulo = new Label();
             panelEscritorio = new Panel();
             pictureBox1 = new PictureBox();
+            btnOrdenes = new Button();
             panelMenu.SuspendLayout();
             panelLogo.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)pictureBox2).BeginInit();
@@ -53,6 +54,7 @@
             // panelMenu
             // 
             panelMenu.BackColor = Color.FromArgb(51, 51, 76);
+            panelMenu.Controls.Add(btnOrdenes);
             panelMenu.Controls.Add(button3);
             panelMenu.Controls.Add(btnSuplidores);
             panelMenu.Controls.Add(btnCategorias);
@@ -156,7 +158,6 @@
             panelLogo.Name = "panelLogo";
             panelLogo.Size = new Size(220, 80);
             panelLogo.TabIndex = 0;
-            panelLogo.Paint += panelLogo_Paint;
             // 
             // labelNombre
             // 
@@ -168,7 +169,6 @@
             labelNombre.Size = new Size(53, 15);
             labelNombre.TabIndex = 2;
             labelNombre.Text = "Nombre";
-            labelNombre.Click += label2_Click;
             // 
             // pictureBox2
             // 
@@ -246,6 +246,26 @@
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;
             // 
+            // btnOrdenes
+            // 
+            btnOrdenes.Dock = DockStyle.Top;
+            btnOrdenes.FlatAppearance.BorderSize = 0;
+            btnOrdenes.FlatStyle = FlatStyle.Flat;
+            btnOrdenes.Font = new Font("Segoe UI", 12F, FontStyle.Bold);
+            btnOrdenes.ForeColor = SystemColors.ButtonHighlight;
+            btnOrdenes.Image = Properties.Resources.lista_de_verificacion__2___1_;
+            btnOrdenes.ImageAlign = ContentAlignment.MiddleLeft;
+            btnOrdenes.Location = new Point(0, 260);
+            btnOrdenes.Name = "btnOrdenes";
+            btnOrdenes.Padding = new Padding(12, 0, 0, 0);
+            btnOrdenes.Size = new Size(220, 60);
+            btnOrdenes.TabIndex = 5;
+            btnOrdenes.Text = "   Ordenes";
+            btnOrdenes.TextAlign = ContentAlignment.MiddleLeft;
+            btnOrdenes.TextImageRelation = TextImageRelation.ImageBeforeText;
+            btnOrdenes.UseVisualStyleBackColor = true;
+            btnOrdenes.Click += btnOrdenes_Click;
+            // 
             // mainMenu
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -287,5 +307,6 @@
         private PictureBox pictureBox1;
         private Label labelNombre;
         private PictureBox pictureBox2;
+        private Button btnOrdenes;
     }
 }

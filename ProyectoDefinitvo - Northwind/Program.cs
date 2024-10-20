@@ -8,6 +8,7 @@ using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System.Reflection;
 using System.Windows.Forms;
 using Serilog;
+using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 
 namespace ProyectoDefinitvo___Northwind
 {
@@ -46,6 +47,7 @@ namespace ProyectoDefinitvo___Northwind
                 serviceCollection.AddTransient<IproductoCRUD, productoCRUD>();
                 serviceCollection.AddTransient<IcategoriaCRUD, categoriaCRUD>();
                 serviceCollection.AddTransient<IsuplidoresCRUD, suplidoresCRUD>();
+                serviceCollection.AddTransient<IOrdenDetalleCRUD, OrdenDetalleCRUD>();
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 

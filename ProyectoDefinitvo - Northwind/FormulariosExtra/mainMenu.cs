@@ -2,6 +2,7 @@
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
+using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using Serilog;
@@ -28,10 +29,11 @@ namespace ProyectoDefinitvo___Northwind
         private readonly IproductoCRUD iproductoCRUD;
         private readonly IcategoriaCRUD icategoriaCRUD;
         private readonly IsuplidoresCRUD isuplidoresCRUD;
+        private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
 
         public IcategoriaService icategoriaService { get; }
 
-        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD)
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD IordenDetalleCRUD)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
@@ -41,6 +43,7 @@ namespace ProyectoDefinitvo___Northwind
             this.iproductoCRUD = iproductoCRUD;
             this.icategoriaCRUD = icategoriaCRUD;
             this.isuplidoresCRUD = isuplidoresCRUD;
+            this.iordenDetalleCRUD = IordenDetalleCRUD;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -83,8 +86,8 @@ namespace ProyectoDefinitvo___Northwind
 
         private void button3_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)","Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD);
+            MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)", "Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD, iordenDetalleCRUD);
             loginForm.Show();
             this.Close();
         }
@@ -99,19 +102,14 @@ namespace ProyectoDefinitvo___Northwind
             }
         }
 
-        private void label2_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void panelLogo_Paint(object sender, PaintEventArgs e)
-        {
-
-        }
-
         public void ActualizarNombreText(string text)
         {
             labelNombre.Text = text;
+        }
+
+        private void btnOrdenes_Click(object sender, EventArgs e)
+        {
+            abrirForm(new OrdenesForm(iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD));
         }
     }
 }
