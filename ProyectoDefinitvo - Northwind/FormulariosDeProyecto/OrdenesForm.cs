@@ -3,6 +3,7 @@ using Microsoft.Extensions.Configuration;
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
+using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
@@ -22,18 +23,22 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
         private readonly IsuplidoresCRUD isuplidoresCRUD;
         private readonly IcategoriaCRUD icategoriaCRUD;
+        private readonly IordenCRUD iordenCRUD;
+        private readonly IordenService iordenService;
 
-        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD)
+        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService)
         {
             InitializeComponent();
             iordenDetalleCRUD = IordenDetalleCRUD;
             this.isuplidoresCRUD = isuplidoresCRUD;
             this.icategoriaCRUD = icategoriaCRUD;
+            this.iordenCRUD = iordenCRUD;
+            this.iordenService = iordenService;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var agregar = new AgregarOrdenDialog();
+            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD);
             agregar.ShowDialog();
         }
 

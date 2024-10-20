@@ -3,6 +3,7 @@ using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
+using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using Serilog;
@@ -30,10 +31,12 @@ namespace ProyectoDefinitvo___Northwind
         private readonly IcategoriaCRUD icategoriaCRUD;
         private readonly IsuplidoresCRUD isuplidoresCRUD;
         private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
+        private readonly IordenCRUD iordenCRUD;
+        private readonly IordenService iordenService;
 
         public IcategoriaService icategoriaService { get; }
 
-        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD IordenDetalleCRUD)
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD IordenDetalleCRUD, IordenCRUD iordenCRUD, IordenService iordenService)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
@@ -44,6 +47,8 @@ namespace ProyectoDefinitvo___Northwind
             this.icategoriaCRUD = icategoriaCRUD;
             this.isuplidoresCRUD = isuplidoresCRUD;
             this.iordenDetalleCRUD = IordenDetalleCRUD;
+            this.iordenCRUD = iordenCRUD;
+            this.iordenService = iordenService;
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -87,7 +92,7 @@ namespace ProyectoDefinitvo___Northwind
         private void button3_Click(object sender, EventArgs e)
         {
             MessageBox.Show("Vuelva pronto señor/a: " + labelNombre.Text + " Cualquier cosa el dev esta en maldivas ;)", "Log out", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD, iordenDetalleCRUD);
+            LoginForm loginForm = new LoginForm(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD, iordenDetalleCRUD, iordenCRUD, iordenService);
             loginForm.Show();
             this.Close();
         }
@@ -109,7 +114,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnOrdenes_Click(object sender, EventArgs e)
         {
-            abrirForm(new OrdenesForm(iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD));
+            abrirForm(new OrdenesForm(iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD, iordenCRUD, iordenService));
         }
     }
 }

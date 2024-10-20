@@ -63,7 +63,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private void btnAceptar_Click(object sender, EventArgs e)
         {
             logger.Information("suplidores_ADD:");
-            
+
             var nombreSuplidor = txtNombre.Text;
             var representante = txtRepresentante.Text;
             var PuestoRepresentante = cbxPuestoRepresentante.Text;
@@ -121,6 +121,11 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 var message = ex.Message;
                 MessageBox.Show(message, "Validación de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+        }
+
+        private void AgregarSuplidorDialog_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

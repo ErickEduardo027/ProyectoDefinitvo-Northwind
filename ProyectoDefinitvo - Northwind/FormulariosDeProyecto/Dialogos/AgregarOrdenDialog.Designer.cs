@@ -29,14 +29,17 @@
         private void InitializeComponent()
         {
             panel1 = new Panel();
+            cbxCiudad = new ComboBox();
+            cbxPais = new ComboBox();
+            button6 = new Button();
             textBox16 = new TextBox();
             label28 = new Label();
             label18 = new Label();
             label19 = new Label();
-            textBox7 = new TextBox();
-            textBox6 = new TextBox();
+            textBoxShipperID = new TextBox();
+            textBoxEmpleadoID = new TextBox();
             label15 = new Label();
-            textBox5 = new TextBox();
+            textBoxClienteID = new TextBox();
             btnContinuar = new Button();
             label13 = new Label();
             textBox4 = new TextBox();
@@ -55,17 +58,16 @@
             textBox3 = new TextBox();
             textBox2 = new TextBox();
             textBox1 = new TextBox();
-            comboBox5 = new ComboBox();
-            comboBox4 = new ComboBox();
             dateTimePicker4 = new DateTimePicker();
             dateTimePicker3 = new DateTimePicker();
             dateTimePicker1 = new DateTimePicker();
-            comboBox3 = new ComboBox();
-            comboBox2 = new ComboBox();
-            comboBox1 = new ComboBox();
+            comboBoxShippers = new ComboBox();
+            comboBoxEmpleados = new ComboBox();
+            comboBoxClientes = new ComboBox();
             label14 = new Label();
             panel2 = new Panel();
             panel3 = new Panel();
+            btnReset = new Button();
             label27 = new Label();
             textBox15 = new TextBox();
             label26 = new Label();
@@ -75,17 +77,19 @@
             label21 = new Label();
             textBox9 = new TextBox();
             button2 = new Button();
-            button1 = new Button();
-            textBox8 = new TextBox();
+            btnBuscar = new Button();
+            label16 = new Label();
+            textBoxBuscarProducto = new TextBox();
             label20 = new Label();
             numericUpDown1 = new NumericUpDown();
             dataGridView1 = new DataGridView();
             panel4 = new Panel();
-            label16 = new Label();
             label17 = new Label();
             dataGridView2 = new DataGridView();
             panel5 = new Panel();
+            label29 = new Label();
             button3 = new Button();
+            textBox17 = new TextBox();
             panel6 = new Panel();
             button4 = new Button();
             textBox11 = new TextBox();
@@ -106,14 +110,17 @@
             // panel1
             // 
             panel1.BorderStyle = BorderStyle.FixedSingle;
+            panel1.Controls.Add(cbxCiudad);
+            panel1.Controls.Add(cbxPais);
+            panel1.Controls.Add(button6);
             panel1.Controls.Add(textBox16);
             panel1.Controls.Add(label28);
             panel1.Controls.Add(label18);
             panel1.Controls.Add(label19);
-            panel1.Controls.Add(textBox7);
-            panel1.Controls.Add(textBox6);
+            panel1.Controls.Add(textBoxShipperID);
+            panel1.Controls.Add(textBoxEmpleadoID);
             panel1.Controls.Add(label15);
-            panel1.Controls.Add(textBox5);
+            panel1.Controls.Add(textBoxClienteID);
             panel1.Controls.Add(btnContinuar);
             panel1.Controls.Add(label13);
             panel1.Controls.Add(textBox4);
@@ -132,19 +139,47 @@
             panel1.Controls.Add(textBox3);
             panel1.Controls.Add(textBox2);
             panel1.Controls.Add(textBox1);
-            panel1.Controls.Add(comboBox5);
-            panel1.Controls.Add(comboBox4);
             panel1.Controls.Add(dateTimePicker4);
             panel1.Controls.Add(dateTimePicker3);
             panel1.Controls.Add(dateTimePicker1);
-            panel1.Controls.Add(comboBox3);
-            panel1.Controls.Add(comboBox2);
-            panel1.Controls.Add(comboBox1);
+            panel1.Controls.Add(comboBoxShippers);
+            panel1.Controls.Add(comboBoxEmpleados);
+            panel1.Controls.Add(comboBoxClientes);
             panel1.ForeColor = SystemColors.ControlText;
             panel1.Location = new Point(12, 50);
             panel1.Name = "panel1";
             panel1.Size = new Size(322, 851);
             panel1.TabIndex = 28;
+            // 
+            // cbxCiudad
+            // 
+            cbxCiudad.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxCiudad.FormattingEnabled = true;
+            cbxCiudad.Location = new Point(28, 617);
+            cbxCiudad.Name = "cbxCiudad";
+            cbxCiudad.Size = new Size(261, 23);
+            cbxCiudad.TabIndex = 45;
+            cbxCiudad.SelectedIndexChanged += cbxCiudad_SelectedIndexChanged;
+            // 
+            // cbxPais
+            // 
+            cbxPais.DropDownStyle = ComboBoxStyle.DropDownList;
+            cbxPais.FormattingEnabled = true;
+            cbxPais.Location = new Point(28, 561);
+            cbxPais.Name = "cbxPais";
+            cbxPais.Size = new Size(261, 23);
+            cbxPais.TabIndex = 44;
+            cbxPais.SelectedIndexChanged += cbxPaiss_SelectedIndexChanged;
+            // 
+            // button6
+            // 
+            button6.Location = new Point(28, 785);
+            button6.Name = "button6";
+            button6.Size = new Size(122, 46);
+            button6.TabIndex = 43;
+            button6.Text = "Cancelar";
+            button6.UseVisualStyleBackColor = true;
+            button6.Click += button6_Click;
             // 
             // textBox16
             // 
@@ -180,21 +215,21 @@
             label19.TabIndex = 30;
             label19.Text = "ID:";
             // 
-            // textBox7
+            // textBoxShipperID
             // 
-            textBox7.Enabled = false;
-            textBox7.Location = new Point(249, 148);
-            textBox7.Name = "textBox7";
-            textBox7.Size = new Size(40, 23);
-            textBox7.TabIndex = 30;
+            textBoxShipperID.Enabled = false;
+            textBoxShipperID.Location = new Point(249, 148);
+            textBoxShipperID.Name = "textBoxShipperID";
+            textBoxShipperID.Size = new Size(40, 23);
+            textBoxShipperID.TabIndex = 30;
             // 
-            // textBox6
+            // textBoxEmpleadoID
             // 
-            textBox6.Enabled = false;
-            textBox6.Location = new Point(249, 92);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(40, 23);
-            textBox6.TabIndex = 28;
+            textBoxEmpleadoID.Enabled = false;
+            textBoxEmpleadoID.Location = new Point(249, 92);
+            textBoxEmpleadoID.Name = "textBoxEmpleadoID";
+            textBoxEmpleadoID.Size = new Size(40, 23);
+            textBoxEmpleadoID.TabIndex = 28;
             // 
             // label15
             // 
@@ -205,17 +240,17 @@
             label15.TabIndex = 27;
             label15.Text = "ID:";
             // 
-            // textBox5
+            // textBoxClienteID
             // 
-            textBox5.Enabled = false;
-            textBox5.Location = new Point(249, 39);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(40, 23);
-            textBox5.TabIndex = 26;
+            textBoxClienteID.Enabled = false;
+            textBoxClienteID.Location = new Point(249, 39);
+            textBoxClienteID.Name = "textBoxClienteID";
+            textBoxClienteID.Size = new Size(40, 23);
+            textBoxClienteID.TabIndex = 26;
             // 
             // btnContinuar
             // 
-            btnContinuar.Location = new Point(106, 787);
+            btnContinuar.Location = new Point(162, 785);
             btnContinuar.Name = "btnContinuar";
             btnContinuar.Size = new Size(122, 46);
             btnContinuar.TabIndex = 25;
@@ -228,9 +263,9 @@
             label13.AutoSize = true;
             label13.Location = new Point(28, 721);
             label13.Name = "label13";
-            label13.Size = new Size(166, 15);
+            label13.Size = new Size(155, 15);
             label13.TabIndex = 24;
-            label13.Text = "Codigo postal de la entrega:* :";
+            label13.Text = "Codigo postal de la entrega:";
             // 
             // textBox4
             // 
@@ -289,9 +324,9 @@
             label7.AutoSize = true;
             label7.Location = new Point(28, 364);
             label7.Name = "label7";
-            label7.Size = new Size(73, 15);
+            label7.Size = new Size(123, 15);
             label7.TabIndex = 17;
-            label7.Text = "Transporte* :";
+            label7.Text = "Costo de Transporte* :";
             // 
             // label6
             // 
@@ -367,22 +402,6 @@
             textBox1.Size = new Size(261, 23);
             textBox1.TabIndex = 9;
             // 
-            // comboBox5
-            // 
-            comboBox5.FormattingEnabled = true;
-            comboBox5.Location = new Point(28, 617);
-            comboBox5.Name = "comboBox5";
-            comboBox5.Size = new Size(261, 23);
-            comboBox5.TabIndex = 7;
-            // 
-            // comboBox4
-            // 
-            comboBox4.FormattingEnabled = true;
-            comboBox4.Location = new Point(28, 557);
-            comboBox4.Name = "comboBox4";
-            comboBox4.Size = new Size(261, 23);
-            comboBox4.TabIndex = 6;
-            // 
             // dateTimePicker4
             // 
             dateTimePicker4.Location = new Point(28, 317);
@@ -404,29 +423,35 @@
             dateTimePicker1.Size = new Size(261, 23);
             dateTimePicker1.TabIndex = 3;
             // 
-            // comboBox3
+            // comboBoxShippers
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(28, 148);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(200, 23);
-            comboBox3.TabIndex = 2;
+            comboBoxShippers.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxShippers.FormattingEnabled = true;
+            comboBoxShippers.Location = new Point(28, 148);
+            comboBoxShippers.Name = "comboBoxShippers";
+            comboBoxShippers.Size = new Size(200, 23);
+            comboBoxShippers.TabIndex = 2;
+            comboBoxShippers.SelectedIndexChanged += comboBoxShippers_SelectedIndexChanged_1;
             // 
-            // comboBox2
+            // comboBoxEmpleados
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(28, 92);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(200, 23);
-            comboBox2.TabIndex = 1;
+            comboBoxEmpleados.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxEmpleados.FormattingEnabled = true;
+            comboBoxEmpleados.Location = new Point(28, 92);
+            comboBoxEmpleados.Name = "comboBoxEmpleados";
+            comboBoxEmpleados.Size = new Size(200, 23);
+            comboBoxEmpleados.TabIndex = 1;
+            comboBoxEmpleados.SelectedIndexChanged += comboBoxEmpleados_SelectedIndexChanged;
             // 
-            // comboBox1
+            // comboBoxClientes
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(28, 39);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(200, 23);
-            comboBox1.TabIndex = 0;
+            comboBoxClientes.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxClientes.FormattingEnabled = true;
+            comboBoxClientes.Location = new Point(28, 39);
+            comboBoxClientes.Name = "comboBoxClientes";
+            comboBoxClientes.Size = new Size(200, 23);
+            comboBoxClientes.TabIndex = 0;
+            comboBoxClientes.SelectedIndexChanged += comboBoxClientes_SelectedIndexChanged;
             // 
             // label14
             // 
@@ -448,6 +473,7 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(btnReset);
             panel3.Controls.Add(label27);
             panel3.Controls.Add(textBox15);
             panel3.Controls.Add(label26);
@@ -457,15 +483,28 @@
             panel3.Controls.Add(label21);
             panel3.Controls.Add(textBox9);
             panel3.Controls.Add(button2);
-            panel3.Controls.Add(button1);
-            panel3.Controls.Add(textBox8);
+            panel3.Controls.Add(btnBuscar);
+            panel3.Controls.Add(label16);
+            panel3.Controls.Add(textBoxBuscarProducto);
             panel3.Controls.Add(label20);
             panel3.Controls.Add(numericUpDown1);
             panel3.Controls.Add(dataGridView1);
-            panel3.Location = new Point(370, 50);
+            panel3.Location = new Point(370, 2);
             panel3.Name = "panel3";
             panel3.Size = new Size(828, 851);
             panel3.TabIndex = 30;
+            // 
+            // btnReset
+            // 
+            btnReset.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnReset.BackColor = Color.MediumOrchid;
+            btnReset.Location = new Point(385, 45);
+            btnReset.Name = "btnReset";
+            btnReset.Size = new Size(81, 45);
+            btnReset.TabIndex = 39;
+            btnReset.Text = "Reset";
+            btnReset.UseVisualStyleBackColor = false;
+            btnReset.Click += btnReset_Click;
             // 
             // label27
             // 
@@ -540,21 +579,32 @@
             button2.Text = "Agregar";
             button2.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // btnBuscar
             // 
-            button1.Location = new Point(271, 6);
-            button1.Name = "button1";
-            button1.Size = new Size(100, 46);
-            button1.TabIndex = 31;
-            button1.Text = "Buscar";
-            button1.UseVisualStyleBackColor = true;
+            btnBuscar.Location = new Point(275, 44);
+            btnBuscar.Name = "btnBuscar";
+            btnBuscar.Size = new Size(100, 46);
+            btnBuscar.TabIndex = 31;
+            btnBuscar.Text = "Buscar";
+            btnBuscar.UseVisualStyleBackColor = true;
+            btnBuscar.Click += btnBuscar_Click;
             // 
-            // textBox8
+            // label16
             // 
-            textBox8.Location = new Point(4, 19);
-            textBox8.Name = "textBox8";
-            textBox8.Size = new Size(261, 23);
-            textBox8.TabIndex = 31;
+            label16.AutoSize = true;
+            label16.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label16.Location = new Point(296, 12);
+            label16.Name = "label16";
+            label16.Size = new Size(224, 25);
+            label16.TabIndex = 31;
+            label16.Text = "Seleccion de productos:";
+            // 
+            // textBoxBuscarProducto
+            // 
+            textBoxBuscarProducto.Location = new Point(8, 57);
+            textBoxBuscarProducto.Name = "textBoxBuscarProducto";
+            textBoxBuscarProducto.Size = new Size(261, 23);
+            textBoxBuscarProducto.TabIndex = 31;
             // 
             // label20
             // 
@@ -575,9 +625,9 @@
             // dataGridView1
             // 
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(4, 56);
+            dataGridView1.Location = new Point(4, 96);
             dataGridView1.Name = "dataGridView1";
-            dataGridView1.Size = new Size(821, 681);
+            dataGridView1.Size = new Size(821, 641);
             dataGridView1.TabIndex = 0;
             // 
             // panel4
@@ -588,21 +638,11 @@
             panel4.Size = new Size(15, 910);
             panel4.TabIndex = 30;
             // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label16.Location = new Point(670, 12);
-            label16.Name = "label16";
-            label16.Size = new Size(224, 25);
-            label16.TabIndex = 31;
-            label16.Text = "Seleccion de productos:";
-            // 
             // label17
             // 
             label17.AutoSize = true;
             label17.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label17.Location = new Point(1294, 12);
+            label17.Location = new Point(33, 17);
             label17.Name = "label17";
             label17.Size = new Size(193, 25);
             label17.TabIndex = 32;
@@ -611,19 +651,31 @@
             // dataGridView2
             // 
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView2.Location = new Point(3, 6);
+            dataGridView2.Location = new Point(3, 54);
             dataGridView2.Name = "dataGridView2";
-            dataGridView2.Size = new Size(341, 552);
+            dataGridView2.Size = new Size(341, 504);
             dataGridView2.TabIndex = 33;
             // 
             // panel5
             // 
+            panel5.Controls.Add(label29);
             panel5.Controls.Add(button3);
             panel5.Controls.Add(dataGridView2);
-            panel5.Location = new Point(1227, 47);
+            panel5.Controls.Add(label17);
+            panel5.Controls.Add(textBox17);
+            panel5.Location = new Point(1227, 2);
             panel5.Name = "panel5";
-            panel5.Size = new Size(347, 618);
+            panel5.Size = new Size(347, 663);
             panel5.TabIndex = 34;
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(259, 8);
+            label29.Name = "label29";
+            label29.Size = new Size(21, 15);
+            label29.TabIndex = 40;
+            label29.Text = "ID:";
             // 
             // button3
             // 
@@ -633,6 +685,13 @@
             button3.TabIndex = 35;
             button3.Text = "Eliminar";
             button3.UseVisualStyleBackColor = true;
+            // 
+            // textBox17
+            // 
+            textBox17.Location = new Point(248, 25);
+            textBox17.Name = "textBox17";
+            textBox17.Size = new Size(41, 23);
+            textBox17.TabIndex = 39;
             // 
             // panel6
             // 
@@ -691,6 +750,7 @@
             button5.TabIndex = 40;
             button5.Text = "Cancelar";
             button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
             // 
             // label25
             // 
@@ -725,8 +785,6 @@
             Controls.Add(button4);
             Controls.Add(panel6);
             Controls.Add(panel5);
-            Controls.Add(label17);
-            Controls.Add(label16);
             Controls.Add(panel4);
             Controls.Add(panel3);
             Controls.Add(panel2);
@@ -748,6 +806,7 @@
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             panel5.ResumeLayout(false);
+            panel5.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -755,10 +814,10 @@
         #endregion
 
         private Panel panel1;
-        private TextBox textBox7;
-        private TextBox textBox6;
+        private TextBox textBoxShipperID;
+        private TextBox textBoxEmpleadoID;
         private Label label15;
-        private TextBox textBox5;
+        private TextBox textBoxClienteID;
         private Button btnContinuar;
         private Label label13;
         private TextBox textBox4;
@@ -777,14 +836,12 @@
         private TextBox textBox3;
         private TextBox textBox2;
         private TextBox textBox1;
-        private ComboBox comboBox5;
-        private ComboBox comboBox4;
         private DateTimePicker dateTimePicker4;
         private DateTimePicker dateTimePicker3;
         private DateTimePicker dateTimePicker1;
-        private ComboBox comboBox3;
-        private ComboBox comboBox2;
-        private ComboBox comboBox1;
+        private ComboBox comboBoxShippers;
+        private ComboBox comboBoxEmpleados;
+        private ComboBox comboBoxClientes;
         private Label label14;
         private Label label18;
         private Label label19;
@@ -795,8 +852,8 @@
         private Label label16;
         private Label label17;
         private Button button2;
-        private Button button1;
-        private TextBox textBox8;
+        private Button btnBuscar;
+        private TextBox textBoxBuscarProducto;
         private Label label20;
         private NumericUpDown numericUpDown1;
         private DataGridView dataGridView2;
@@ -821,5 +878,11 @@
         private TextBox textBox14;
         private Label label28;
         private TextBox textBox16;
+        private Button button6;
+        private Label label29;
+        private TextBox textBox17;
+        private ComboBox cbxPais;
+        private ComboBox cbxCiudad;
+        private Button btnReset;
     }
 }

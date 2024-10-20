@@ -13,13 +13,13 @@ namespace ProyectoDefinitvo___Northwind.Servicios.productos
         void CrearProducto(productosService.CrearProductoRequest request);
     }
 
-    public class pruebaProductoService : IproductosService
-    {
-        public void CrearProducto(productosService.CrearProductoRequest request)
-        {
-            throw new NotImplementedException();
-        }
-    }
+    //public class pruebaProductoService : IproductosService
+    //{
+    //    public void CrearProducto(productosService.CrearOrdenRequest request)
+    //    {
+    //        throw new NotImplementedException();
+    //    }
+    //}
 
     public class productosService : IproductosService
     {
