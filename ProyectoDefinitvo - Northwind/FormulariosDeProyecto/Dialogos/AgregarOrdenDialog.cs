@@ -15,6 +15,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using static ProyectoDefinitvo___Northwind.Servicios.Ordenes.ordenService;
 using static ProyectoDefinitvo___Northwind.Servicios.productos.productosService;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 {
@@ -302,5 +303,20 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             dataGridView1.DataSource = dtcontext.Products.ToList();
             btnReset.Visible = false;
         }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                // Obtener la fila seleccionada
+                DataGridViewRow filaSeleccionada = dataGridView1.Rows[e.RowIndex];
+
+                // Asignar los valores de la fila a los controles correspondientes
+                textBoxID.Text = filaSeleccionada.Cells["ProductId"].Value.ToString(); // Columna ProductId
+                textBoxProducto.Text = filaSeleccionada.Cells["ProductName"].Value.ToString(); // Columna ProductName
+                textBoxPrecio.Text = filaSeleccionada.Cells["UnitPrice"].Value.ToString(); // Columna UnitPrice
+            }
+        }
+
     }
 }

@@ -71,11 +71,11 @@
             label27 = new Label();
             textBox15 = new TextBox();
             label26 = new Label();
-            textBox12 = new TextBox();
+            textBoxID = new TextBox();
             label22 = new Label();
-            textBox10 = new TextBox();
+            textBoxPrecio = new TextBox();
             label21 = new Label();
-            textBox9 = new TextBox();
+            textBoxProducto = new TextBox();
             button2 = new Button();
             btnBuscar = new Button();
             label16 = new Label();
@@ -477,11 +477,11 @@
             panel3.Controls.Add(label27);
             panel3.Controls.Add(textBox15);
             panel3.Controls.Add(label26);
-            panel3.Controls.Add(textBox12);
+            panel3.Controls.Add(textBoxID);
             panel3.Controls.Add(label22);
-            panel3.Controls.Add(textBox10);
+            panel3.Controls.Add(textBoxPrecio);
             panel3.Controls.Add(label21);
-            panel3.Controls.Add(textBox9);
+            panel3.Controls.Add(textBoxProducto);
             panel3.Controls.Add(button2);
             panel3.Controls.Add(btnBuscar);
             panel3.Controls.Add(label16);
@@ -509,11 +509,11 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Location = new Point(566, 776);
+            label27.Location = new Point(556, 776);
             label27.Name = "label27";
-            label27.Size = new Size(66, 15);
+            label27.Size = new Size(95, 15);
             label27.TabIndex = 38;
-            label27.Text = "Descuento:";
+            label27.Text = "Descuento en %:";
             // 
             // textBox15
             // 
@@ -531,28 +531,30 @@
             label26.TabIndex = 36;
             label26.Text = "ID:";
             // 
-            // textBox12
+            // textBoxID
             // 
-            textBox12.Location = new Point(54, 792);
-            textBox12.Name = "textBox12";
-            textBox12.Size = new Size(41, 23);
-            textBox12.TabIndex = 35;
+            textBoxID.Enabled = false;
+            textBoxID.Location = new Point(54, 792);
+            textBoxID.Name = "textBoxID";
+            textBoxID.Size = new Size(41, 23);
+            textBoxID.TabIndex = 35;
             // 
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(423, 776);
+            label22.Location = new Point(431, 776);
             label22.Name = "label22";
             label22.Size = new Size(43, 15);
             label22.TabIndex = 34;
             label22.Text = "Precio:";
             // 
-            // textBox10
+            // textBoxPrecio
             // 
-            textBox10.Location = new Point(385, 794);
-            textBox10.Name = "textBox10";
-            textBox10.Size = new Size(135, 23);
-            textBox10.TabIndex = 33;
+            textBoxPrecio.Enabled = false;
+            textBoxPrecio.Location = new Point(385, 794);
+            textBoxPrecio.Name = "textBoxPrecio";
+            textBoxPrecio.Size = new Size(135, 23);
+            textBoxPrecio.TabIndex = 33;
             // 
             // label21
             // 
@@ -563,12 +565,13 @@
             label21.TabIndex = 32;
             label21.Text = "Producto:";
             // 
-            // textBox9
+            // textBoxProducto
             // 
-            textBox9.Location = new Point(109, 793);
-            textBox9.Name = "textBox9";
-            textBox9.Size = new Size(135, 23);
-            textBox9.TabIndex = 31;
+            textBoxProducto.Enabled = false;
+            textBoxProducto.Location = new Point(109, 793);
+            textBoxProducto.Name = "textBoxProducto";
+            textBoxProducto.Size = new Size(135, 23);
+            textBoxProducto.TabIndex = 31;
             // 
             // button2
             // 
@@ -609,7 +612,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(287, 775);
+            label20.Location = new Point(283, 775);
             label20.Name = "label20";
             label20.Size = new Size(58, 15);
             label20.TabIndex = 2;
@@ -627,8 +630,11 @@
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView1.Location = new Point(4, 96);
             dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(821, 641);
             dataGridView1.TabIndex = 0;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // panel4
             // 
@@ -859,9 +865,9 @@
         private DataGridView dataGridView2;
         private Panel panel5;
         private Label label22;
-        private TextBox textBox10;
+        private TextBox textBoxPrecio;
         private Label label21;
-        private TextBox textBox9;
+        private TextBox textBoxProducto;
         private Button button3;
         private Panel panel6;
         private Button button4;
@@ -870,7 +876,7 @@
         private Label label23;
         private Label label24;
         private Label label26;
-        private TextBox textBox12;
+        private TextBox textBoxID;
         private Label label27;
         private TextBox textBox15;
         private Button button5;
