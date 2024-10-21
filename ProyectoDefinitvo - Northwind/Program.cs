@@ -51,6 +51,7 @@ namespace ProyectoDefinitvo___Northwind
                 serviceCollection.AddTransient<IOrdenDetalleCRUD, OrdenDetalleCRUD>();
                 serviceCollection.AddTransient<IordenCRUD, ordenCRUD>();
                 serviceCollection.AddTransient<IordenService, ordenService>();
+                serviceCollection.AddTransient<IOrdenDetalleCRUD, OrdenDetalleCRUD>();
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 

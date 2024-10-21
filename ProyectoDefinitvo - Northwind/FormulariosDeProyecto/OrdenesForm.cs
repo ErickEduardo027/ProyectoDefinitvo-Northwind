@@ -26,7 +26,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private readonly IordenCRUD iordenCRUD;
         private readonly IordenService iordenService;
 
-        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService)
+        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD)
         {
             InitializeComponent();
             iordenDetalleCRUD = IordenDetalleCRUD;
@@ -34,11 +34,12 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             this.icategoriaCRUD = icategoriaCRUD;
             this.iordenCRUD = iordenCRUD;
             this.iordenService = iordenService;
+            this.iordenDetalleCRUD = iordenDetalleCRUD;
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD);
+            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD, iordenDetalleCRUD);
             agregar.ShowDialog();
         }
 

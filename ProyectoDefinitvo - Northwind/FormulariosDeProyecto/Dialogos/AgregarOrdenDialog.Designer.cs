@@ -67,6 +67,7 @@
             label14 = new Label();
             panel2 = new Panel();
             panel3 = new Panel();
+            textBox5 = new TextBox();
             btnReset = new Button();
             label27 = new Label();
             textBox15 = new TextBox();
@@ -81,7 +82,6 @@
             label16 = new Label();
             textBoxBuscarProducto = new TextBox();
             label20 = new Label();
-            numericUpDown1 = new NumericUpDown();
             dataGridView1 = new DataGridView();
             panel4 = new Panel();
             label17 = new Label();
@@ -101,7 +101,6 @@
             textBox14 = new TextBox();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).BeginInit();
             panel5.SuspendLayout();
@@ -245,7 +244,7 @@
             textBoxClienteID.Enabled = false;
             textBoxClienteID.Location = new Point(249, 39);
             textBoxClienteID.Name = "textBoxClienteID";
-            textBoxClienteID.Size = new Size(40, 23);
+            textBoxClienteID.Size = new Size(68, 23);
             textBoxClienteID.TabIndex = 26;
             // 
             // btnContinuar
@@ -473,6 +472,7 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(textBox5);
             panel3.Controls.Add(btnReset);
             panel3.Controls.Add(label27);
             panel3.Controls.Add(textBox15);
@@ -487,12 +487,18 @@
             panel3.Controls.Add(label16);
             panel3.Controls.Add(textBoxBuscarProducto);
             panel3.Controls.Add(label20);
-            panel3.Controls.Add(numericUpDown1);
             panel3.Controls.Add(dataGridView1);
             panel3.Location = new Point(370, 2);
             panel3.Name = "panel3";
             panel3.Size = new Size(828, 851);
             panel3.TabIndex = 30;
+            // 
+            // textBox5
+            // 
+            textBox5.Location = new Point(261, 793);
+            textBox5.Name = "textBox5";
+            textBox5.Size = new Size(104, 23);
+            textBox5.TabIndex = 40;
             // 
             // btnReset
             // 
@@ -509,11 +515,11 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Location = new Point(556, 776);
+            label27.Location = new Point(539, 776);
             label27.Name = "label27";
-            label27.Size = new Size(95, 15);
+            label27.Size = new Size(127, 15);
             label27.TabIndex = 38;
-            label27.Text = "Descuento en %:";
+            label27.Text = "Descuento en decimal:";
             // 
             // textBox15
             // 
@@ -581,6 +587,7 @@
             button2.TabIndex = 31;
             button2.Text = "Agregar";
             button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
             // 
             // btnBuscar
             // 
@@ -617,13 +624,6 @@
             label20.Size = new Size(58, 15);
             label20.TabIndex = 2;
             label20.Text = "Cantidad:";
-            // 
-            // numericUpDown1
-            // 
-            numericUpDown1.Location = new Point(255, 793);
-            numericUpDown1.Name = "numericUpDown1";
-            numericUpDown1.Size = new Size(120, 23);
-            numericUpDown1.TabIndex = 1;
             // 
             // dataGridView1
             // 
@@ -808,7 +808,6 @@
             panel1.PerformLayout();
             panel3.ResumeLayout(false);
             panel3.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)numericUpDown1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             panel5.ResumeLayout(false);
@@ -861,7 +860,6 @@
         private Button btnBuscar;
         private TextBox textBoxBuscarProducto;
         private Label label20;
-        private NumericUpDown numericUpDown1;
         private DataGridView dataGridView2;
         private Panel panel5;
         private Label label22;
@@ -890,5 +888,6 @@
         private ComboBox cbxPais;
         private ComboBox cbxCiudad;
         private Button btnReset;
+        private TextBox textBox5;
     }
 }

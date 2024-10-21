@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProyectoDefinitvo___Northwind.Data;
 using ProyectoDefinitvo___Northwind.Models;
+using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using System;
@@ -25,13 +26,15 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private Dictionary<string, List<string>> ciudadesRegiones = new Dictionary<string, List<string>>();
         private readonly IordenService iordenService;
         private readonly IordenCRUD iordenCRUD;
+        private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
 
-        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD)
+        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD)
         {
             InitializeComponent();
             CargarDatosComboBox();
             this.iordenService = iordenService;
             this.iordenCRUD = iordenCRUD;
+            this.iordenDetalleCRUD = iordenDetalleCRUD;
             InicializarDatos();
         }
 
@@ -222,52 +225,86 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void button5_Click(object sender, EventArgs e)
         {
-            try
+            var dbcontext = new NorthwindContext();
+            var ultimaOrden = dbcontext.Orders
+                       .OrderByDescending(o => o.OrderId)
+                       .FirstOrDefault();
+
+            if (ultimaOrden == null)
             {
-                var dbcontext = new NorthwindContext();
+                MessageBox.Show("No se encontró ninguna orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (dataGridView2.Rows.Count > 0)
+            {
+                var confirmResult = MessageBox.Show($"Hay registros asociados a la orden. Si desea cancelar se eliminarán tanto los registros como la última orden creada. ¿Está seguro que desea continuar?",
+                                                    "Confirmar eliminación",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question);
+                if (confirmResult == DialogResult.Yes)
                 {
-                    var ultimaOrden = dbcontext.Orders
-                        .OrderByDescending(o => o.OrderId)
-                        .FirstOrDefault();
+                    var detallesOrden = dbcontext.OrderDetails
+                        .Where(od => od.OrderId == ultimaOrden.OrderId)
+                        .ToList();
 
-                    if (ultimaOrden != null)
+                    foreach (var detalle in detallesOrden)
                     {
-                        var confirmResult = MessageBox.Show($"Para crear una orden se necesita al menos un registro, si desea cancelar se borraran los datos de la orden previamente creada ¿Está seguro que desea eliminar la última orden?",
-                                                            "Confirmar eliminación",
-                                                            MessageBoxButtons.YesNo,
-                                                            MessageBoxIcon.Question);
+                        dbcontext.OrderDetails.Remove(detalle);
+                    }
 
-                        if (confirmResult == DialogResult.Yes)
-                        {
-                            if (iordenCRUD.EliminarOrden(ultimaOrden.OrderId))
-                            {
-                                MessageBox.Show($"Última orden con ID {ultimaOrden.OrderId} eliminada con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    dbcontext.SaveChanges();
 
-                                panel3.Enabled = false;
-                                panel5.Enabled = false;
-                                panel1.Enabled = true;
-                            }
-                            else
-                            {
-                                MessageBox.Show("Ocurrió un error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                            }
-                        }
-                        else
-                        {
-                            MessageBox.Show("La eliminación de la orden fue cancelada.", "Cancelado", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
+                    if (iordenCRUD.EliminarOrden(ultimaOrden.OrderId))
+                    {
+                        MessageBox.Show($"Última orden con ID {ultimaOrden.OrderId} y sus detalles eliminados con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                       
+                        dataGridView1.DataSource = null;
+                        dataGridView2.DataSource = null;
+                        panel3.Enabled = false;
+                        panel5.Enabled = false;
+                        panel1.Enabled = true;
+                        textBox17.Text = "";
+                        textBoxID.Text = "";
+                        textBoxPrecio.Text = "";
+                        textBox5.Text = "";
+                        textBox15.Text = "";
+                        textBoxProducto.Text = "";
+
+
                     }
                     else
                     {
-                        MessageBox.Show("No se encontró ninguna orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Ocurrió un error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Ocurrió un error al intentar eliminar la orden: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                var confirmResult = MessageBox.Show($"No hay registros en la tabla. ¿Está seguro que desea eliminar la última orden con ID {ultimaOrden.OrderId}?",
+                                                    "Confirmar eliminación",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question);
+                if (confirmResult == DialogResult.Yes)
+                {
+                    if (iordenCRUD.EliminarOrden(ultimaOrden.OrderId))
+                    {
+                        MessageBox.Show($"Última orden con ID {ultimaOrden.OrderId} eliminada con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                        dataGridView1.DataSource = null;
+                        panel3.Enabled = false;
+                        panel5.Enabled = false;
+                        panel1.Enabled = true;
+                    }
+                    else
+                    {
+                        MessageBox.Show("Ocurrió un error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
         }
+
 
         private void btnBuscar_Click(object sender, EventArgs e)
         {
@@ -308,15 +345,33 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         {
             if (e.RowIndex >= 0)
             {
-                // Obtener la fila seleccionada
+              
                 DataGridViewRow filaSeleccionada = dataGridView1.Rows[e.RowIndex];
 
-                // Asignar los valores de la fila a los controles correspondientes
-                textBoxID.Text = filaSeleccionada.Cells["ProductId"].Value.ToString(); // Columna ProductId
-                textBoxProducto.Text = filaSeleccionada.Cells["ProductName"].Value.ToString(); // Columna ProductName
-                textBoxPrecio.Text = filaSeleccionada.Cells["UnitPrice"].Value.ToString(); // Columna UnitPrice
+                
+                textBoxID.Text = filaSeleccionada.Cells["ProductId"].Value.ToString(); 
+                textBoxProducto.Text = filaSeleccionada.Cells["ProductName"].Value.ToString(); 
+                textBoxPrecio.Text = filaSeleccionada.Cells["UnitPrice"].Value.ToString(); 
             }
         }
 
+        private void button2_Click(object sender, EventArgs e)
+        {
+
+            var ordenId = int.Parse(textBox17.Text);
+            var productiId = int.Parse(textBoxID.Text);
+            var precioXunidad = decimal.Parse(textBoxPrecio.Text);
+            var cantidad = short.Parse(textBox5.Text);
+            var descuento = float.Parse(textBox15.Text);
+
+            if (iordenDetalleCRUD.AgregarOrdenDetalle(ordenId, productiId, precioXunidad, cantidad, descuento))
+            {
+                MessageBox.Show("Nuevo detalle de la orden ingresada con éxito", "Agregar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                var dtcontext = new NorthwindContext();
+                dataGridView2.DataSource = dtcontext.OrderDetails.ToList().Where(x => x.OrderId == ordenId).ToList();
+
+            }
+            
+        }
     }
 }
