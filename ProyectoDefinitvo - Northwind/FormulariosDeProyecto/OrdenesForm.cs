@@ -1,5 +1,6 @@
 ﻿using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
+using ProyectoDefinitvo___Northwind.Data;
 using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
@@ -45,12 +46,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void OrdenesForm_Load(object sender, EventArgs e)
         {
+
             label2.Visible = false;
             textBox1.Visible = false;
             btnReset.Visible = false;
             btnFiltrarPorNombre.Visible = false;
             btnReset.Visible = false;
-            dataGridView1.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle();
+            var dtcontext = new NorthwindContext();
+            dataGridView1.DataSource = dtcontext.Orders.ToList();
         }
 
 
@@ -94,7 +97,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         {
             btnReset.Visible = false;
             textBox1.Text = "";
-            dataGridView1.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle();
+            var dtcontext = new NorthwindContext();
+            dataGridView1.DataSource = dtcontext.Orders.ToList();
         }
 
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)

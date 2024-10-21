@@ -12,7 +12,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
 {
     public interface IOrdenDetalleCRUD
     {
-        List<OrderDetailViewModel> ObtenerOrdenDetalle();
+        List<OrderDetailViewModel> ObtenerOrdenDetalle(int orderId);
         bool AgregarOrdenDetalle(int orderId, int productId, decimal unitPrice, short quantity, float discount);
         bool EliminarOrdenDetalle(int orderId, int productId);
     }
@@ -41,13 +41,17 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
 
     public class OrdenDetalleCRUD : IOrdenDetalleCRUD
     {
-       
-        public List<OrderDetailViewModel> ObtenerOrdenDetalle()
+
+        public List<OrderDetailViewModel> ObtenerOrdenDetalle(int orderId)
         {
             var dbContext = new NorthwindContext();
-            var orderDetail = dbContext.OrderDetails.Include(x => x.Product)
+
+          
+            var orderDetail = dbContext.OrderDetails
+                .Include(x => x.Product)
                 .Include(x => x.Product.Category)
                 .Include(x => x.Product.Supplier)
+                .Where(x => x.OrderId == orderId) 
                 .Select(x => new OrderDetailViewModel()
                 {
                     OrderId = x.OrderId,
@@ -59,13 +63,14 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
                     CategoryName = x.Product.Category.CategoryName,
                     CompanyName = x.Product.Supplier.CompanyName,
                     ExtendedPrice = (decimal)((x.Quantity * float.Parse(x.UnitPrice.ToString())) - (x.Quantity * float.Parse(x.UnitPrice.ToString())) * x.Discount),
-
-                }).ToList();
+                })
+                .ToList();
 
             return orderDetail;
         }
 
-       
+
+
         public bool AgregarOrdenDetalle(int orderId, int productId, decimal unitPrice, short quantity, float discount)
         {
             try

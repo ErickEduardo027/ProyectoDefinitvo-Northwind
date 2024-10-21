@@ -258,7 +258,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     {
                         MessageBox.Show($"Última orden con ID {ultimaOrden.OrderId} y sus detalles eliminados con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
-                       
+
                         dataGridView1.DataSource = null;
                         dataGridView2.DataSource = null;
                         panel3.Enabled = false;
@@ -345,13 +345,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         {
             if (e.RowIndex >= 0)
             {
-              
+
                 DataGridViewRow filaSeleccionada = dataGridView1.Rows[e.RowIndex];
 
-                
-                textBoxID.Text = filaSeleccionada.Cells["ProductId"].Value.ToString(); 
-                textBoxProducto.Text = filaSeleccionada.Cells["ProductName"].Value.ToString(); 
-                textBoxPrecio.Text = filaSeleccionada.Cells["UnitPrice"].Value.ToString(); 
+
+                textBoxID.Text = filaSeleccionada.Cells["ProductId"].Value.ToString();
+                textBoxProducto.Text = filaSeleccionada.Cells["ProductName"].Value.ToString();
+                textBoxPrecio.Text = filaSeleccionada.Cells["UnitPrice"].Value.ToString();
             }
         }
 
@@ -368,10 +368,67 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             {
                 MessageBox.Show("Nuevo detalle de la orden ingresada con éxito", "Agregar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var dtcontext = new NorthwindContext();
-                dataGridView2.DataSource = dtcontext.OrderDetails.ToList().Where(x => x.OrderId == ordenId).ToList();
+                dataGridView2.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle(ordenId);
 
             }
-            
+
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                DataGridViewRow filaSeleccionada = dataGridView2.SelectedRows[0];
+
+                int orderId = int.Parse(filaSeleccionada.Cells["OrderId"].Value.ToString());
+                int productId = int.Parse(filaSeleccionada.Cells["ProductId"].Value.ToString());
+
+                var confirmResult = MessageBox.Show($"¿Está seguro que desea eliminar el detalle del producto con ID {productId} de la orden con ID {orderId}?",
+                                                    "Confirmar eliminación",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    if (iordenDetalleCRUD.EliminarOrdenDetalle(orderId, productId))
+                    {
+                        MessageBox.Show("Detalle de la orden eliminado con éxito", "Eliminar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        var dtcontext = new NorthwindContext();
+                        dataGridView2.DataSource = dtcontext.OrderDetails
+                            .Where(x => x.OrderId == orderId)
+                            .ToList();
+                    }
+                    else
+                    {
+                        MessageBox.Show("Error al eliminar el detalle de la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un detalle de la orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
+
+        private void btnCrearOrden_Click(object sender, EventArgs e)
+        {
+
+            var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden y cerrar el formulario?",
+                                                "Confirmar creación de orden",
+                                                MessageBoxButtons.YesNo,
+                                                MessageBoxIcon.Question);
+
+            if (confirmResult == DialogResult.Yes)
+            {
+
+                this.Close();
+            }
+            else
+            {
+                MessageBox.Show("La creación de la orden ha sido cancelada.", "Operación cancelada", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
     }
 }

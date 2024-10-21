@@ -87,18 +87,17 @@
             label17 = new Label();
             dataGridView2 = new DataGridView();
             panel5 = new Panel();
+            label25 = new Label();
             label29 = new Label();
             button3 = new Button();
-            textBox17 = new TextBox();
-            panel6 = new Panel();
-            button4 = new Button();
-            textBox11 = new TextBox();
-            textBox13 = new TextBox();
-            label23 = new Label();
             label24 = new Label();
             button5 = new Button();
-            label25 = new Label();
-            textBox14 = new TextBox();
+            label23 = new Label();
+            textBox17 = new TextBox();
+            btnCrearOrden = new Button();
+            label30 = new Label();
+            label31 = new Label();
+            label32 = new Label();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -495,7 +494,7 @@
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(261, 793);
+            textBox5.Location = new Point(416, 794);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(104, 23);
             textBox5.TabIndex = 40;
@@ -548,7 +547,7 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(431, 776);
+            label22.Location = new Point(305, 774);
             label22.Name = "label22";
             label22.Size = new Size(43, 15);
             label22.TabIndex = 34;
@@ -557,7 +556,7 @@
             // textBoxPrecio
             // 
             textBoxPrecio.Enabled = false;
-            textBoxPrecio.Location = new Point(385, 794);
+            textBoxPrecio.Location = new Point(258, 796);
             textBoxPrecio.Name = "textBoxPrecio";
             textBoxPrecio.Size = new Size(135, 23);
             textBoxPrecio.TabIndex = 33;
@@ -574,7 +573,7 @@
             // textBoxProducto
             // 
             textBoxProducto.Enabled = false;
-            textBoxProducto.Location = new Point(109, 793);
+            textBoxProducto.Location = new Point(110, 796);
             textBoxProducto.Name = "textBoxProducto";
             textBoxProducto.Size = new Size(135, 23);
             textBoxProducto.TabIndex = 31;
@@ -619,7 +618,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(283, 775);
+            label20.Location = new Point(438, 776);
             label20.Name = "label20";
             label20.Size = new Size(58, 15);
             label20.TabIndex = 2;
@@ -659,20 +658,39 @@
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Location = new Point(3, 54);
             dataGridView2.Name = "dataGridView2";
+            dataGridView2.ReadOnly = true;
+            dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView2.Size = new Size(341, 504);
             dataGridView2.TabIndex = 33;
             // 
             // panel5
             // 
+            panel5.Controls.Add(label30);
+            panel5.Controls.Add(label31);
+            panel5.Controls.Add(label32);
+            panel5.Controls.Add(label25);
             panel5.Controls.Add(label29);
             panel5.Controls.Add(button3);
+            panel5.Controls.Add(label24);
+            panel5.Controls.Add(button5);
+            panel5.Controls.Add(label23);
             panel5.Controls.Add(dataGridView2);
             panel5.Controls.Add(label17);
             panel5.Controls.Add(textBox17);
+            panel5.Controls.Add(btnCrearOrden);
             panel5.Location = new Point(1227, 2);
             panel5.Name = "panel5";
-            panel5.Size = new Size(347, 663);
+            panel5.Size = new Size(347, 899);
             panel5.TabIndex = 34;
+            // 
+            // label25
+            // 
+            label25.AutoSize = true;
+            label25.Location = new Point(97, 797);
+            label25.Name = "label25";
+            label25.Size = new Size(42, 15);
+            label25.TabIndex = 42;
+            label25.Text = "TOTAL:";
             // 
             // label29
             // 
@@ -691,6 +709,35 @@
             button3.TabIndex = 35;
             button3.Text = "Eliminar";
             button3.UseVisualStyleBackColor = true;
+            button3.Click += button3_Click;
+            // 
+            // label24
+            // 
+            label24.AutoSize = true;
+            label24.Location = new Point(73, 770);
+            label24.Name = "label24";
+            label24.Size = new Size(66, 15);
+            label24.TabIndex = 38;
+            label24.Text = "Descuento:";
+            // 
+            // button5
+            // 
+            button5.Location = new Point(31, 837);
+            button5.Name = "button5";
+            button5.Size = new Size(143, 55);
+            button5.TabIndex = 40;
+            button5.Text = "Cancelar";
+            button5.UseVisualStyleBackColor = true;
+            button5.Click += button5_Click;
+            // 
+            // label23
+            // 
+            label23.AutoSize = true;
+            label23.Location = new Point(85, 745);
+            label23.Name = "label23";
+            label23.Size = new Size(54, 15);
+            label23.TabIndex = 31;
+            label23.Text = "Subtotal:";
             // 
             // textBox17
             // 
@@ -699,80 +746,42 @@
             textBox17.Size = new Size(41, 23);
             textBox17.TabIndex = 39;
             // 
-            // panel6
+            // btnCrearOrden
             // 
-            panel6.BackColor = SystemColors.ActiveCaptionText;
-            panel6.Location = new Point(1219, 671);
-            panel6.Name = "panel6";
-            panel6.Size = new Size(359, 16);
-            panel6.TabIndex = 31;
+            btnCrearOrden.Location = new Point(178, 836);
+            btnCrearOrden.Name = "btnCrearOrden";
+            btnCrearOrden.Size = new Size(143, 57);
+            btnCrearOrden.TabIndex = 35;
+            btnCrearOrden.Text = "Crear Orden";
+            btnCrearOrden.UseVisualStyleBackColor = true;
+            btnCrearOrden.Click += btnCrearOrden_Click;
             // 
-            // button4
+            // label30
             // 
-            button4.Location = new Point(1398, 844);
-            button4.Name = "button4";
-            button4.Size = new Size(176, 57);
-            button4.TabIndex = 35;
-            button4.Text = "Crear Orden";
-            button4.UseVisualStyleBackColor = true;
+            label30.AutoSize = true;
+            label30.Location = new Point(97, 708);
+            label30.Name = "label30";
+            label30.Size = new Size(42, 15);
+            label30.TabIndex = 45;
+            label30.Text = "TOTAL:";
             // 
-            // textBox11
+            // label31
             // 
-            textBox11.Location = new Point(1339, 727);
-            textBox11.Name = "textBox11";
-            textBox11.Size = new Size(230, 23);
-            textBox11.TabIndex = 31;
+            label31.AutoSize = true;
+            label31.Location = new Point(73, 681);
+            label31.Name = "label31";
+            label31.Size = new Size(66, 15);
+            label31.TabIndex = 44;
+            label31.Text = "Descuento:";
             // 
-            // textBox13
+            // label32
             // 
-            textBox13.Location = new Point(1339, 760);
-            textBox13.Name = "textBox13";
-            textBox13.Size = new Size(230, 23);
-            textBox13.TabIndex = 36;
-            // 
-            // label23
-            // 
-            label23.AutoSize = true;
-            label23.Location = new Point(1248, 730);
-            label23.Name = "label23";
-            label23.Size = new Size(54, 15);
-            label23.TabIndex = 31;
-            label23.Text = "Subtotal:";
-            // 
-            // label24
-            // 
-            label24.AutoSize = true;
-            label24.Location = new Point(1236, 762);
-            label24.Name = "label24";
-            label24.Size = new Size(66, 15);
-            label24.TabIndex = 38;
-            label24.Text = "Descuento:";
-            // 
-            // button5
-            // 
-            button5.Location = new Point(1225, 844);
-            button5.Name = "button5";
-            button5.Size = new Size(167, 57);
-            button5.TabIndex = 40;
-            button5.Text = "Cancelar";
-            button5.UseVisualStyleBackColor = true;
-            button5.Click += button5_Click;
-            // 
-            // label25
-            // 
-            label25.AutoSize = true;
-            label25.Location = new Point(1260, 799);
-            label25.Name = "label25";
-            label25.Size = new Size(42, 15);
-            label25.TabIndex = 42;
-            label25.Text = "TOTAL:";
-            // 
-            // textBox14
-            // 
-            textBox14.Location = new Point(1339, 796);
-            textBox14.Name = "textBox14";
-            textBox14.Size = new Size(230, 23);
-            textBox14.TabIndex = 41;
+            label32.AutoSize = true;
+            label32.Location = new Point(85, 656);
+            label32.Name = "label32";
+            label32.Size = new Size(54, 15);
+            label32.TabIndex = 43;
+            label32.Text = "Subtotal:";
             // 
             // AgregarOrdenDialog
             // 
@@ -781,15 +790,6 @@
             BackColor = SystemColors.ActiveCaption;
             ClientSize = new Size(1581, 907);
             ControlBox = false;
-            Controls.Add(label25);
-            Controls.Add(textBox14);
-            Controls.Add(button5);
-            Controls.Add(label24);
-            Controls.Add(label23);
-            Controls.Add(textBox13);
-            Controls.Add(textBox11);
-            Controls.Add(button4);
-            Controls.Add(panel6);
             Controls.Add(panel5);
             Controls.Add(panel4);
             Controls.Add(panel3);
@@ -867,10 +867,7 @@
         private Label label21;
         private TextBox textBoxProducto;
         private Button button3;
-        private Panel panel6;
-        private Button button4;
-        private TextBox textBox11;
-        private TextBox textBox13;
+        private Button btnCrearOrden;
         private Label label23;
         private Label label24;
         private Label label26;
@@ -879,7 +876,6 @@
         private TextBox textBox15;
         private Button button5;
         private Label label25;
-        private TextBox textBox14;
         private Label label28;
         private TextBox textBox16;
         private Button button6;
@@ -889,5 +885,8 @@
         private ComboBox cbxCiudad;
         private Button btnReset;
         private TextBox textBox5;
+        private Label label30;
+        private Label label31;
+        private Label label32;
     }
 }
