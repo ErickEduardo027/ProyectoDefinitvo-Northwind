@@ -51,6 +51,7 @@
             dataGridView1.Location = new Point(12, 75);
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             dataGridView1.Size = new Size(971, 547);
             dataGridView1.TabIndex = 0;
             // 
@@ -102,6 +103,7 @@
             button4.TabIndex = 5;
             button4.Text = "Eliminar";
             button4.UseVisualStyleBackColor = true;
+            button4.Click += button4_Click;
             // 
             // btnReset
             // 

@@ -122,5 +122,44 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         {
             btnFiltrarPorNombre.Visible = true;
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            // Verificar que haya una fila seleccionada en el DataGridView
+    if (dataGridView1.SelectedRows.Count > 0)
+    {
+        // Obtener la fila seleccionada
+        DataGridViewRow filaSeleccionada = dataGridView1.SelectedRows[0];
+
+        // Obtener el OrderId desde la fila seleccionada (asegúrate de que el nombre de la columna sea correcto)
+        int orderId = Convert.ToInt32(filaSeleccionada.Cells["OrderId"].Value);
+
+        // Preguntar si el usuario realmente desea eliminar la orden
+        var confirmResult = MessageBox.Show($"¿Está seguro que desea eliminar la orden con ID {orderId}?",
+                                            "Confirmar eliminación",
+                                            MessageBoxButtons.YesNo,
+                                            MessageBoxIcon.Question);
+
+        if (confirmResult == DialogResult.Yes)
+        {
+            // Llamar al método para eliminar la orden
+            if (iordenCRUD.EliminarOrden(orderId))
+            {
+                MessageBox.Show($"Orden con ID {orderId} eliminada con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                        // Actualizar el DataGridView después de la eliminación
+                        dataGridView1.DataSource = iordenCRUD.obtenerOrdenes(); // Método que recarga los datos en el DataGridView
+            }
+            else
+            {
+                MessageBox.Show("Error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+    }
+    else
+    {
+        MessageBox.Show("Por favor, seleccione una orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+    }
+        }
     }
 }

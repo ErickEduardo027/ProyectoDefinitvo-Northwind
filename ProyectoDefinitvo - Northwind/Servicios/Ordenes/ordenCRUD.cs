@@ -11,6 +11,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
 {
     public interface IordenCRUD
     {
+        List<Order> obtenerOrdenes();
         bool ActualizarOrden(int orderId, string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
         bool AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
         bool EliminarOrden(int orderId);
@@ -19,6 +20,17 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
     public class ordenCRUD : IordenCRUD
     {
         NorthwindContext dtContext = new NorthwindContext();
+
+        public List<Order> obtenerOrdenes()
+        {
+            using (var dbContext = new NorthwindContext())
+            {
+                var ordenes = dbContext.Orders.ToList();
+                return ordenes;
+            }
+        }
+
+
         public bool AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate,
                                DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress,
                                string shipCity, string shipRegion, string shipPostalCode, string shipCountry)
@@ -91,24 +103,37 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
 
         public bool EliminarOrden(int orderId)
         {
-            var orden = dtContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
-
-            if (orden == null)
+            using (var dbContext = new NorthwindContext())
             {
-                return false;
-            }
+                
+                var orden = dbContext.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
-            dtContext.Orders.Remove(orden);
+                if (orden == null)
+                {
+                    Console.WriteLine($"La orden con ID {orderId} no existe.");
+                    return false;
+                }
 
-            try
-            {
-                dtContext.SaveChanges();
-                return true;
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine("Error al eliminar la orden: " + ex.Message);
-                return false;
+              
+                var detalles = dbContext.OrderDetails.Where(d => d.OrderId == orderId).ToList();
+
+                if (detalles.Any())
+                {
+                    dbContext.OrderDetails.RemoveRange(detalles);
+                }
+
+                dbContext.Orders.Remove(orden);
+
+                try
+                {
+                    dbContext.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error al eliminar la orden: {ex.Message}");
+                    return false;
+                }
             }
         }
     }
