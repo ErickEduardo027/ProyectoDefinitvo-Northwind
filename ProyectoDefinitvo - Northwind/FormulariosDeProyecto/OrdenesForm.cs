@@ -86,10 +86,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private void btnFiltrarPorNombre_Click(object sender, EventArgs e)
         {
             btnReset.Visible = true;
-            dataGridView1.DataSource = GetDataTable("SELECT * FROM Products WHERE ProductName = @ProductName",
+            dataGridView1.DataSource = GetDataTable("SELECT * FROM Orders WHERE OrderID = @OrderID",
                 new Dictionary<string, object>
                 {
-            { "@ProductName", textBox1.Text }
+            { "@OrderID", int.Parse(textBox1.Text) }
                 });
         }
 
@@ -97,6 +97,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         {
             btnReset.Visible = false;
             textBox1.Text = "";
+            comboBox3.SelectedIndex = -1;
             var dtcontext = new NorthwindContext();
             dataGridView1.DataSource = dtcontext.Orders.ToList();
         }
@@ -108,10 +109,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 label2.Visible = false;
                 textBox1.Visible = false;
 
-                if (comboBox3.Text == "Nombre")
+                if (comboBox3.Text == "ID")
                 {
                     label2.Visible = true;
-                    label2.Text = "Ingresa el nombre:";
+                    label2.Text = "Ingresa el ID de la orden:";
                     textBox1.Visible = true;
                 }
             }

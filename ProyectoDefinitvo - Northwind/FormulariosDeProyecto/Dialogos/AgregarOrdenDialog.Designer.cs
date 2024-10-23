@@ -87,6 +87,15 @@
             label17 = new Label();
             dataGridView2 = new DataGridView();
             panel5 = new Panel();
+            textBoxTotal = new TextBox();
+            textBoxDescuento = new TextBox();
+            textBoxSubtotal = new TextBox();
+            label35 = new Label();
+            label34 = new Label();
+            label33 = new Label();
+            label30 = new Label();
+            label31 = new Label();
+            label32 = new Label();
             label25 = new Label();
             label29 = new Label();
             button3 = new Button();
@@ -95,9 +104,6 @@
             label23 = new Label();
             textBox17 = new TextBox();
             btnCrearOrden = new Button();
-            label30 = new Label();
-            label31 = new Label();
-            label32 = new Label();
             panel1.SuspendLayout();
             panel3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
@@ -243,7 +249,7 @@
             textBoxClienteID.Enabled = false;
             textBoxClienteID.Location = new Point(249, 39);
             textBoxClienteID.Name = "textBoxClienteID";
-            textBoxClienteID.Size = new Size(68, 23);
+            textBoxClienteID.Size = new Size(57, 23);
             textBoxClienteID.TabIndex = 26;
             // 
             // btnContinuar
@@ -489,12 +495,12 @@
             panel3.Controls.Add(dataGridView1);
             panel3.Location = new Point(370, 2);
             panel3.Name = "panel3";
-            panel3.Size = new Size(828, 851);
+            panel3.Size = new Size(448, 899);
             panel3.TabIndex = 30;
             // 
             // textBox5
             // 
-            textBox5.Location = new Point(416, 794);
+            textBox5.Location = new Point(185, 828);
             textBox5.Name = "textBox5";
             textBox5.Size = new Size(104, 23);
             textBox5.TabIndex = 40;
@@ -503,9 +509,9 @@
             // 
             btnReset.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             btnReset.BackColor = Color.MediumOrchid;
-            btnReset.Location = new Point(385, 45);
+            btnReset.Location = new Point(381, 44);
             btnReset.Name = "btnReset";
-            btnReset.Size = new Size(81, 45);
+            btnReset.Size = new Size(63, 45);
             btnReset.TabIndex = 39;
             btnReset.Text = "Reset";
             btnReset.UseVisualStyleBackColor = false;
@@ -514,15 +520,15 @@
             // label27
             // 
             label27.AutoSize = true;
-            label27.Location = new Point(539, 776);
+            label27.Location = new Point(194, 752);
             label27.Name = "label27";
-            label27.Size = new Size(127, 15);
+            label27.Size = new Size(95, 15);
             label27.TabIndex = 38;
-            label27.Text = "Descuento en decimal:";
+            label27.Text = "Descuento en %:";
             // 
             // textBox15
             // 
-            textBox15.Location = new Point(535, 794);
+            textBox15.Location = new Point(170, 770);
             textBox15.Name = "textBox15";
             textBox15.Size = new Size(135, 23);
             textBox15.TabIndex = 37;
@@ -530,7 +536,7 @@
             // label26
             // 
             label26.AutoSize = true;
-            label26.Location = new Point(65, 774);
+            label26.Location = new Point(76, 721);
             label26.Name = "label26";
             label26.Size = new Size(21, 15);
             label26.TabIndex = 36;
@@ -539,7 +545,7 @@
             // textBoxID
             // 
             textBoxID.Enabled = false;
-            textBoxID.Location = new Point(54, 792);
+            textBoxID.Location = new Point(65, 739);
             textBoxID.Name = "textBoxID";
             textBoxID.Size = new Size(41, 23);
             textBoxID.TabIndex = 35;
@@ -547,7 +553,7 @@
             // label22
             // 
             label22.AutoSize = true;
-            label22.Location = new Point(305, 774);
+            label22.Location = new Point(61, 831);
             label22.Name = "label22";
             label22.Size = new Size(43, 15);
             label22.TabIndex = 34;
@@ -556,7 +562,7 @@
             // textBoxPrecio
             // 
             textBoxPrecio.Enabled = false;
-            textBoxPrecio.Location = new Point(258, 796);
+            textBoxPrecio.Location = new Point(17, 852);
             textBoxPrecio.Name = "textBoxPrecio";
             textBoxPrecio.Size = new Size(135, 23);
             textBoxPrecio.TabIndex = 33;
@@ -564,7 +570,7 @@
             // label21
             // 
             label21.AutoSize = true;
-            label21.Location = new Point(147, 775);
+            label21.Location = new Point(54, 775);
             label21.Name = "label21";
             label21.Size = new Size(59, 15);
             label21.TabIndex = 32;
@@ -573,14 +579,14 @@
             // textBoxProducto
             // 
             textBoxProducto.Enabled = false;
-            textBoxProducto.Location = new Point(110, 796);
+            textBoxProducto.Location = new Point(17, 796);
             textBoxProducto.Name = "textBoxProducto";
             textBoxProducto.Size = new Size(135, 23);
             textBoxProducto.TabIndex = 31;
             // 
             // button2
             // 
-            button2.Location = new Point(676, 761);
+            button2.Location = new Point(322, 770);
             button2.Name = "button2";
             button2.Size = new Size(122, 73);
             button2.TabIndex = 31;
@@ -602,7 +608,7 @@
             // 
             label16.AutoSize = true;
             label16.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label16.Location = new Point(296, 12);
+            label16.Location = new Point(131, 10);
             label16.Name = "label16";
             label16.Size = new Size(224, 25);
             label16.TabIndex = 31;
@@ -618,7 +624,7 @@
             // label20
             // 
             label20.AutoSize = true;
-            label20.Location = new Point(438, 776);
+            label20.Location = new Point(207, 808);
             label20.Name = "label20";
             label20.Size = new Size(58, 15);
             label20.TabIndex = 2;
@@ -631,14 +637,14 @@
             dataGridView1.Name = "dataGridView1";
             dataGridView1.ReadOnly = true;
             dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(821, 641);
+            dataGridView1.Size = new Size(440, 617);
             dataGridView1.TabIndex = 0;
             dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // panel4
             // 
             panel4.BackColor = SystemColors.ActiveCaptionText;
-            panel4.Location = new Point(1204, 2);
+            panel4.Location = new Point(820, 2);
             panel4.Name = "panel4";
             panel4.Size = new Size(15, 910);
             panel4.TabIndex = 30;
@@ -647,7 +653,7 @@
             // 
             label17.AutoSize = true;
             label17.Font = new Font("Segoe UI", 14.25F, FontStyle.Bold, GraphicsUnit.Point, 0);
-            label17.Location = new Point(33, 17);
+            label17.Location = new Point(220, 17);
             label17.Name = "label17";
             label17.Size = new Size(193, 25);
             label17.TabIndex = 32;
@@ -655,16 +661,24 @@
             // 
             // dataGridView2
             // 
+            dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView2.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Location = new Point(3, 54);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.ReadOnly = true;
             dataGridView2.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView2.Size = new Size(341, 504);
+            dataGridView2.Size = new Size(725, 504);
             dataGridView2.TabIndex = 33;
             // 
             // panel5
             // 
+            panel5.Controls.Add(textBoxTotal);
+            panel5.Controls.Add(textBoxDescuento);
+            panel5.Controls.Add(textBoxSubtotal);
+            panel5.Controls.Add(label35);
+            panel5.Controls.Add(label34);
+            panel5.Controls.Add(label33);
             panel5.Controls.Add(label30);
             panel5.Controls.Add(label31);
             panel5.Controls.Add(label32);
@@ -678,15 +692,90 @@
             panel5.Controls.Add(label17);
             panel5.Controls.Add(textBox17);
             panel5.Controls.Add(btnCrearOrden);
-            panel5.Location = new Point(1227, 2);
+            panel5.Location = new Point(841, 2);
             panel5.Name = "panel5";
-            panel5.Size = new Size(347, 899);
+            panel5.Size = new Size(733, 899);
             panel5.TabIndex = 34;
+            // 
+            // textBoxTotal
+            // 
+            textBoxTotal.Enabled = false;
+            textBoxTotal.Location = new Point(286, 788);
+            textBoxTotal.Name = "textBoxTotal";
+            textBoxTotal.Size = new Size(190, 23);
+            textBoxTotal.TabIndex = 51;
+            // 
+            // textBoxDescuento
+            // 
+            textBoxDescuento.Enabled = false;
+            textBoxDescuento.Location = new Point(286, 743);
+            textBoxDescuento.Name = "textBoxDescuento";
+            textBoxDescuento.Size = new Size(190, 23);
+            textBoxDescuento.TabIndex = 50;
+            // 
+            // textBoxSubtotal
+            // 
+            textBoxSubtotal.Enabled = false;
+            textBoxSubtotal.Location = new Point(286, 702);
+            textBoxSubtotal.Name = "textBoxSubtotal";
+            textBoxSubtotal.Size = new Size(190, 23);
+            textBoxSubtotal.TabIndex = 49;
+            // 
+            // label35
+            // 
+            label35.AutoSize = true;
+            label35.Location = new Point(381, 638);
+            label35.Name = "label35";
+            label35.Size = new Size(0, 15);
+            label35.TabIndex = 48;
+            // 
+            // label34
+            // 
+            label34.AutoSize = true;
+            label34.Location = new Point(380, 610);
+            label34.Name = "label34";
+            label34.Size = new Size(0, 15);
+            label34.TabIndex = 47;
+            // 
+            // label33
+            // 
+            label33.AutoSize = true;
+            label33.Location = new Point(380, 582);
+            label33.Name = "label33";
+            label33.Size = new Size(0, 15);
+            label33.TabIndex = 46;
+            // 
+            // label30
+            // 
+            label30.AutoSize = true;
+            label30.Location = new Point(273, 638);
+            label30.Name = "label30";
+            label30.Size = new Size(102, 15);
+            label30.TabIndex = 45;
+            label30.Text = "Discount Avg (%):";
+            // 
+            // label31
+            // 
+            label31.AutoSize = true;
+            label31.Location = new Point(291, 610);
+            label31.Name = "label31";
+            label31.Size = new Size(83, 15);
+            label31.TabIndex = 44;
+            label31.Text = "Quantity Sum:";
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Location = new Point(269, 582);
+            label32.Name = "label32";
+            label32.Size = new Size(106, 15);
+            label32.TabIndex = 43;
+            label32.Text = "Unit price Avg (%):";
             // 
             // label25
             // 
             label25.AutoSize = true;
-            label25.Location = new Point(97, 797);
+            label25.Location = new Point(238, 791);
             label25.Name = "label25";
             label25.Size = new Size(42, 15);
             label25.TabIndex = 42;
@@ -695,7 +784,7 @@
             // label29
             // 
             label29.AutoSize = true;
-            label29.Location = new Point(259, 8);
+            label29.Location = new Point(444, 8);
             label29.Name = "label29";
             label29.Size = new Size(21, 15);
             label29.TabIndex = 40;
@@ -703,7 +792,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(225, 563);
+            button3.Location = new Point(606, 564);
             button3.Name = "button3";
             button3.Size = new Size(122, 50);
             button3.TabIndex = 35;
@@ -714,7 +803,7 @@
             // label24
             // 
             label24.AutoSize = true;
-            label24.Location = new Point(73, 770);
+            label24.Location = new Point(214, 746);
             label24.Name = "label24";
             label24.Size = new Size(66, 15);
             label24.TabIndex = 38;
@@ -722,7 +811,7 @@
             // 
             // button5
             // 
-            button5.Location = new Point(31, 837);
+            button5.Location = new Point(219, 835);
             button5.Name = "button5";
             button5.Size = new Size(143, 55);
             button5.TabIndex = 40;
@@ -733,7 +822,7 @@
             // label23
             // 
             label23.AutoSize = true;
-            label23.Location = new Point(85, 745);
+            label23.Location = new Point(226, 706);
             label23.Name = "label23";
             label23.Size = new Size(54, 15);
             label23.TabIndex = 31;
@@ -741,47 +830,20 @@
             // 
             // textBox17
             // 
-            textBox17.Location = new Point(248, 25);
+            textBox17.Location = new Point(435, 25);
             textBox17.Name = "textBox17";
             textBox17.Size = new Size(41, 23);
             textBox17.TabIndex = 39;
             // 
             // btnCrearOrden
             // 
-            btnCrearOrden.Location = new Point(178, 836);
+            btnCrearOrden.Location = new Point(379, 834);
             btnCrearOrden.Name = "btnCrearOrden";
             btnCrearOrden.Size = new Size(143, 57);
             btnCrearOrden.TabIndex = 35;
             btnCrearOrden.Text = "Crear Orden";
             btnCrearOrden.UseVisualStyleBackColor = true;
             btnCrearOrden.Click += btnCrearOrden_Click;
-            // 
-            // label30
-            // 
-            label30.AutoSize = true;
-            label30.Location = new Point(97, 708);
-            label30.Name = "label30";
-            label30.Size = new Size(42, 15);
-            label30.TabIndex = 45;
-            label30.Text = "TOTAL:";
-            // 
-            // label31
-            // 
-            label31.AutoSize = true;
-            label31.Location = new Point(73, 681);
-            label31.Name = "label31";
-            label31.Size = new Size(66, 15);
-            label31.TabIndex = 44;
-            label31.Text = "Descuento:";
-            // 
-            // label32
-            // 
-            label32.AutoSize = true;
-            label32.Location = new Point(85, 656);
-            label32.Name = "label32";
-            label32.Size = new Size(54, 15);
-            label32.TabIndex = 43;
-            label32.Text = "Subtotal:";
             // 
             // AgregarOrdenDialog
             // 
@@ -888,5 +950,11 @@
         private Label label30;
         private Label label31;
         private Label label32;
+        private TextBox textBoxTotal;
+        private TextBox textBoxDescuento;
+        private TextBox textBoxSubtotal;
+        private Label label35;
+        private Label label34;
+        private Label label33;
     }
 }

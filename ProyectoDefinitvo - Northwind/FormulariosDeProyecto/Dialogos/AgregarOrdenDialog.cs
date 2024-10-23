@@ -362,13 +362,14 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             var productiId = int.Parse(textBoxID.Text);
             var precioXunidad = decimal.Parse(textBoxPrecio.Text);
             var cantidad = short.Parse(textBox5.Text);
-            var descuento = float.Parse(textBox15.Text);
+            var descuento = float.Parse(textBox15.Text) / 100;
 
             if (iordenDetalleCRUD.AgregarOrdenDetalle(ordenId, productiId, precioXunidad, cantidad, descuento))
             {
                 MessageBox.Show("Nuevo detalle de la orden ingresada con éxito", "Agregar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 var dtcontext = new NorthwindContext();
                 dataGridView2.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle(ordenId);
+                ActualizarResumen();
 
             }
 
@@ -395,9 +396,9 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                         MessageBox.Show("Detalle de la orden eliminado con éxito", "Eliminar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                         var dtcontext = new NorthwindContext();
-                        dataGridView2.DataSource = dtcontext.OrderDetails
-                            .Where(x => x.OrderId == orderId)
-                            .ToList();
+                        dataGridView2.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle(orderId);
+
+                        ActualizarResumen();
                     }
                     else
                     {
@@ -430,5 +431,52 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             }
         }
 
+        private void ActualizarResumen()
+        {
+            if (dataGridView2.Rows.Count > 0)
+            {
+                var detallesOrden = dataGridView2.Rows
+                    .Cast<DataGridViewRow>() 
+                    .Where(row => row.Cells["UnitPrice"].Value != null && row.Cells["Quantity"].Value != null && row.Cells["Discount"].Value != null); // Filtrar filas válidas
+
+                var promedioUnitPrice = detallesOrden
+                    .Average(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value));
+                label33.Text = promedioUnitPrice.ToString("F2"); 
+
+                var sumaCantidad = detallesOrden
+                    .Sum(row => Convert.ToInt32(row.Cells["Quantity"].Value));
+                label34.Text = sumaCantidad.ToString(); 
+                
+                var promedioDescuento = detallesOrden
+                    .Average(row => Convert.ToSingle(row.Cells["Discount"].Value));
+                promedioDescuento = promedioDescuento * 100;
+                label35.Text = promedioDescuento.ToString(); 
+
+
+                var subtotal = detallesOrden
+      .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value));
+                textBoxSubtotal.Text = subtotal.ToString("F2");
+              
+                var totalDescuento = detallesOrden
+                    .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value) * Convert.ToDecimal(row.Cells["Discount"].Value));
+                textBoxDescuento.Text = totalDescuento.ToString("F2");
+
+                var total = subtotal - totalDescuento;
+                textBoxTotal.Text = total.ToString("F2");
+            }
+            else
+            {
+                
+                label33.Text = "0.00";
+                label34.Text = "0";
+                label35.Text = "0.00";
+                textBoxSubtotal.Text = "0.00";
+                textBoxDescuento.Text = "0.00";
+                textBoxTotal.Text = "0.00";
+            }
+        }
+
     }
+
 }
+
