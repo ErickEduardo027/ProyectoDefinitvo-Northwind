@@ -274,7 +274,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                         textBox15.Text = "";
                         textBoxPrecio.Text = "";
                         numericUpDown1.Value = 0;
-                        
+
 
                         var categoria = context.Categories
                                                .Where(c => c.CategoryId == producto.CategoryId)
@@ -381,6 +381,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             }
         }
 
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 
 }
