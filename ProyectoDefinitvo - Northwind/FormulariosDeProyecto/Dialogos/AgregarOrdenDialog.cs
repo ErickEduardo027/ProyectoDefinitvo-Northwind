@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -106,6 +107,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 MessageBox.Show("Paso 2", "Proceda a agregar los detalles", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 panel3.Enabled = true;
                 panel1.Enabled = false;
+                textBoxCostoTransporte.Text = textBox1.Text;
+                label29.Text = "0";
+                label32.Text = "0";
+                label36.Text = "0";
+                textBoxSubtotal.Text = "0";
+                textBoxCostoTransporte.Text = "0";
+                textBoxTotal.Text = "0";
 
                 using (var context = new NorthwindContext())
                 {
@@ -278,8 +286,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                                                .Select(p => p.CompanyName)
                                                .FirstOrDefault();
 
-                        decimal precioPorUnidad = producto.UnitPrice ?? 0;
-                        decimal precioExtendido = (precioPorUnidad * cantidad) * (1 - descuento);
+                        SqlMoney precioPorUnidad = producto.UnitPrice ?? 0;
+                        SqlMoney precioExtendido = (precioPorUnidad * cantidad) * (1 - descuento);
 
                         dataGridView2.Rows.Add(
                             producto.ProductName,
@@ -288,7 +296,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                             (descuento * 100).ToString(),
                             categoria,
                             proveedor,
-                            precioExtendido.ToString("C")
+                            precioExtendido.ToString()
                         );
 
                         ActualizarResumen();
@@ -319,6 +327,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     foreach (DataGridViewRow row in dataGridView2.SelectedRows)
                     {
                         dataGridView2.Rows.Remove(row);
+                        ActualizarResumen();
                     }
                 }
             }
@@ -340,39 +349,34 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     .Cast<DataGridViewRow>()
                     .Where(row => row.Cells["UnitPrice"].Value != null && row.Cells["Quantity"].Value != null && row.Cells["Discount"].Value != null); // Filtrar filas válidas
 
-                //var promedioUnitPrice = detallesOrden
-                //    .Average(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value));
-                //label33.Text = promedioUnitPrice.ToString("F2");
+                var promedioUnitPrice = detallesOrden
+                    .Average(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value));
+                label29.Text = promedioUnitPrice.ToString("F2");
 
-                //var sumaCantidad = detallesOrden
-                //    .Sum(row => Convert.ToInt32(row.Cells["Quantity"].Value));
-                //label34.Text = sumaCantidad.ToString();
+                var sumaCantidad = detallesOrden
+                    .Sum(row => Convert.ToInt32(row.Cells["Quantity"].Value));
+                label32.Text = sumaCantidad.ToString();
 
-                //var promedioDescuento = detallesOrden
-                //    .Average(row => Convert.ToSingle(row.Cells["Discount"].Value));
-                //promedioDescuento = promedioDescuento * 100;
-                //label35.Text = promedioDescuento.ToString();
+                var promedioDescuento = detallesOrden
+                    .Average(row => Convert.ToSingle(row.Cells["Discount"].Value));
+                label36.Text = promedioDescuento.ToString();
 
 
                 var subtotal = detallesOrden
-      .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value));
+      .Sum(row => Convert.ToDecimal(row.Cells["ExtendedPrice"].Value));
                 textBoxSubtotal.Text = subtotal.ToString("F2");
 
-                var totalDescuento = detallesOrden
-                    .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value) - (Convert.ToDecimal(row.Cells["Discount"].Value) * Convert.ToDecimal(row.Cells["UnitPrice"].Value)));
-                textBoxDescuento.Text = totalDescuento.ToString("F2");
-
-                var total = subtotal - totalDescuento;
+                var total = subtotal + int.Parse(textBoxCostoTransporte.Text);
                 textBoxTotal.Text = total.ToString("F2");
             }
             else
             {
 
-                label33.Text = "0.00";
-                label34.Text = "0";
-                label35.Text = "0.00";
+                label29.Text = "0";
+                label32.Text = "0";
+                label36.Text = "0";
                 textBoxSubtotal.Text = "0.00";
-                textBoxDescuento.Text = "0.00";
+                textBoxCostoTransporte.Text = "0";
                 textBoxTotal.Text = "0.00";
             }
         }

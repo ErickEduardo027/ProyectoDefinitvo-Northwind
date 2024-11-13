@@ -66,10 +66,13 @@
             label14 = new Label();
             panel2 = new Panel();
             panel3 = new Panel();
+            label36 = new Label();
+            label32 = new Label();
+            label29 = new Label();
             button1 = new Button();
             textBoxTotal = new TextBox();
             numericUpDown1 = new NumericUpDown();
-            textBoxDescuento = new TextBox();
+            textBoxCostoTransporte = new TextBox();
             cbxProducto = new ComboBox();
             textBoxSubtotal = new TextBox();
             label35 = new Label();
@@ -460,10 +463,13 @@
             // 
             // panel3
             // 
+            panel3.Controls.Add(label36);
+            panel3.Controls.Add(label32);
+            panel3.Controls.Add(label29);
             panel3.Controls.Add(button1);
             panel3.Controls.Add(textBoxTotal);
             panel3.Controls.Add(numericUpDown1);
-            panel3.Controls.Add(textBoxDescuento);
+            panel3.Controls.Add(textBoxCostoTransporte);
             panel3.Controls.Add(cbxProducto);
             panel3.Controls.Add(textBoxSubtotal);
             panel3.Controls.Add(label35);
@@ -491,6 +497,33 @@
             panel3.Size = new Size(743, 899);
             panel3.TabIndex = 30;
             // 
+            // label36
+            // 
+            label36.AutoSize = true;
+            label36.Location = new Point(307, 687);
+            label36.Name = "label36";
+            label36.Size = new Size(106, 15);
+            label36.TabIndex = 55;
+            label36.Text = "Unit price Avg (%):";
+            // 
+            // label32
+            // 
+            label32.AutoSize = true;
+            label32.Location = new Point(307, 659);
+            label32.Name = "label32";
+            label32.Size = new Size(106, 15);
+            label32.TabIndex = 54;
+            label32.Text = "Unit price Avg (%):";
+            // 
+            // label29
+            // 
+            label29.AutoSize = true;
+            label29.Location = new Point(307, 631);
+            label29.Name = "label29";
+            label29.Size = new Size(106, 15);
+            label29.TabIndex = 53;
+            label29.Text = "Unit price Avg (%):";
+            // 
             // button1
             // 
             button1.Location = new Point(608, 621);
@@ -516,13 +549,13 @@
             numericUpDown1.Size = new Size(65, 23);
             numericUpDown1.TabIndex = 42;
             // 
-            // textBoxDescuento
+            // textBoxCostoTransporte
             // 
-            textBoxDescuento.Enabled = false;
-            textBoxDescuento.Location = new Point(302, 757);
-            textBoxDescuento.Name = "textBoxDescuento";
-            textBoxDescuento.Size = new Size(190, 23);
-            textBoxDescuento.TabIndex = 50;
+            textBoxCostoTransporte.Enabled = false;
+            textBoxCostoTransporte.Location = new Point(302, 757);
+            textBoxCostoTransporte.Name = "textBoxCostoTransporte";
+            textBoxCostoTransporte.Size = new Size(190, 23);
+            textBoxCostoTransporte.TabIndex = 50;
             // 
             // cbxProducto
             // 
@@ -595,11 +628,11 @@
             // label24
             // 
             label24.AutoSize = true;
-            label24.Location = new Point(230, 760);
+            label24.Location = new Point(182, 760);
             label24.Name = "label24";
-            label24.Size = new Size(66, 15);
+            label24.Size = new Size(114, 15);
             label24.TabIndex = 38;
-            label24.Text = "Descuento:";
+            label24.Text = "Costo de transporte:";
             // 
             // label34
             // 
@@ -715,8 +748,10 @@
             // 
             dataGridView2.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView2.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
+            dataGridView2.BackgroundColor = Color.Teal;
             dataGridView2.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridView2.Columns.AddRange(new DataGridViewColumn[] { ProductName, UnitPrice, Quantity, Discount, ProductCategoryName, ProductSupplierCompanyName, ExtendedPrice });
+            dataGridView2.GridColor = Color.FromArgb(0, 0, 192);
             dataGridView2.Location = new Point(3, 185);
             dataGridView2.Name = "dataGridView2";
             dataGridView2.ReadOnly = true;
@@ -856,7 +891,7 @@
         private Label label34;
         private Label label33;
         private TextBox textBoxTotal;
-        private TextBox textBoxDescuento;
+        private TextBox textBoxCostoTransporte;
         private TextBox textBoxSubtotal;
         private Label label35;
         private ComboBox cbxProducto;
@@ -869,5 +904,8 @@
         private DataGridViewTextBoxColumn ProductCategoryName;
         private DataGridViewTextBoxColumn ProductSupplierCompanyName;
         private DataGridViewTextBoxColumn ExtendedPrice;
+        private Label label36;
+        private Label label32;
+        private Label label29;
     }
 }
