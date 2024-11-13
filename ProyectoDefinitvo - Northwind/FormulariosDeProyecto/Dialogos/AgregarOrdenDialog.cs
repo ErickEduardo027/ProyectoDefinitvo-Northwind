@@ -261,7 +261,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     {
 
                         MessageBox.Show("Producto agregado al detalle con exito", "Agregar Producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        ActualizarResumen();
                         cbxProducto.SelectedIndex = -1;
                         textBoxID.Text = "";
                         textBox15.Text = "";
@@ -291,6 +290,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                             proveedor,
                             precioExtendido.ToString("C")
                         );
+
+                        ActualizarResumen();
                     }
                     else
                     {
@@ -332,49 +333,41 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void ActualizarResumen()
         {
+
             if (dataGridView2.Rows.Count > 0)
             {
                 var detallesOrden = dataGridView2.Rows
                     .Cast<DataGridViewRow>()
-                    .Where(row => row.Cells["UnitPrice"].Value != null &&
-                                  row.Cells["Quantity"].Value != null &&
-                                  row.Cells["Discount"].Value != null);
+                    .Where(row => row.Cells["UnitPrice"].Value != null && row.Cells["Quantity"].Value != null && row.Cells["Discount"].Value != null); // Filtrar filas válidas
 
-                // Calcula el subtotal (sin aplicar descuento)
-                var subtotal = detallesOrden
-                    .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) *
-                                Convert.ToInt32(row.Cells["Quantity"].Value));
-                textBoxSubtotal.Text = subtotal.ToString("F2");
-
-                // Calcula el total del descuento (aplicado al subtotal)
-                var totalDescuento = detallesOrden
-                    .Sum(row => (Convert.ToDecimal(row.Cells["UnitPrice"].Value) *
-                                 Convert.ToInt32(row.Cells["Quantity"].Value)) *
-                                (Convert.ToDecimal(row.Cells["Discount"].Value) / 100));
-                textBoxDescuento.Text = totalDescuento.ToString("F2");
-
-                // Calcula el total final (subtotal - descuento)
-                var total = subtotal - totalDescuento;
-                textBoxTotal.Text = total.ToString("F2");
-
-                //// Calcula el promedio del precio unitario
                 //var promedioUnitPrice = detallesOrden
                 //    .Average(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value));
                 //label33.Text = promedioUnitPrice.ToString("F2");
 
-                //// Calcula la suma de las cantidades
                 //var sumaCantidad = detallesOrden
                 //    .Sum(row => Convert.ToInt32(row.Cells["Quantity"].Value));
                 //label34.Text = sumaCantidad.ToString();
 
-                //// Calcula el promedio del descuento
                 //var promedioDescuento = detallesOrden
-                //    .Average(row => Convert.ToDecimal(row.Cells["Discount"].Value));
-                //label35.Text = promedioDescuento.ToString("F2");
+                //    .Average(row => Convert.ToSingle(row.Cells["Discount"].Value));
+                //promedioDescuento = promedioDescuento * 100;
+                //label35.Text = promedioDescuento.ToString();
+
+
+                var subtotal = detallesOrden
+      .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value));
+                textBoxSubtotal.Text = subtotal.ToString("F2");
+
+                var totalDescuento = detallesOrden
+                    .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value) - (Convert.ToDecimal(row.Cells["Discount"].Value) * Convert.ToDecimal(row.Cells["UnitPrice"].Value)));
+                textBoxDescuento.Text = totalDescuento.ToString("F2");
+
+                var total = subtotal - totalDescuento;
+                textBoxTotal.Text = total.ToString("F2");
             }
             else
             {
-                // Limpia los valores si no hay filas
+
                 label33.Text = "0.00";
                 label34.Text = "0";
                 label35.Text = "0.00";
