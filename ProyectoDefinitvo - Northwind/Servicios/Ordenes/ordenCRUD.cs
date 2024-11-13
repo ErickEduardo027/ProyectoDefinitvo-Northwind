@@ -13,7 +13,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
     {
         List<Order> obtenerOrdenes();
         bool ActualizarOrden(int orderId, string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
-        bool AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
+        int AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
         bool EliminarOrden(int orderId);
     }
 
@@ -31,9 +31,9 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
         }
 
 
-        public bool AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate,
-                               DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress,
-                               string shipCity, string shipRegion, string shipPostalCode, string shipCountry)
+        public int AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate,
+                        DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress,
+                        string shipCity, string shipRegion, string shipPostalCode, string shipCountry)
         {
             var orden = new Order
             {
@@ -56,14 +56,15 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
             try
             {
                 dtContext.SaveChanges();
-                return true;
+                return orden.OrderId; 
             }
             catch (Exception ex)
             {
                 Console.WriteLine("Error al agregar la orden: " + ex.Message);
-                return false;
+                return 0; 
             }
         }
+
         public bool ActualizarOrden(int orderId, string customerID, int employeeID, DateTime orderDate, DateTime requiredDate,
                                   DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress,
                                   string shipCity, string shipRegion, string shipPostalCode, string shipCountry)

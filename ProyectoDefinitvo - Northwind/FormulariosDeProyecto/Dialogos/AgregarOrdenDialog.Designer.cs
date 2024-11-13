@@ -559,6 +559,7 @@
             // 
             // cbxProducto
             // 
+            cbxProducto.DropDownStyle = ComboBoxStyle.DropDownList;
             cbxProducto.FormattingEnabled = true;
             cbxProducto.Location = new Point(81, 62);
             cbxProducto.Name = "cbxProducto";

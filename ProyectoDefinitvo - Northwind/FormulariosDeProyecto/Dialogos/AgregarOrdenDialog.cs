@@ -105,14 +105,13 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 empleado = int.Parse(textBoxEmpleadoID.Text);
 
                 MessageBox.Show("Paso 2", "Proceda a agregar los detalles", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBoxCostoTransporte.Text = textBox1.Text;
                 panel3.Enabled = true;
                 panel1.Enabled = false;
-                textBoxCostoTransporte.Text = textBox1.Text;
                 label29.Text = "0";
                 label32.Text = "0";
                 label36.Text = "0";
                 textBoxSubtotal.Text = "0";
-                textBoxCostoTransporte.Text = "0";
                 textBoxTotal.Text = "0";
 
                 using (var context = new NorthwindContext())
@@ -214,16 +213,79 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnCrearOrden_Click(object sender, EventArgs e)
         {
-
-            var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden y cerrar el formulario?",
+            var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden?",
                                                 "Confirmar creación de orden",
                                                 MessageBoxButtons.YesNo,
                                                 MessageBoxIcon.Question);
 
             if (confirmResult == DialogResult.Yes)
             {
+                
+                var cliente = textBoxClienteID.Text;
+                var empleado = int.Parse(textBoxEmpleadoID.Text);
+                int shipper = int.Parse(textBoxShipperID.Text);
+                int costoDeTransporte = int.Parse(textBoxCostoTransporte.Text);
 
-                this.Close();
+                var fechaActual = dateTimePicker1.Value;
+                var fechaDeLaOrden = dateTimePicker3.Value;
+                var fechaDeLaEntrega = dateTimePicker4.Value;
+                var direccionDeLaEntrega = textBox2.Text;
+                var nombreDeLaEntrega = textBox3.Text;
+                var paisDeLaEntrega = cbxPais.Text;
+                var ciudadDeLaEntrega = cbxCiudad.Text;
+                var region = textBox16.Text;
+                var codigoPostal = textBox4.Text;
+
+                
+                int ordenId = iordenCRUD.AgregarOrden(cliente, empleado, fechaActual, fechaDeLaOrden, fechaDeLaEntrega, shipper, costoDeTransporte, nombreDeLaEntrega, direccionDeLaEntrega, ciudadDeLaEntrega, region, codigoPostal, paisDeLaEntrega);
+
+                if (ordenId > 0)
+                {
+                    
+                    foreach (DataGridViewRow row in dataGridView2.Rows)
+                    {
+                        if (row.Cells["ProductName"].Value != null &&
+                            row.Cells["UnitPrice"].Value != null &&
+                            row.Cells["Quantity"].Value != null &&
+                            row.Cells["Discount"].Value != null)
+                        {
+                            var nombreProducto = row.Cells["ProductName"].Value.ToString();
+                            var precioPorUnidad = Convert.ToDecimal(row.Cells["UnitPrice"].Value);
+                            var cantidad = (short)Convert.ToInt32(row.Cells["Quantity"].Value); 
+                            var descuento = (float)Convert.ToDecimal(row.Cells["Discount"].Value) / 100;    
+
+                            
+                            using (var context = new NorthwindContext())
+                            {
+                                var productoId = context.Products
+                                                         .Where(p => p.ProductName == nombreProducto)
+                                                         .Select(p => p.ProductId)
+                                                         .FirstOrDefault();
+
+                                if (productoId == 0) 
+                                {
+                                    MessageBox.Show($"No se encontró el ID para el producto: {nombreProducto}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+
+                                
+                                if (!iordenDetalleCRUD.AgregarOrdenDetalle(ordenId, productoId, precioPorUnidad, cantidad, descuento))
+                                {
+                                    MessageBox.Show($"Error al agregar el detalle para el producto {nombreProducto}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                    MessageBox.Show("Nueva orden y sus detalles ingresados con éxito", "Agregar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error al agregar la orden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
