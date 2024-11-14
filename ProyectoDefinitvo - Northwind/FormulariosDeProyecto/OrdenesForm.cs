@@ -5,6 +5,7 @@ using ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
+using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using System;
 using System.Collections.Generic;
@@ -37,7 +38,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             this.iordenCRUD = iordenCRUD;
             this.iordenService = iordenService;
             this.iordenDetalleCRUD = iordenDetalleCRUD;
-            
+
 
         }
 
@@ -198,6 +199,22 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
 
+        }
+
+        private void btnActualizar_Click(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                string ordenId = dataGridView1.SelectedRows[0].Cells["Id"].Value.ToString();
+                var actualizar = new ActualizarOrdenDialog(iordenService, iordenCRUD, iordenDetalleCRUD);
+                actualizar.Tag = ordenId;
+                actualizar.ShowDialog();
+
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un producto para actualizar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
     }
 }

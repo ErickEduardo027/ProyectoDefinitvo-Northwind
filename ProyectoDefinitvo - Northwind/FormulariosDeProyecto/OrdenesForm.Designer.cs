@@ -28,11 +28,11 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             textBox1 = new TextBox();
             btnFiltrarPorNombre = new Button();
             button2 = new Button();
-            button3 = new Button();
+            btnActualizar = new Button();
             button4 = new Button();
             btnReset = new Button();
             comboBox3 = new ComboBox();
@@ -72,15 +72,16 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // button3
+            // btnActualizar
             // 
-            button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button3.Location = new Point(739, 644);
-            button3.Name = "button3";
-            button3.Size = new Size(119, 43);
-            button3.TabIndex = 4;
-            button3.Text = "Actualizar";
-            button3.UseVisualStyleBackColor = true;
+            btnActualizar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnActualizar.Location = new Point(739, 644);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(119, 43);
+            btnActualizar.TabIndex = 4;
+            btnActualizar.Text = "Actualizar";
+            btnActualizar.UseVisualStyleBackColor = true;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // button4
             // 
@@ -147,14 +148,14 @@
             dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             dataGridView1.BackgroundColor = Color.MediumTurquoise;
             dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Window;
-            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.False;
-            dataGridView1.DefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
             dataGridView1.GridColor = Color.FromArgb(0, 0, 192);
             dataGridView1.Location = new Point(12, 85);
             dataGridView1.Name = "dataGridView1";
@@ -176,7 +177,7 @@
             Controls.Add(comboBox3);
             Controls.Add(btnReset);
             Controls.Add(button4);
-            Controls.Add(button3);
+            Controls.Add(btnActualizar);
             Controls.Add(button2);
             Controls.Add(btnFiltrarPorNombre);
             Controls.Add(textBox1);
@@ -192,7 +193,7 @@
         private TextBox textBox1;
         private Button btnFiltrarPorNombre;
         private Button button2;
-        private Button button3;
+        private Button btnActualizar;
         private Button button4;
         private Button btnReset;
         private ComboBox comboBox3;
