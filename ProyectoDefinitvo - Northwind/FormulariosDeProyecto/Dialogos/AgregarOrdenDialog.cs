@@ -28,14 +28,16 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private readonly IordenService iordenService;
         private readonly IordenCRUD iordenCRUD;
         private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
+        private OrdenesForm _ordenesForm;
 
-        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD)
+        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm ordenesForm)
         {
             InitializeComponent();
             CargarDatosComboBox();
             this.iordenService = iordenService;
             this.iordenCRUD = iordenCRUD;
             this.iordenDetalleCRUD = iordenDetalleCRUD;
+            _ordenesForm = ordenesForm;
             InicializarDatos();
         }
 
@@ -279,7 +281,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     }
 
                     MessageBox.Show("Nueva orden y sus detalles ingresados con éxito", "Agregar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
+                    //_ordenesForm.ActualizarOrdenes(); 
                     this.Close();
                 }
                 else

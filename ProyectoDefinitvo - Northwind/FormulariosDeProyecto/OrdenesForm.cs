@@ -26,8 +26,9 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private readonly IcategoriaCRUD icategoriaCRUD;
         private readonly IordenCRUD iordenCRUD;
         private readonly IordenService iordenService;
+        private OrdenesForm ordenesForm;
 
-        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD)
+        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm _ordenesForm)
         {
             InitializeComponent();
             iordenDetalleCRUD = IordenDetalleCRUD;
@@ -36,15 +37,17 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             this.iordenCRUD = iordenCRUD;
             this.iordenService = iordenService;
             this.iordenDetalleCRUD = iordenDetalleCRUD;
+            
+
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD, iordenDetalleCRUD);
+            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD, iordenDetalleCRUD, ordenesForm);
             agregar.ShowDialog();
         }
 
-        private void OrdenesForm_Load(object sender, EventArgs e)
+        public void OrdenesForm_Load(object sender, EventArgs e)
         {
 
             label2.Visible = false;
@@ -52,8 +55,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             btnReset.Visible = false;
             btnFiltrarPorNombre.Visible = false;
             btnReset.Visible = false;
-            var dtcontext = new NorthwindContext();
-            dataGridView1.DataSource = dtcontext.Orders.ToList();
+            dataGridView1.DataSource = iordenCRUD.obtenerOrdenes();
         }
 
 
@@ -95,9 +97,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnReset_Click(object sender, EventArgs e)
         {
+            comboBox3.SelectedIndex = -1;
+            btnFiltrarPorNombre.Visible = false;
             btnReset.Visible = false;
             textBox1.Text = "";
-            comboBox3.SelectedIndex = -1;
             var dtcontext = new NorthwindContext();
             dataGridView1.DataSource = dtcontext.Orders.ToList();
         }
@@ -105,7 +108,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private void comboBox3_SelectedIndexChanged(object sender, EventArgs e)
         {
             {
-
+                btnFiltrarPorNombre.Visible = false;
                 label2.Visible = false;
                 textBox1.Visible = false;
 
@@ -114,7 +117,15 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                     label2.Visible = true;
                     label2.Text = "Ingresa el ID de la orden:";
                     textBox1.Visible = true;
+                    btnFiltrarPorNombre.Visible = true;
                 }
+                else btnFiltrarPorNombre.Visible = false;
+
+                if (comboBox3.Text != "ID")
+                {
+                    btnFiltrarPorNombre.Visible = false;
+                }
+
             }
         }
 
@@ -125,39 +136,68 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void button4_Click(object sender, EventArgs e)
         {
-
-    if (dataGridView1.SelectedRows.Count > 0)
-    {
-        DataGridViewRow filaSeleccionada = dataGridView1.SelectedRows[0];
-
-        int orderId = Convert.ToInt32(filaSeleccionada.Cells["OrderId"].Value);
-
-
-        var confirmResult = MessageBox.Show($"¿Está seguro que desea eliminar la orden con ID {orderId}?",
-                                            "Confirmar eliminación",
-                                            MessageBoxButtons.YesNo,
-                                            MessageBoxIcon.Question);
-
-        if (confirmResult == DialogResult.Yes)
-        {
-       
-            if (iordenCRUD.EliminarOrden(orderId))
+            if (dataGridView1.SelectedRows.Count > 0)
             {
-                MessageBox.Show($"Orden con ID {orderId} eliminada con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                DataGridViewRow filaSeleccionada = dataGridView1.SelectedRows[0];
+                int orderId = Convert.ToInt32(filaSeleccionada.Cells["Id"].Value);
 
-                        
-                        dataGridView1.DataSource = iordenCRUD.obtenerOrdenes(); 
+                var confirmResult = MessageBox.Show($"¿Está seguro que desea eliminar la orden con ID {orderId} y todos sus detalles?",
+                                                    "Confirmar eliminación",
+                                                    MessageBoxButtons.YesNo,
+                                                    MessageBoxIcon.Question);
+
+                if (confirmResult == DialogResult.Yes)
+                {
+                    try
+                    {
+
+                        var detalles = iordenDetalleCRUD.ObtenerOrdenDetalle(orderId);
+
+
+                        foreach (var detalle in detalles)
+                        {
+                            iordenDetalleCRUD.EliminarOrdenDetalle(orderId, detalle.ProductId);
+                        }
+
+
+                        if (iordenCRUD.EliminarOrden(orderId))
+                        {
+                            MessageBox.Show($"Orden con ID {orderId} y sus detalles eliminados con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+                            dataGridView1.DataSource = iordenCRUD.obtenerOrdenes();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error al eliminar la orden y sus detalles: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
             }
             else
             {
-                MessageBox.Show("Error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Por favor, seleccione una orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
-    }
-    else
-    {
-        MessageBox.Show("Por favor, seleccione una orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-    }
+
+
+        private void label3_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        public void ActualizarOrdenes()
+        {
+            dataGridView1.DataSource = iordenCRUD.obtenerOrdenes();
+        }
+
+        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
 {
     public interface IordenCRUD
     {
-        List<Order> obtenerOrdenes();
+        List<dynamic> obtenerOrdenes();
         bool ActualizarOrden(int orderId, string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
         int AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate, DateTime? shippedDate, int shipVia, decimal freight, string shipName, string shipAddress, string shipCity, string shipRegion, string shipPostalCode, string shipCountry);
         bool EliminarOrden(int orderId);
@@ -21,14 +21,30 @@ namespace ProyectoDefinitvo___Northwind.Servicios.Ordenes
     {
         NorthwindContext dtContext = new NorthwindContext();
 
-        public List<Order> obtenerOrdenes()
+        public List<dynamic> obtenerOrdenes()
         {
             using (var dbContext = new NorthwindContext())
             {
-                var ordenes = dbContext.Orders.ToList();
+                var ordenes = dbContext.Orders
+                    .Select(o => new
+                    {
+                        Id = o.OrderId,
+                        NombreDeLaEntrega = o.ShipName,
+                        FechaDeLaOrden = o.OrderDate,
+                        FechaDeEntrega = o.ShippedDate,
+                        CostoDeTransporte = o.Freight,
+                        DireccionDeLaEntrega = o.ShipAddress,
+                        CiudadDeLaEntrega = o.ShipCity,
+                        RegionDeLaEntrega = o.ShipRegion,
+                        PaisDeLaEntrega = o.ShipCountry,
+                        CodigoPostal = o.ShipPostalCode
+                    })
+                    .ToList<dynamic>();
+
                 return ordenes;
             }
         }
+
 
 
         public int AgregarOrden(string customerID, int employeeID, DateTime orderDate, DateTime requiredDate,

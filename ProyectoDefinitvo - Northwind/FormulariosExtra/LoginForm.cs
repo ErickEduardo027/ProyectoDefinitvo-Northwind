@@ -1,3 +1,4 @@
+using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
@@ -19,6 +20,7 @@ namespace ProyectoDefinitvo___Northwind
         private readonly IordenCRUD iordenCRUD;
         private readonly IordenService iordenService;
         private readonly IcategoriaService icategoriaService;
+        private OrdenesForm ordenesForm;
 
         public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD iordenDetalleCRUD, IordenCRUD iordenCRUD, IordenService iordenService)
         {
@@ -60,7 +62,7 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD, iordenDetalleCRUD, iordenCRUD, iordenService, iordenDetalleCRUD);
+                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD, iordenDetalleCRUD, iordenCRUD, iordenService, iordenDetalleCRUD, ordenesForm);
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);
