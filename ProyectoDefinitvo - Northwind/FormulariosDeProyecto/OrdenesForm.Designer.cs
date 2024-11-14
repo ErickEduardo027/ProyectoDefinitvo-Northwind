@@ -28,32 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            dataGridView1 = new DataGridView();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             textBox1 = new TextBox();
             btnFiltrarPorNombre = new Button();
             button2 = new Button();
-            button3 = new Button();
+            btnActualizar = new Button();
             button4 = new Button();
             btnReset = new Button();
             comboBox3 = new ComboBox();
             label1 = new Label();
             label2 = new Label();
             label3 = new Label();
+            dataGridView1 = new DataGridView();
             ((System.ComponentModel.ISupportInitialize)dataGridView1).BeginInit();
             SuspendLayout();
-            // 
-            // dataGridView1
-            // 
-            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
-            dataGridView1.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllHeaders;
-            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridView1.Location = new Point(12, 75);
-            dataGridView1.Name = "dataGridView1";
-            dataGridView1.ReadOnly = true;
-            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridView1.Size = new Size(971, 547);
-            dataGridView1.TabIndex = 0;
             // 
             // textBox1
             // 
@@ -84,15 +72,16 @@
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
-            // button3
+            // btnActualizar
             // 
-            button3.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            button3.Location = new Point(739, 644);
-            button3.Name = "button3";
-            button3.Size = new Size(119, 43);
-            button3.TabIndex = 4;
-            button3.Text = "Actualizar";
-            button3.UseVisualStyleBackColor = true;
+            btnActualizar.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            btnActualizar.Location = new Point(739, 644);
+            btnActualizar.Name = "btnActualizar";
+            btnActualizar.Size = new Size(119, 43);
+            btnActualizar.TabIndex = 4;
+            btnActualizar.Text = "Actualizar";
+            btnActualizar.UseVisualStyleBackColor = true;
+            btnActualizar.Click += btnActualizar_Click;
             // 
             // button4
             // 
@@ -117,6 +106,7 @@
             // 
             // comboBox3
             // 
+            comboBox3.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox3.FormattingEnabled = true;
             comboBox3.Items.AddRange(new object[] { "ID" });
             comboBox3.Location = new Point(12, 34);
@@ -146,28 +136,51 @@
             // label3
             // 
             label3.AutoSize = true;
-            label3.Location = new Point(762, 32);
+            label3.Location = new Point(762, 34);
             label3.Name = "label3";
             label3.Size = new Size(221, 15);
             label3.TabIndex = 15;
             label3.Text = "doble click para ver el detalle de la orden";
+            // 
+            // dataGridView1
+            // 
+            dataGridView1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            dataGridView1.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
+            dataGridView1.BackgroundColor = Color.MediumTurquoise;
+            dataGridView1.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
+            dataGridView1.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridView1.GridColor = Color.FromArgb(0, 0, 192);
+            dataGridView1.Location = new Point(12, 85);
+            dataGridView1.Name = "dataGridView1";
+            dataGridView1.ReadOnly = true;
+            dataGridView1.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridView1.Size = new Size(971, 544);
+            dataGridView1.TabIndex = 16;
+            dataGridView1.CellContentClick += dataGridView1_CellContentClick;
             // 
             // OrdenesForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(995, 699);
+            Controls.Add(dataGridView1);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Controls.Add(comboBox3);
             Controls.Add(btnReset);
             Controls.Add(button4);
-            Controls.Add(button3);
+            Controls.Add(btnActualizar);
             Controls.Add(button2);
             Controls.Add(btnFiltrarPorNombre);
             Controls.Add(textBox1);
-            Controls.Add(dataGridView1);
             Name = "OrdenesForm";
             Text = "ORDENES";
             Load += OrdenesForm_Load;
@@ -177,17 +190,16 @@
         }
 
         #endregion
-
-        private DataGridView dataGridView1;
         private TextBox textBox1;
         private Button btnFiltrarPorNombre;
         private Button button2;
-        private Button button3;
+        private Button btnActualizar;
         private Button button4;
         private Button btnReset;
         private ComboBox comboBox3;
         private Label label1;
         private Label label2;
         private Label label3;
+        private DataGridView dataGridView1;
     }
 }

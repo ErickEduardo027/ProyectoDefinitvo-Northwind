@@ -34,10 +34,12 @@ namespace ProyectoDefinitvo___Northwind
         private readonly IordenCRUD iordenCRUD;
         private readonly IordenService iordenService;
         private readonly IOrdenDetalleCRUD iordenDetalleCRUD1;
+        private OrdenesForm ordenesForm;
+
 
         public IcategoriaService icategoriaService { get; }
 
-        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD IordenDetalleCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD)
+        public mainMenu(IproductosService iproductosService, IcategoriaService icategoriaService, ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD IordenDetalleCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm ordenesForm)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
@@ -50,7 +52,8 @@ namespace ProyectoDefinitvo___Northwind
             this.iordenDetalleCRUD = IordenDetalleCRUD;
             this.iordenCRUD = iordenCRUD;
             this.iordenService = iordenService;
-            iordenDetalleCRUD1 = iordenDetalleCRUD;
+            this.iordenDetalleCRUD1 = iordenDetalleCRUD;
+            
         }
 
         private void mainMenu_Load(object sender, EventArgs e)
@@ -116,7 +119,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnOrdenes_Click(object sender, EventArgs e)
         {
-            abrirForm(new OrdenesForm(iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD, iordenCRUD, iordenService, iordenDetalleCRUD));
+            abrirForm(new OrdenesForm(iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD, iordenCRUD, iordenService, iordenDetalleCRUD, ordenesForm));
         }
     }
 }

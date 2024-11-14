@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlTypes;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -27,31 +28,31 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private readonly IordenService iordenService;
         private readonly IordenCRUD iordenCRUD;
         private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
+        private OrdenesForm _ordenesForm;
 
-        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD)
+        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm ordenesForm)
         {
             InitializeComponent();
             CargarDatosComboBox();
             this.iordenService = iordenService;
             this.iordenCRUD = iordenCRUD;
             this.iordenDetalleCRUD = iordenDetalleCRUD;
+            _ordenesForm = ordenesForm;
             InicializarDatos();
         }
 
         private void AgregarOrdenDialog_Load(object sender, EventArgs e)
         {
             panel3.Enabled = false;
-            panel5.Enabled = false;
-            comboBoxClientes.Text = string.Empty;
-            comboBoxEmpleados.Text = string.Empty;
-            comboBoxShippers.Text = string.Empty;
+            comboBoxClientes.SelectedIndex = -1;
+            comboBoxEmpleados.SelectedIndex = -1;
+            comboBoxShippers.SelectedIndex = -1;
             textBoxClienteID.Text = "";
             textBoxEmpleadoID.Text = "";
             textBoxShipperID.Text = "";
             cbxCiudad.Text = string.Empty;
             cbxPais.Text = string.Empty;
             textBox1.Text = "0";
-            btnReset.Visible = false;
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -84,7 +85,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             var region = textBox16.Text;
             var codigoPostal = textBox4.Text;
 
-
             try
             {
                 this.iordenService.CrearOrden(new CrearOrdenRequest
@@ -106,48 +106,37 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
                 empleado = int.Parse(textBoxEmpleadoID.Text);
 
+                MessageBox.Show("Paso 2", "Proceda a agregar los detalles", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                textBoxCostoTransporte.Text = textBox1.Text;
+                panel3.Enabled = true;
+                panel1.Enabled = false;
+                label29.Text = "0";
+                label32.Text = "0";
+                label36.Text = "0";
+                textBoxSubtotal.Text = "0";
+                textBoxTotal.Text = "0";
 
-                if (iordenCRUD.AgregarOrden(cliente, empleado, fechaActual, fechaDeLaOrden, fechaDeLaEntrega, shipper, costoDeTransporte, nombreDeLaEntrega, direccionDeLaEntrega, ciudadDeLaEntrega, region, codigoPostal, paisDeLaEntrega))
+                using (var context = new NorthwindContext())
                 {
-                    MessageBox.Show("Nueva orden ingresada con éxito", "Agregar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    var productos = context.Products
+                                           .Select(p => new { p.ProductId, p.ProductName, p.UnitPrice })
+                                           .ToList();
 
-                    panel3.Enabled = true;
-                    panel5.Enabled = true;
-                    panel1.Enabled = false;
-
-                    textBoxClienteID.Text = "";
-                    textBoxEmpleadoID.Text = "";
-                    textBoxShipperID.Text = "";
-                    textBox1.Text = "0";
-                    textBox3.Text = "";
-                    textBox2.Text = "";
-                    cbxPais.Text = " ";
-                    cbxCiudad.Text = " ";
-                    textBox16.Text = "";
-                    textBox4.Text = "";
-
-
-
-                    var dbcontext = new NorthwindContext();
-                    var ultimaOrden = dbcontext.Orders
-                        .OrderByDescending(o => o.OrderId)
-                        .FirstOrDefault();
-
-                    textBox17.Text = ultimaOrden.OrderId.ToString();
-
-                    dataGridView1.DataSource = dbcontext.Products.ToList();
-
+                    cbxProducto.DataSource = productos;
+                    cbxProducto.DisplayMember = "ProductName";
+                    cbxProducto.ValueMember = "UnitPrice";
                 }
-                else
-                {
-                    MessageBox.Show("Error al agregar la orden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                }
+                cbxProducto.SelectedIndex = -1;
+                textBoxID.Text = "";
+                textBoxPrecio.Text = "";
             }
+
             catch (ValidationException ex)
             {
                 var message = ex.Message;
                 MessageBox.Show(message, "Validación de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
+
         }
         private void CargarDatosComboBox()
         {
@@ -169,6 +158,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             comboBoxShippers.DataSource = shippers;
             comboBoxShippers.DisplayMember = "CompanyName";
             comboBoxShippers.ValueMember = "ShipperId";
+
         }
 
         private void comboBoxClientes_SelectedIndexChanged(object sender, EventArgs e)
@@ -223,207 +213,81 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             string ciudadSeleccionada = cbxCiudad.SelectedItem.ToString();
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            var dbcontext = new NorthwindContext();
-            var ultimaOrden = dbcontext.Orders
-                       .OrderByDescending(o => o.OrderId)
-                       .FirstOrDefault();
-
-            if (ultimaOrden == null)
-            {
-                MessageBox.Show("No se encontró ninguna orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-            if (dataGridView2.Rows.Count > 0)
-            {
-                var confirmResult = MessageBox.Show($"Hay registros asociados a la orden. Si desea cancelar se eliminarán tanto los registros como la última orden creada. ¿Está seguro que desea continuar?",
-                                                    "Confirmar eliminación",
-                                                    MessageBoxButtons.YesNo,
-                                                    MessageBoxIcon.Question);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    var detallesOrden = dbcontext.OrderDetails
-                        .Where(od => od.OrderId == ultimaOrden.OrderId)
-                        .ToList();
-
-                    foreach (var detalle in detallesOrden)
-                    {
-                        dbcontext.OrderDetails.Remove(detalle);
-                    }
-
-                    dbcontext.SaveChanges();
-
-                    if (iordenCRUD.EliminarOrden(ultimaOrden.OrderId))
-                    {
-                        MessageBox.Show($"Última orden con ID {ultimaOrden.OrderId} y sus detalles eliminados con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                        dataGridView1.DataSource = null;
-                        dataGridView2.DataSource = null;
-                        panel3.Enabled = false;
-                        panel5.Enabled = false;
-                        panel1.Enabled = true;
-                        textBox17.Text = "";
-                        textBoxID.Text = "";
-                        textBoxPrecio.Text = "";
-                        textBox5.Text = "";
-                        textBox15.Text = "";
-                        textBoxProducto.Text = "";
-
-
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrió un error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
-            {
-                var confirmResult = MessageBox.Show($"No hay registros en la tabla. ¿Está seguro que desea eliminar la última orden con ID {ultimaOrden.OrderId}?",
-                                                    "Confirmar eliminación",
-                                                    MessageBoxButtons.YesNo,
-                                                    MessageBoxIcon.Question);
-                if (confirmResult == DialogResult.Yes)
-                {
-                    if (iordenCRUD.EliminarOrden(ultimaOrden.OrderId))
-                    {
-                        MessageBox.Show($"Última orden con ID {ultimaOrden.OrderId} eliminada con éxito.", "Eliminar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-
-                        dataGridView1.DataSource = null;
-                        panel3.Enabled = false;
-                        panel5.Enabled = false;
-                        panel1.Enabled = true;
-                    }
-                    else
-                    {
-                        MessageBox.Show("Ocurrió un error al eliminar la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-        }
-
-
-        private void btnBuscar_Click(object sender, EventArgs e)
-        {
-
-            string nombreProducto = textBoxBuscarProducto.Text.Trim();
-
-            if (string.IsNullOrEmpty(nombreProducto))
-            {
-                MessageBox.Show("Por favor, ingrese un nombre de producto para buscar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
-            var dtcontext = new NorthwindContext();
-            var productosFiltrados = dtcontext.Products
-                .Where(p => p.ProductName.ToLower().Contains(nombreProducto.ToLower()))
-                .ToList();
-
-            if (productosFiltrados.Any())
-            {
-
-                dataGridView1.DataSource = productosFiltrados;
-                btnReset.Visible = true;
-            }
-            else
-            {
-                MessageBox.Show("No se encontraron productos con ese nombre.", "Buscar Producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-        }
-
-        private void btnReset_Click(object sender, EventArgs e)
-        {
-            var dtcontext = new NorthwindContext();
-            dataGridView1.DataSource = dtcontext.Products.ToList();
-            btnReset.Visible = false;
-        }
-
-        private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if (e.RowIndex >= 0)
-            {
-
-                DataGridViewRow filaSeleccionada = dataGridView1.Rows[e.RowIndex];
-
-
-                textBoxID.Text = filaSeleccionada.Cells["ProductId"].Value.ToString();
-                textBoxProducto.Text = filaSeleccionada.Cells["ProductName"].Value.ToString();
-                textBoxPrecio.Text = filaSeleccionada.Cells["UnitPrice"].Value.ToString();
-            }
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-
-            var ordenId = int.Parse(textBox17.Text);
-            var productiId = int.Parse(textBoxID.Text);
-            var precioXunidad = decimal.Parse(textBoxPrecio.Text);
-            var cantidad = short.Parse(textBox5.Text);
-            var descuento = float.Parse(textBox15.Text) / 100;
-
-            if (iordenDetalleCRUD.AgregarOrdenDetalle(ordenId, productiId, precioXunidad, cantidad, descuento))
-            {
-                MessageBox.Show("Nuevo detalle de la orden ingresada con éxito", "Agregar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                var dtcontext = new NorthwindContext();
-                dataGridView2.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle(ordenId);
-                ActualizarResumen();
-
-            }
-
-        }
-
-        private void button3_Click(object sender, EventArgs e)
-        {
-            if (dataGridView2.SelectedRows.Count > 0)
-            {
-                DataGridViewRow filaSeleccionada = dataGridView2.SelectedRows[0];
-
-                int orderId = int.Parse(filaSeleccionada.Cells["OrderId"].Value.ToString());
-                int productId = int.Parse(filaSeleccionada.Cells["ProductId"].Value.ToString());
-
-                var confirmResult = MessageBox.Show($"¿Está seguro que desea eliminar el detalle del producto con ID {productId} de la orden con ID {orderId}?",
-                                                    "Confirmar eliminación",
-                                                    MessageBoxButtons.YesNo,
-                                                    MessageBoxIcon.Question);
-
-                if (confirmResult == DialogResult.Yes)
-                {
-                    if (iordenDetalleCRUD.EliminarOrdenDetalle(orderId, productId))
-                    {
-                        MessageBox.Show("Detalle de la orden eliminado con éxito", "Eliminar Detalle", MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-                        var dtcontext = new NorthwindContext();
-                        dataGridView2.DataSource = iordenDetalleCRUD.ObtenerOrdenDetalle(orderId);
-
-                        ActualizarResumen();
-                    }
-                    else
-                    {
-                        MessageBox.Show("Error al eliminar el detalle de la orden.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                }
-            }
-            else
-            {
-                MessageBox.Show("Por favor, seleccione un detalle de la orden para eliminar.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
-        }
-
         private void btnCrearOrden_Click(object sender, EventArgs e)
         {
-
-            var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden y cerrar el formulario?",
+            var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden?",
                                                 "Confirmar creación de orden",
                                                 MessageBoxButtons.YesNo,
                                                 MessageBoxIcon.Question);
 
             if (confirmResult == DialogResult.Yes)
             {
+                
+                var cliente = textBoxClienteID.Text;
+                var empleado = int.Parse(textBoxEmpleadoID.Text);
+                int shipper = int.Parse(textBoxShipperID.Text);
+                int costoDeTransporte = int.Parse(textBoxCostoTransporte.Text);
 
-                this.Close();
+                var fechaActual = dateTimePicker1.Value;
+                var fechaDeLaOrden = dateTimePicker3.Value;
+                var fechaDeLaEntrega = dateTimePicker4.Value;
+                var direccionDeLaEntrega = textBox2.Text;
+                var nombreDeLaEntrega = textBox3.Text;
+                var paisDeLaEntrega = cbxPais.Text;
+                var ciudadDeLaEntrega = cbxCiudad.Text;
+                var region = textBox16.Text;
+                var codigoPostal = textBox4.Text;
+
+                
+                int ordenId = iordenCRUD.AgregarOrden(cliente, empleado, fechaActual, fechaDeLaOrden, fechaDeLaEntrega, shipper, costoDeTransporte, nombreDeLaEntrega, direccionDeLaEntrega, ciudadDeLaEntrega, region, codigoPostal, paisDeLaEntrega);
+
+                if (ordenId > 0)
+                {
+                    
+                    foreach (DataGridViewRow row in dataGridView2.Rows)
+                    {
+                        if (row.Cells["ProductName"].Value != null &&
+                            row.Cells["UnitPrice"].Value != null &&
+                            row.Cells["Quantity"].Value != null &&
+                            row.Cells["Discount"].Value != null)
+                        {
+                            var nombreProducto = row.Cells["ProductName"].Value.ToString();
+                            var precioPorUnidad = Convert.ToDecimal(row.Cells["UnitPrice"].Value);
+                            var cantidad = (short)Convert.ToInt32(row.Cells["Quantity"].Value); 
+                            var descuento = (float)Convert.ToDecimal(row.Cells["Discount"].Value) / 100;    
+
+                            
+                            using (var context = new NorthwindContext())
+                            {
+                                var productoId = context.Products
+                                                         .Where(p => p.ProductName == nombreProducto)
+                                                         .Select(p => p.ProductId)
+                                                         .FirstOrDefault();
+
+                                if (productoId == 0) 
+                                {
+                                    MessageBox.Show($"No se encontró el ID para el producto: {nombreProducto}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+
+                                
+                                if (!iordenDetalleCRUD.AgregarOrdenDetalle(ordenId, productoId, precioPorUnidad, cantidad, descuento))
+                                {
+                                    MessageBox.Show($"Error al agregar el detalle para el producto {nombreProducto}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                                    return;
+                                }
+                            }
+                        }
+                    }
+
+                    MessageBox.Show("Nueva orden y sus detalles ingresados con éxito", "Agregar orden", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    //_ordenesForm.ActualizarOrdenes(); 
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Error al agregar la orden", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
             else
             {
@@ -431,52 +295,162 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             }
         }
 
+        private void cbxProducto_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cbxProducto.SelectedItem != null)
+            {
+                var productoSeleccionado = (dynamic)cbxProducto.SelectedItem;
+
+                textBoxID.Text = productoSeleccionado.ProductId.ToString();
+                textBoxPrecio.Text = productoSeleccionado.UnitPrice.ToString("C");
+            }
+        }
+
+        private void btnBuscar_Click(object sender, EventArgs e)
+        {
+            if (cbxProducto.SelectedValue != null)
+            {
+                int productoId = int.Parse(textBoxID.Text);
+
+                int cantidad = (int)numericUpDown1.Value;
+                decimal descuento = string.IsNullOrWhiteSpace(textBox15.Text) ? 0 : decimal.Parse(textBox15.Text) / 100;
+
+                using (var context = new NorthwindContext())
+                {
+
+                    var producto = context.Products
+                                          .Where(p => p.ProductId == productoId)
+                                          .Select(p => new
+                                          {
+                                              p.ProductName,
+                                              p.UnitPrice,
+                                              p.CategoryId,
+                                              p.SupplierId
+                                          })
+                                          .FirstOrDefault();
+
+                    if (producto != null)
+                    {
+
+                        MessageBox.Show("Producto agregado al detalle con exito", "Agregar Producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        cbxProducto.SelectedIndex = -1;
+                        textBoxID.Text = "";
+                        textBox15.Text = "";
+                        textBoxPrecio.Text = "";
+                        numericUpDown1.Value = 0;
+
+
+                        var categoria = context.Categories
+                                               .Where(c => c.CategoryId == producto.CategoryId)
+                                               .Select(c => c.CategoryName)
+                                               .FirstOrDefault();
+
+                        var proveedor = context.Suppliers
+                                               .Where(p => p.SupplierId == producto.SupplierId)
+                                               .Select(p => p.CompanyName)
+                                               .FirstOrDefault();
+
+                        SqlMoney precioPorUnidad = producto.UnitPrice ?? 0;
+                        SqlMoney precioExtendido = (precioPorUnidad * cantidad) * (1 - descuento);
+
+                        dataGridView2.Rows.Add(
+                            producto.ProductName,
+                            precioPorUnidad.ToString(),
+                            cantidad,
+                            (descuento * 100).ToString(),
+                            categoria,
+                            proveedor,
+                            precioExtendido.ToString()
+                        );
+
+                        ActualizarResumen();
+                    }
+                    else
+                    {
+                        MessageBox.Show("No se encontró el producto en la base de datos.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona un producto válido.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            if (dataGridView2.SelectedRows.Count > 0)
+            {
+                DialogResult result = MessageBox.Show("¿Estás seguro de que deseas eliminar esta fila?",
+                                                      "Confirmar eliminación",
+                                                      MessageBoxButtons.YesNo,
+                                                      MessageBoxIcon.Question);
+
+                if (result == DialogResult.Yes)
+                {
+                    foreach (DataGridViewRow row in dataGridView2.SelectedRows)
+                    {
+                        dataGridView2.Rows.Remove(row);
+                        ActualizarResumen();
+                    }
+                }
+            }
+            else
+            {
+                MessageBox.Show("Por favor, selecciona una fila para eliminar.",
+                                "Error",
+                                MessageBoxButtons.OK,
+                                MessageBoxIcon.Error);
+            }
+        }
+
         private void ActualizarResumen()
         {
+
             if (dataGridView2.Rows.Count > 0)
             {
                 var detallesOrden = dataGridView2.Rows
-                    .Cast<DataGridViewRow>() 
+                    .Cast<DataGridViewRow>()
                     .Where(row => row.Cells["UnitPrice"].Value != null && row.Cells["Quantity"].Value != null && row.Cells["Discount"].Value != null); // Filtrar filas válidas
 
                 var promedioUnitPrice = detallesOrden
                     .Average(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value));
-                label33.Text = promedioUnitPrice.ToString("F2"); 
+                label29.Text = promedioUnitPrice.ToString("F2");
 
                 var sumaCantidad = detallesOrden
                     .Sum(row => Convert.ToInt32(row.Cells["Quantity"].Value));
-                label34.Text = sumaCantidad.ToString(); 
-                
+                label32.Text = sumaCantidad.ToString();
+
                 var promedioDescuento = detallesOrden
                     .Average(row => Convert.ToSingle(row.Cells["Discount"].Value));
-                promedioDescuento = promedioDescuento * 100;
-                label35.Text = promedioDescuento.ToString(); 
+                label36.Text = promedioDescuento.ToString();
 
 
                 var subtotal = detallesOrden
-      .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value));
+      .Sum(row => Convert.ToDecimal(row.Cells["ExtendedPrice"].Value));
                 textBoxSubtotal.Text = subtotal.ToString("F2");
-              
-                var totalDescuento = detallesOrden
-                    .Sum(row => Convert.ToDecimal(row.Cells["UnitPrice"].Value) * Convert.ToInt32(row.Cells["Quantity"].Value) * Convert.ToDecimal(row.Cells["Discount"].Value));
-                textBoxDescuento.Text = totalDescuento.ToString("F2");
 
-                var total = subtotal - totalDescuento;
+                var total = subtotal + int.Parse(textBoxCostoTransporte.Text);
                 textBoxTotal.Text = total.ToString("F2");
             }
             else
             {
-                
-                label33.Text = "0.00";
-                label34.Text = "0";
-                label35.Text = "0.00";
+
+                label29.Text = "0";
+                label32.Text = "0";
+                label36.Text = "0";
                 textBoxSubtotal.Text = "0.00";
-                textBoxDescuento.Text = "0.00";
+                textBoxCostoTransporte.Text = "0";
                 textBoxTotal.Text = "0.00";
             }
         }
 
+        private void dataGridView2_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
     }
 
 }
+
 

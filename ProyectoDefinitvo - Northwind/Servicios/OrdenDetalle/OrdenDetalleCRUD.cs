@@ -15,6 +15,8 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
         List<OrderDetailViewModel> ObtenerOrdenDetalle(int orderId);
         bool AgregarOrdenDetalle(int orderId, int productId, decimal unitPrice, short quantity, float discount);
         bool EliminarOrdenDetalle(int orderId, int productId);
+        bool ActualizarOrdenDetalle(int orderId, int productId, decimal unitPrice, short quantity, float discount);
+
     }
 
     public class OrderDetailViewModel
@@ -99,7 +101,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
             }
         }
 
-   
+
         public bool EliminarOrdenDetalle(int orderId, int productId)
         {
             try
@@ -112,7 +114,7 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
                     if (detalleEliminar != null)
                     {
                         dbContext.OrderDetails.Remove(detalleEliminar);
-                        dbContext.SaveChanges(); 
+                        dbContext.SaveChanges();
                         return true; 
                     }
                     else
@@ -125,6 +127,43 @@ namespace ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle
             catch (Exception ex)
             {
                 Console.WriteLine($"Error al eliminar el detalle de la orden: {ex.Message}");
+                return false; 
+            }
+        }
+
+
+
+        public bool ActualizarOrdenDetalle(int orderId, int productId, decimal unitPrice, short quantity, float discount)
+        {
+            try
+            {
+                using (var dbContext = new NorthwindContext())
+                {
+                    
+                    var detalleOrden = dbContext.OrderDetails
+                        .FirstOrDefault(od => od.OrderId == orderId);
+
+                    if (detalleOrden != null)
+                    {
+                        
+                        detalleOrden.UnitPrice = unitPrice;
+                        detalleOrden.Quantity = quantity;
+                        detalleOrden.Discount = discount;
+
+                        
+                        dbContext.SaveChanges();
+                        return true; 
+                    }
+                    else
+                    {
+                        Console.WriteLine($"No se encontró un detalle de la orden con OrderId = {orderId} y ProductId = {productId}");
+                        return false; 
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al actualizar el detalle de la orden: {ex.Message}");
                 return false; 
             }
         }
