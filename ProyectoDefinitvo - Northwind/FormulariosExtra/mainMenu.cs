@@ -119,7 +119,7 @@ namespace ProyectoDefinitvo___Northwind
 
         private void btnOrdenes_Click(object sender, EventArgs e)
         {
-            abrirForm(new OrdenesForm(iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD, iordenCRUD, iordenService, iordenDetalleCRUD, ordenesForm));
+            abrirForm(new OrdenesForm(logger, iordenDetalleCRUD, isuplidoresCRUD, icategoriaCRUD, iordenCRUD, iordenService, iordenDetalleCRUD, ordenesForm));
         }
     }
 }

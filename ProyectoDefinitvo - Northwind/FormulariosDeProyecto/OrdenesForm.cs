@@ -7,6 +7,7 @@ using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,9 +28,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
         private readonly IcategoriaCRUD icategoriaCRUD;
         private readonly IordenCRUD iordenCRUD;
         private readonly IordenService iordenService;
+        private readonly ILogger logger;
         private OrdenesForm ordenesForm;
 
-        public OrdenesForm(IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm _ordenesForm)
+        public OrdenesForm(ILogger logger, IOrdenDetalleCRUD IordenDetalleCRUD, IsuplidoresCRUD isuplidoresCRUD, IcategoriaCRUD icategoriaCRUD, IordenCRUD iordenCRUD, IordenService iordenService, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm _ordenesForm)
         {
             InitializeComponent();
             iordenDetalleCRUD = IordenDetalleCRUD;
@@ -44,7 +46,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD, iordenDetalleCRUD, ordenesForm);
+            var agregar = new AgregarOrdenDialog(iordenService, iordenCRUD, iordenDetalleCRUD, ordenesForm, logger);
             agregar.ShowDialog();
         }
 

@@ -5,6 +5,7 @@ using ProyectoDefinitvo___Northwind.Models;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
+using Serilog;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -28,9 +29,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         private readonly IordenService iordenService;
         private readonly IordenCRUD iordenCRUD;
         private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
+        private readonly ILogger logger;
         private OrdenesForm _ordenesForm;
 
-        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm ordenesForm)
+        public AgregarOrdenDialog(IordenService iordenService, IordenCRUD iordenCRUD, IOrdenDetalleCRUD iordenDetalleCRUD, OrdenesForm ordenesForm, ILogger logger)
         {
             InitializeComponent();
             CargarDatosComboBox();
@@ -215,6 +217,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnCrearOrden_Click(object sender, EventArgs e)
         {
+            logger.Information("Producto_ADD: ");
             var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden?",
                                                 "Confirmar creación de orden",
                                                 MessageBoxButtons.YesNo,

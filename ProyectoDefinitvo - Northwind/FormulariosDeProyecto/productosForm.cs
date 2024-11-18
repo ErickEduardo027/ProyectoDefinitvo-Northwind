@@ -64,27 +64,60 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
 
         private void btnEliminar_Click(object sender, EventArgs e)
         {
-            
             if (dataGridView1.SelectedRows.Count > 0)
             {
                 string nombre = dataGridView1.CurrentRow.Cells[0].Value.ToString();
 
-                DialogResult result = MessageBox.Show($"¿Está seguro de que desea eliminar el producto '{nombre}'?, no vayas a poner un huevo!",
+                DialogResult result = MessageBox.Show($"¿Está seguro de que desea eliminar el producto '{nombre}'? ¡No vayas a poner un huevo!",
                     "Confirmación de eliminación", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 
                 if (result == DialogResult.Yes)
                 {
-
-                    bool exito = iproductoCRUD.EliminarProducto(nombre);
-
-                    if (exito)
+                    try
                     {
-                        MessageBox.Show("Producto eliminado con éxito, despues no me vengas llorando!", "Eliminar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        dataGridView1.DataSource = iproductoCRUD.ObtenerProductos();
+
+                        using (var context = new NorthwindContext())
+                        {
+                            var producto = context.Products.FirstOrDefault(p => p.ProductName == nombre);
+
+                            if (producto != null)
+                            {
+        
+                                var ordenesRelacionadas = context.OrderDetails
+                                    .Where(od => od.ProductId == producto.ProductId)
+                                    .Select(od => od.OrderId)
+                                    .Distinct()
+                                    .ToList();
+
+                                if (ordenesRelacionadas.Any())
+                                {
+                
+                                    string mensaje = $"No se puede eliminar el producto '{nombre}' porque está enlazado a las siguientes órdenes:\n" +
+                                                     string.Join(", ", ordenesRelacionadas);
+
+                                    MessageBox.Show(mensaje, "Restricción de clave foránea", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                                    return;
+                                }
+                            }
+
+                   
+                            bool exito = iproductoCRUD.EliminarProducto(nombre);
+
+                            if (exito)
+                            {
+                                MessageBox.Show("Producto eliminado con éxito, después no me vengas llorando!", "Eliminar producto", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                dataGridView1.DataSource = iproductoCRUD.ObtenerProductos();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error al eliminar el producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            }
+                        }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        MessageBox.Show("Error al eliminar el producto.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        
+                        MessageBox.Show($"Error inesperado: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -93,6 +126,8 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 MessageBox.Show("Por favor, seleccione un producto para eliminar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+
 
 
         private void btnActualizar_Click(object sender, EventArgs e)
