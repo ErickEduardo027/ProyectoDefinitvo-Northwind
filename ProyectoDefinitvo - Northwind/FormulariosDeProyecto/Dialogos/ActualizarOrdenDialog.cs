@@ -52,7 +52,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
             if (confirmResult == DialogResult.Yes)
             {
-                // Datos de la orden
+               
                 var cliente = textBoxClienteID.Text;
                 var empleado = int.Parse(textBoxEmpleadoID.Text);
                 int shipper = int.Parse(textBoxShipperID.Text);
@@ -68,11 +68,11 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 var region = textBox16.Text;
                 var codigoPostal = textBox4.Text;
 
-                // Listas para manejar detalles
+               
                 List<OrderDetailViewModel> nuevosDetalles = new List<OrderDetailViewModel>();
                 List<OrderDetailViewModel> detallesEliminados = new List<OrderDetailViewModel>();
 
-                // Obtener los detalles eliminados
+              
                 foreach (DataGridViewRow row in dataGridView2.Rows)
                 {
                     if (row.IsNewRow) continue;
@@ -114,7 +114,6 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                     }
                 }
 
-                // Llama al método para actualizar la orden y manejar los detalles
                 int resultado = iordenCRUD.ActualizarOrden(id, cliente, empleado, fechaActual, fechaDeLaOrden, fechaDeLaEntrega, shipper,
                                                            costoDeTransporte, nombreDeLaEntrega, direccionDeLaEntrega, ciudadDeLaEntrega,
                                                            region, codigoPostal, paisDeLaEntrega, nuevosDetalles, detallesEliminados);
@@ -181,12 +180,12 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         {
             using (SqlConnection conexion = new SqlConnection(connectionString))
             {
-                // Comando para cargar los datos de la orden
+                
                 SqlCommand cmdOrden = conexion.CreateCommand();
                 cmdOrden.CommandText = "SELECT * FROM Orders WHERE OrderID = @OrderID";
                 cmdOrden.Parameters.AddWithValue("@OrderID", orderId);
 
-                // Comando para cargar los detalles de la orden con los datos en el orden requerido
+                
                 SqlCommand cmdDetalles = conexion.CreateCommand();
                 cmdDetalles.CommandText = @"
             SELECT 
