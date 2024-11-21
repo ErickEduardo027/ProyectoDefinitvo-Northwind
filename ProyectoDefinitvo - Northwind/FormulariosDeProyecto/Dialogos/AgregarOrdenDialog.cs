@@ -40,6 +40,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             this.iordenCRUD = iordenCRUD;
             this.iordenDetalleCRUD = iordenDetalleCRUD;
             _ordenesForm = ordenesForm;
+            this.logger = logger;
             InicializarDatos();
         }
 
@@ -217,7 +218,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
 
         private void btnCrearOrden_Click(object sender, EventArgs e)
         {
-            logger.Information("Producto_ADD: ");
+            logger.Information("ProductoADD: ");
             var confirmResult = MessageBox.Show("¿Está seguro que desea crear la orden?",
                                                 "Confirmar creación de orden",
                                                 MessageBoxButtons.YesNo,

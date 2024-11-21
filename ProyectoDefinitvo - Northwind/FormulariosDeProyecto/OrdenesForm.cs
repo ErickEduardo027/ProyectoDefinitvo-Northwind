@@ -40,7 +40,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
             this.iordenCRUD = iordenCRUD;
             this.iordenService = iordenService;
             this.iordenDetalleCRUD = iordenDetalleCRUD;
-
+            this.logger = logger;
 
         }
 
