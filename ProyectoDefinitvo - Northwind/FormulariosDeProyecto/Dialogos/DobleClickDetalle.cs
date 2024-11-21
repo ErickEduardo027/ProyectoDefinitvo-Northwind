@@ -81,6 +81,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
         {
             int orderID = int.Parse(this.Tag.ToString());
             CargarOrdenPorId(orderID);
+            textBox1.Text = orderID.ToString();
         }
     }
 }
