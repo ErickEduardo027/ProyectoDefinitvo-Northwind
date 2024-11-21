@@ -218,5 +218,21 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto
                 MessageBox.Show("Por favor, seleccione un producto para actualizar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
         }
+
+        private void dataGridView1_DoubleClick(object sender, EventArgs e)
+        {
+            if (dataGridView1.SelectedRows.Count > 0)
+            {
+                string ordenId = dataGridView1.SelectedRows[0].Cells["Id"].Value.ToString();
+                var verDetalle = new DobleClickDetalle();
+                verDetalle.Tag = ordenId;
+                verDetalle.ShowDialog();
+
+            }
+            else
+            {
+                MessageBox.Show("Por favor, seleccione un producto para actualizar.", "Advertencia", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+        }
     }
 }
