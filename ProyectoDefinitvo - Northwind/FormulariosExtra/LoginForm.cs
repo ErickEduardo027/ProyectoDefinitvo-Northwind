@@ -1,4 +1,7 @@
+using ProyectoDefinitvo___Northwind.FormulariosDeProyecto;
 using ProyectoDefinitvo___Northwind.Servicios.categorias;
+using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
+using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
 using ProyectoDefinitvo___Northwind.Servicios.productos;
 using ProyectoDefinitvo___Northwind.Servicios.suplidores;
 using Serilog;
@@ -13,9 +16,13 @@ namespace ProyectoDefinitvo___Northwind
         private readonly IproductoCRUD iproductoCRUD;
         private readonly IcategoriaCRUD icategoriaCRUD;
         private readonly IsuplidoresCRUD isuplidoresCRUD;
+        private readonly IOrdenDetalleCRUD iordenDetalleCRUD;
+        private readonly IordenCRUD iordenCRUD;
+        private readonly IordenService iordenService;
         private readonly IcategoriaService icategoriaService;
+        private OrdenesForm ordenesForm;
 
-        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD)
+        public LoginForm(IproductosService iproductosService, IcategoriaService icategoriaService,  ISuplidorService isuplidorService, ILogger logger, IproductoCRUD iproductoCRUD, IcategoriaCRUD icategoriaCRUD, IsuplidoresCRUD isuplidoresCRUD, IOrdenDetalleCRUD iordenDetalleCRUD, IordenCRUD iordenCRUD, IordenService iordenService)
         {
             InitializeComponent();
             this.iproductosService = iproductosService;
@@ -25,6 +32,9 @@ namespace ProyectoDefinitvo___Northwind
             this.iproductoCRUD = iproductoCRUD;
             this.icategoriaCRUD = icategoriaCRUD;
             this.isuplidoresCRUD = isuplidoresCRUD;
+            this.iordenDetalleCRUD = iordenDetalleCRUD;
+            this.iordenCRUD = iordenCRUD;
+            this.iordenService = iordenService;
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -52,7 +62,7 @@ namespace ProyectoDefinitvo___Northwind
         {
             if (Validar())
             {
-                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD);
+                mainMenu mainMenu = new mainMenu(iproductosService, icategoriaService, isuplidorService, logger, iproductoCRUD, icategoriaCRUD, isuplidoresCRUD, iordenDetalleCRUD, iordenCRUD, iordenService, iordenDetalleCRUD, ordenesForm);
 
                 string nombre = txtUsuario.Text;
                 mainMenu.ActualizarNombreText(nombre);

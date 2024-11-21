@@ -128,6 +128,7 @@
             // comboBox1
             // 
             comboBox1.Anchor = AnchorStyles.None;
+            comboBox1.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBox1.FormattingEnabled = true;
             comboBox1.Items.AddRange(new object[] { "Empleado" });
             comboBox1.Location = new Point(20, 32);

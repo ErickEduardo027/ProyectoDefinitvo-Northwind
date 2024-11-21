@@ -44,7 +44,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 using (MemoryStream ms = new MemoryStream())
                 {
                     pictureBox1.Image.Save(ms, pictureBox1.Image.RawFormat);
-                    pictureData = ms.ToArray(); 
+                    pictureData = ms.ToArray();
                 }
             }
 
@@ -55,10 +55,10 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 {
                     CategoryName = categoryName,
                     Description = description,
-                    Picture = pictureData 
+                    Picture = pictureData
                 });
-                
-                if (icategoriaCRUD.AgregarCategoria(categoryName, description, pictureData)) 
+
+                if (icategoriaCRUD.AgregarCategoria(categoryName, description, pictureData))
                 {
                     MessageBox.Show("Nueva categoría ingresada con éxito", "Agregar categoría", MessageBoxButtons.OK, MessageBoxIcon.Information);
 
@@ -76,7 +76,7 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
                 var message = ex.Message;
                 MessageBox.Show(message, "Validación de errores", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-         
+
         }
 
         private void btnSubirFoto_Click(object sender, EventArgs e)
@@ -88,6 +88,11 @@ namespace ProyectoDefinitvo___Northwind.FormulariosDeProyecto.Dialogos
             {
                 pictureBox1.Image = Image.FromFile(subir.FileName);
             }
+
+        }
+
+        private void AgregarCategoriaDialog_Load(object sender, EventArgs e)
+        {
 
         }
     }
