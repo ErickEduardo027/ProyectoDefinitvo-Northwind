@@ -113,6 +113,7 @@
             // 
             textBox1.Location = new Point(657, 44);
             textBox1.Name = "textBox1";
+            textBox1.ReadOnly = true;
             textBox1.Size = new Size(100, 23);
             textBox1.TabIndex = 36;
             // 
@@ -130,7 +131,7 @@
             MinimizeBox = false;
             Name = "DobleClickDetalle";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "DobleClickDetalle";
+            Text = "Detalles de la orden";
             Load += DobleClickDetalle_Load;
             ((System.ComponentModel.ISupportInitialize)dataGridView2).EndInit();
             ResumeLayout(false);
