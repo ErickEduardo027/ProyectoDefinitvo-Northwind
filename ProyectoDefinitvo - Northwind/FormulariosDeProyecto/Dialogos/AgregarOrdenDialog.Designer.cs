@@ -819,7 +819,6 @@
             Name = "AgregarOrdenDialog";
             ShowIcon = false;
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "Factura";
             Load += AgregarOrdenDialog_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
