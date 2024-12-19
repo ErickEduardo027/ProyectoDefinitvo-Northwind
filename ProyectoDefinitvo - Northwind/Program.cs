@@ -10,6 +10,8 @@ using System.Windows.Forms;
 using Serilog;
 using ProyectoDefinitvo___Northwind.Servicios.OrdenDetalle;
 using ProyectoDefinitvo___Northwind.Servicios.Ordenes;
+using Northwind.Infrastructure;
+using Northwind.Application.Abstractions;
 
 namespace ProyectoDefinitvo___Northwind
 {
@@ -52,6 +54,10 @@ namespace ProyectoDefinitvo___Northwind
                 serviceCollection.AddTransient<IordenCRUD, ordenCRUD>();
                 serviceCollection.AddTransient<IordenService, ordenService>();
                 serviceCollection.AddTransient<IOrdenDetalleCRUD, OrdenDetalleCRUD>();
+
+                //infrastructure
+                serviceCollection.AddScoped<ISupplierRepository, SupplierRepository>();
+                serviceCollection.AddScoped<IsqlConnectionFactory, sqlConnectionFactory>();
 
                 var serviceProvider = serviceCollection.BuildServiceProvider();
 
